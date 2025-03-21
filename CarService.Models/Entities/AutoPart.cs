@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,12 @@ namespace CarService.Models.Entities
 {
     public class AutoPart
     {
-        int AutoPartId { get; set; }
-        string AutoPartName { get; set; } = null!;
-        int PartNumber { get; set; }
-        decimal Price { get; set; }
-        int StockAmount { get; set; }
-        Manufacturer manufacturer { get; set; }
+        [Key]
+        public int AutoPartId { get; set; }
+        public string AutoPartName { get; set; } = null!;
+        public int PartNumber { get; set; }
+        public decimal Price { get; set; }
+        public int StockAmount { get; set; }
+        public Manufacturer manufacturer { get; set; }
     }
 }

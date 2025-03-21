@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,10 @@ namespace CarService.Models.Entities
 {
     public class OrderedPart
     {
-        int OrderedPartId { get; set; }
-        Order order { get; set; } = null!;
-        AutoPart autoPart { get; set; } = null!;
-        int Amount { get; set; }
+        [Key]
+        public int OrderedPartId { get; set; }
+        public Order order { get; set; } = null!;
+        public AutoPart autoPart { get; set; } = null!;
+        public int Amount { get; set; }
     }
 }
