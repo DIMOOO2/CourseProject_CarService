@@ -11,8 +11,8 @@ namespace CarService.Models.Entities
     {
         [Key]
         public int OrderedPartId { get; set; }
-        public Order order { get; set; } = null!;
-        public AutoPart autoPart { get; set; } = null!;
+        public Order Order { get; set; } = null!;
+        public AutoPart AutoPart { get; set; } = null!;
         public int Amount { get; set; }
     }
 }

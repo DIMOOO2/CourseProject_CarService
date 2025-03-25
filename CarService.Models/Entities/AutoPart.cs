@@ -15,6 +15,6 @@ namespace CarService.Models.Entities
         public int PartNumber { get; set; }
         public decimal Price { get; set; }
         public int StockAmount { get; set; }
-        public Manufacturer manufacturer { get; set; }
+        public Manufacturer Manufacturer { get; set; } = null!;
     }
 }
