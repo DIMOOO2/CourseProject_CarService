@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Api", "CarServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Client", "CarService.Client\CarService.Client\CarService.Client.csproj", "{B5D52907-1737-4B8D-9B23-18264DE01F81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Administrator", "CarService.Administrator\CarService.Administrator.csproj", "{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{B5D52907-1737-4B8D-9B23-18264DE01F81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5D52907-1737-4B8D-9B23-18264DE01F81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B5D52907-1737-4B8D-9B23-18264DE01F81}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2AEB206-BBD9-4CBA-97B7-5D7AD7C3099E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
