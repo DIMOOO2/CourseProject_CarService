@@ -1,6 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarService.Client.Pages.MainPage">
+             x:Class="CarService.Client.Pages.MainPage"
+             xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Title="">
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center"
+                     Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
+            <Label Text="Заказы клиентов" FontSize="30" FontAttributes="Bold"/>
+        </StackLayout>
+
+        <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
+                     Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20"/>
+
+        <!--Потом когда будешь ViewModel делать укажешь свойство отображения-->
+        <ListView IsVisible="True"/>
+        
+        <!--Здесь тоже самое-->
+        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="True" Spacing="20">
+            <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
+            <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
+                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+        </StackLayout>
+        
+    </Grid>
 </ContentPage>

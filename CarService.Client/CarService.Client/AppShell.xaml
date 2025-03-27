@@ -4,11 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CarService.Client.Pages"
-    Shell.FlyoutBehavior="Flyout"
-    Title="CarService.Client">
+    Shell.FlyoutBehavior="Locked"
+    Title="Автозапчасти.Логистика"
+    >
 
     <ShellContent
-        Title="Home"
+        Title="Клиентские заказы"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage"/>
+    
+    <ShellContent
+        Title="Поиск запчастей"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+    
+    <ShellContent
+        Title="Заказать запчасти"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
