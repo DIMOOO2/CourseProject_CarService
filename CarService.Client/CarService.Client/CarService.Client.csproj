@@ -64,4 +64,19 @@
 		<PackageReference Include="UraniumUI.Material" Version="2.11.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Pages\SearchAutoPart.xaml.cs">
+	    <DependentUpon>SearchAutoPart.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\OrderPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\SearchAutoPart.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

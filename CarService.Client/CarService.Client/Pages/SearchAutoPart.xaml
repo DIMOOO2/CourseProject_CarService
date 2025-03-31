@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarService.Client.Pages.SearchAutoPart"
+             xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Title="">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ur:AutoCompleteTextField" x:Name="SerchTextStyle">
+                <Setter Property="AccentColor" Value="OrangeRed"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Поиск запчастей" FontSize="30" FontAttributes="Bold" Margin="10,0,0,0" VerticalOptions="Center"/>
+            <ur:AutoCompleteTextField HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,0,10,0"/>
+        </StackLayout>
+
+        <!--После коллекцию заполнить и доделать-->
+        <CollectionView Grid.Row="1" IsVisible="True"/>
+
+        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="True" Spacing="20">
+            <Image Source="not_found_icon.png" WidthRequest="200" HeightRequest="200"/>
+            <Label Text="Данные не найдены. Проверьте подключение к интернету или повторите ошибку позже." FontSize="Default"
+           FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
