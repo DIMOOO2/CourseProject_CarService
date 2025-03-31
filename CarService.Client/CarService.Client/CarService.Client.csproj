@@ -65,6 +65,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\CarService.Models\CarService.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Pages\SearchAutoPart.xaml.cs">
 	    <DependentUpon>SearchAutoPart.xaml</DependentUpon>
 	  </Compile>
