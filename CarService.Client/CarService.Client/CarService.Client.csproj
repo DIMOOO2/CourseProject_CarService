@@ -69,12 +69,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Pages\SearchAutoPart.xaml.cs">
-	    <DependentUpon>SearchAutoPart.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Pages\OrderPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

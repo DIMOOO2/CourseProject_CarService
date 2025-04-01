@@ -4,7 +4,9 @@
              x:Class="CarService.Client.Pages.MainPage"
              Title=""
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
-             x:DataType="vm:MainPageViewModel">
+             x:DataType="vm:MainPageViewModel"
+             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="ButtonStyle">
@@ -30,21 +32,31 @@
         </Grid.ColumnDefinitions>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center"
-                     Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3">
+                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <Label Text="Заказы клиентов" FontSize="30" FontAttributes="Bold"/>
         </StackLayout>
 
         <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"/>
 
-        <!--Потом когда будешь ViewModel делать укажешь свойство отображения-->
-        <ListView IsVisible="True"/>
-        
-        <!--Здесь тоже самое-->
-        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="True" Spacing="20">
+        <CollectionView x:Name="ClientCollection" ItemsSource="{Binding Clients}" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" BackgroundColor="Transparent">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Client">
+                    <StackLayout Orientation="Vertical" BackgroundColor="OrangeRed">
+                        <Label Text="{Binding LastName}"/>
+                        <Label Text="{Binding FirstName}"/>
+                        <Label Text="{Binding PhoneNumber}"/>
+                        <Label Text="{Binding Email}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding IsNullItems}" Spacing="20">
             <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
             <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
                    FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Button Text="Обновить" Command="{Binding UpdateRequestCommand}" Style="{StaticResource ButtonStyle}"/>
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -1,31 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CarService.Models.Entities;
 using System.Collections.ObjectModel;
 using System.Net.Http.Json;
 
+namespace CarService.Client.ViewModels;
 
-namespace CarService.Client.ViewModels
-{
-    public partial class MainPageViewModel : ObservableObject
+public partial class MainPageViewModel : ObservableObject
+{       
+    [ObservableProperty]
+    bool? isNullItems;
+
+    [ObservableProperty]
+    ObservableCollection<Models.Entities.Client>? clients;
+
+    HttpClient client = new HttpClient();
+
+    [RelayCommand]
+    async void UpdateRequest()
     {
-        public MainPageViewModel() 
-        {
+        //Позже изменить адрес по Docker
+        ObservableCollection<Models.Entities.Client>? clientsList = await client.GetFromJsonAsync<ObservableCollection<Models.Entities.Client>>("https://localhost:7196/clients");
 
+        if (clientsList?.Any() == null)
+        {
+            isNullItems = true;
         }
-        HttpClient client = new HttpClient();
-
-        [ObservableProperty]
-        bool isNullItems;
-
-        [ObservableProperty]
-        List<Models.Entities.Client> clients;
-
-        [RelayCommand]
-        async void UpdateRequest()
+        else
         {
-            //Позже изменить адрес по Docker
-            await client.GetFromJsonAsync<List<Models.Entities.Client>>("https://localhost:7196/clients");
+            clients = clientsList;
+            isNullItems = false;
         }
     }
 }

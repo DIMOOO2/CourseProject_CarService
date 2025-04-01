@@ -12,7 +12,7 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -31,6 +31,7 @@
             <Image Source="not_found_icon.png" WidthRequest="200" HeightRequest="200"/>
             <Label Text="Данные не найдены. Проверьте подключение к интернету или повторите ошибку позже." FontSize="Default"
            FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
+            
         </StackLayout>
     </Grid>
 </ContentPage>
