@@ -39,20 +39,23 @@
         <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"/>
 
-        <CollectionView x:Name="ClientCollection" ItemsSource="{Binding Clients}" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" BackgroundColor="Transparent">
+        <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding Clients}" 
+                        IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Client">
-                    <StackLayout Orientation="Vertical" BackgroundColor="OrangeRed">
-                        <Label Text="{Binding LastName}"/>
-                        <Label Text="{Binding FirstName}"/>
-                        <Label Text="{Binding PhoneNumber}"/>
-                        <Label Text="{Binding Email}"/>
-                    </StackLayout>
+                    <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding LastName}"/>
+                            <Label Text="{Binding FirstName}"/>
+                            <Label Text="{Binding PhoneNumber}"/>
+                            <Label Text="{Binding Email}"/>
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding IsNullItems}" Spacing="20">
+        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Spacing="20" IsVisible="{Binding IsVisibleUpdate}">
             <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
             <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
                    FontAttributes="Bold" HorizontalTextAlignment="Center"/>

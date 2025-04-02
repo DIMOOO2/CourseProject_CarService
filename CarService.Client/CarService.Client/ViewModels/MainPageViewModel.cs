@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Net.Http.Json;
@@ -6,29 +7,32 @@ using System.Net.Http.Json;
 namespace CarService.Client.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
-{       
+{
+    HttpClient client = new HttpClient();
+
     [ObservableProperty]
-    bool? isNullItems;
+    bool isVisibleItems;
+
+    [ObservableProperty]
+    bool isVisibleUpdate = true;
 
     [ObservableProperty]
     ObservableCollection<Models.Entities.Client>? clients;
 
-    HttpClient client = new HttpClient();
+    public MainPageViewModel()
+    {
+        UpdateRequest();
+    }
 
     [RelayCommand]
     async void UpdateRequest()
     {
-        //Позже изменить адрес по Docker
-        ObservableCollection<Models.Entities.Client>? clientsList = await client.GetFromJsonAsync<ObservableCollection<Models.Entities.Client>>("https://localhost:7196/clients");
-
-        if (clientsList?.Any() == null)
+        ObservableCollection<Models.Entities.Client>? collectionClient = await client.GetFromJsonAsync<ObservableCollection<Models.Entities.Client>>("https://localhost:7196/clients");
+        if (collectionClient!.Count != 0)
         {
-            isNullItems = true;
-        }
-        else
-        {
-            clients = clientsList;
-            isNullItems = false;
+            Clients = collectionClient;
+            IsVisibleItems = true;
+            IsVisibleUpdate = false;
         }
     }
 }
