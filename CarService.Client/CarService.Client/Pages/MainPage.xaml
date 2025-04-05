@@ -45,8 +45,7 @@
                 <DataTemplate x:DataType="model:Client">
                     <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
                         <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding LastName}"/>
-                            <Label Text="{Binding FirstName}"/>
+                            <Label Text="{Binding FullName}"/>
                             <Label Text="{Binding PhoneNumber}"/>
                             <Label Text="{Binding Email}"/>
                         </StackLayout>

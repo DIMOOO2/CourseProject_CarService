@@ -8,13 +8,14 @@ namespace CarService.Client.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
+    NetworkAccess access = Connectivity.Current.NetworkAccess;
     HttpClient client = new HttpClient();
 
     [ObservableProperty]
     bool isVisibleItems;
 
     [ObservableProperty]
-    bool isVisibleUpdate = true;
+    bool isVisibleUpdate;
 
     [ObservableProperty]
     ObservableCollection<Models.Entities.Client>? clients;
@@ -25,14 +26,23 @@ public partial class MainPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void UpdateRequest()
+    private async void UpdateRequest()
     {
-        ObservableCollection<Models.Entities.Client>? collectionClient = await client.GetFromJsonAsync<ObservableCollection<Models.Entities.Client>>("https://localhost:7196/clients");
-        if (collectionClient!.Count != 0)
+        try
         {
-            Clients = collectionClient;
-            IsVisibleItems = true;
-            IsVisibleUpdate = false;
+            ObservableCollection<Models.Entities.Client>? collectionClient = await client.GetFromJsonAsync<ObservableCollection<Models.Entities.Client>>("https://localhost:7196/clients");
+            if (collectionClient!.Count != 0)
+            {
+                Clients = collectionClient;
+                IsVisibleItems = true;
+                IsVisibleUpdate = false;
+            }     
         }
+        catch (HttpRequestException)
+        {
+            await Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
+            IsVisibleItems = false;
+            IsVisibleUpdate = true;
+        }   
     }
 }
