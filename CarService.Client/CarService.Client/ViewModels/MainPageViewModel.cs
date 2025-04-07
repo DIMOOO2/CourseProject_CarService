@@ -8,7 +8,6 @@ namespace CarService.Client.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
-    NetworkAccess access = Connectivity.Current.NetworkAccess;
     HttpClient client = new HttpClient();
 
     [ObservableProperty]

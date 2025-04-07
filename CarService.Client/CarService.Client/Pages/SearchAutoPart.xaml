@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarService.Client.Pages.SearchAutoPart"
              xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             Title="">
+             Title=""
+             xmlns:vm="clr-namespace:CarService.Client.ViewModels"
+             x:DataType="vm:SearchAutoPartViewModel"
+             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -24,14 +27,27 @@
             <ur:AutoCompleteTextField HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,0,10,0"/>
         </StackLayout>
 
-        <!--После коллекцию заполнить и доделать-->
-        <CollectionView Grid.Row="1" IsVisible="True"/>
+        <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding AutoParts}" 
+                 IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:AutoPart">
+                    <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding AutoPartName}"/>
+                            <Label Text="{Binding PartNumber}"/>
+                            <Label Text="{Binding GetPrice}"/>
+                            <Label Text="{Binding GetStockAmount}"/>
+                            <Label Text="{Binding GetNameManufacturer}"/>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="True" Spacing="20">
+        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding IsVisibleNotFoundView}" Spacing="20">
             <Image Source="not_found_icon.png" WidthRequest="200" HeightRequest="200"/>
-            <Label Text="Данные не найдены. Проверьте подключение к интернету или повторите ошибку позже." FontSize="Default"
+            <Label Text="Данные не найдены." FontSize="Default"
            FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
-            
         </StackLayout>
     </Grid>
 </ContentPage>
