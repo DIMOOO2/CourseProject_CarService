@@ -12,7 +12,7 @@ namespace CarService.Api.DbContextAPI.ConnectDB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; DataBase = CarServiceDB; Trusted_Connection = true; TrustServerCertificate = true");
+            optionsBuilder.UseSqlServer("Server = DOTER; DataBase = CarServiceDB; Trusted_Connection = true; TrustServerCertificate = true");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace CarService.Api.DbContextAPI.ConnectDB
             modelBuilder.Entity<OrderedPart>().HasKey(u => u.OrderedPartId);
         }
 
-        public DbSet<AutoPart> Autoparts { get; set; }
+        public DbSet<AutoPart> AutoParts { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Order> Orders { get; set; }

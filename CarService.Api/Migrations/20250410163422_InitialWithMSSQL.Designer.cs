@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250321091008_Initial1")]
-    partial class Initial1
+    [Migration("20250410163422_InitialWithMSSQL")]
+    partial class InitialWithMSSQL
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,18 +27,16 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.AutoPart", b =>
                 {
-                    b.Property<int>("AutoPartId")
+                    b.Property<Guid>("AutoPartId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AutoPartId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AutoPartName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ManufacturerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ManufacturerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("PartNumber")
                         .HasColumnType("int");
@@ -53,16 +51,14 @@ namespace CarService.Api.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Autoparts");
+                    b.ToTable("AutoParts");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.Client", b =>
                 {
-                    b.Property<int>("ClientId")
+                    b.Property<Guid>("ClientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -87,11 +83,9 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.Manufacturer", b =>
                 {
-                    b.Property<int>("ManufacturerId")
+                    b.Property<Guid>("ManufacturerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ManufacturerId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContactInfo")
                         .IsRequired()
@@ -108,14 +102,12 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -133,20 +125,18 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
                 {
-                    b.Property<int>("OrderedPartId")
+                    b.Property<Guid>("OrderedPartId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderedPartId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("AutoPartId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AutoPartId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OrderedPartId");
 
@@ -159,13 +149,13 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.AutoPart", b =>
                 {
-                    b.HasOne("CarService.Models.Entities.Manufacturer", "manufacturer")
+                    b.HasOne("CarService.Models.Entities.Manufacturer", "Manufacturer")
                         .WithMany()
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("manufacturer");
+                    b.Navigation("Manufacturer");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.Order", b =>
@@ -181,21 +171,21 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
                 {
-                    b.HasOne("CarService.Models.Entities.AutoPart", "autoPart")
+                    b.HasOne("CarService.Models.Entities.AutoPart", "AutoPart")
                         .WithMany()
                         .HasForeignKey("AutoPartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarService.Models.Entities.Order", "order")
+                    b.HasOne("CarService.Models.Entities.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("autoPart");
+                    b.Navigation("AutoPart");
 
-                    b.Navigation("order");
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

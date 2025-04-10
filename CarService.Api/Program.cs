@@ -11,39 +11,44 @@ namespace CarService.Api
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
             #region GET-Запросы
-            app.MapGet("/autoparts", () => appDbContext.Autoparts);
+            app.MapGet("/autoparts", () => appDbContext.AutoParts);
             app.MapGet("/clients", () => appDbContext.Clients);
             app.MapGet("/manufacturers", () => appDbContext.Manufacturers);
             app.MapGet("/orders", () => appDbContext.Orders);
             app.MapGet("/orderParts", () => appDbContext.OrderedParts);
             #endregion 
             #region POST-Запросы
-            app.MapPost("/autoparts", (AutoPart autopart) =>
+            app.MapPost("/autoparts", (AutoPart autoPart) =>
             {
-                appDbContext.Autoparts.Add(autopart);
+                autoPart.AutoPartId = Guid.NewGuid();
+                appDbContext.AutoParts.Add(autoPart);
                 appDbContext.SaveChangesAsync();
             });
 
             app.MapPost("/clients", (Client client) =>
             {
+                client.ClientId = Guid.NewGuid();
                 appDbContext.Clients.Add(client);
                 appDbContext.SaveChangesAsync();
             });
 
             app.MapPost("/manufacturers", (Manufacturer manufacturer) =>
             {
+                manufacturer.ManufacturerId = Guid.NewGuid();
                 appDbContext.Manufacturers.Add(manufacturer);
                 appDbContext.SaveChangesAsync();
             });
 
             app.MapPost("/orders", (Order order) =>
             {
+                order.OrderId = Guid.NewGuid();
                 appDbContext.Orders.Add(order);
                 appDbContext.SaveChangesAsync();
             });
 
             app.MapPost("/orderParts", (OrderedPart orderPart) =>
             {
+                orderPart.OrderedPartId = Guid.NewGuid();
                 appDbContext.OrderedParts.Add(orderPart);
                 appDbContext.SaveChangesAsync();
             });
@@ -51,7 +56,7 @@ namespace CarService.Api
             #region DELETE-Запросы
             app.MapDelete("/autoparts/{id}", (int id) =>
             {
-                appDbContext.Autoparts.Remove(appDbContext.Autoparts.Find(id)!);
+                appDbContext.AutoParts.Remove(appDbContext.AutoParts.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
@@ -82,14 +87,14 @@ namespace CarService.Api
             #region PUT-Запросы
             app.MapPut("/autoparts", (AutoPart newAutopart) =>
             {
-                AutoPart autopart = appDbContext.Autoparts.Find(newAutopart)!;
+                AutoPart autopart = appDbContext.AutoParts.Find(newAutopart)!;
                 autopart.AutoPartName = newAutopart.AutoPartName;
                 autopart.Manufacturer = newAutopart.Manufacturer;
                 autopart.PartNumber = newAutopart.PartNumber;
                 autopart.Price = newAutopart.Price;
                 autopart.StockAmount = newAutopart.StockAmount;
 
-                appDbContext.Autoparts.Update(newAutopart);
+                appDbContext.AutoParts.Update(newAutopart);
                 appDbContext.SaveChangesAsync();
             });
             app.MapPut("/clients", (Client newClient) =>

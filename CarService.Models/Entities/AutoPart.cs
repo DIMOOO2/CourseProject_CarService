@@ -11,7 +11,7 @@ namespace CarService.Models.Entities
     public class AutoPart
     {
         [Key]
-        public int AutoPartId { get; set; }
+        public Guid AutoPartId { get; set; }
         public string AutoPartName { get; set; } = null!;
         public int PartNumber { get; set; }
         public decimal Price { get; set; }

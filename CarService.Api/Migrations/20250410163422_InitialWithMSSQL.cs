@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarService.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial1 : Migration
+    public partial class InitialWithMSSQL : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace CarService.Api.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    ClientId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -31,8 +30,7 @@ namespace CarService.Api.Migrations
                 name: "Manufacturers",
                 columns: table => new
                 {
-                    ManufacturerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ManufacturerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -45,10 +43,9 @@ namespace CarService.Api.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -63,22 +60,21 @@ namespace CarService.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Autoparts",
+                name: "AutoParts",
                 columns: table => new
                 {
-                    AutoPartId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AutoPartName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PartNumber = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StockAmount = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: false)
+                    ManufacturerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autoparts", x => x.AutoPartId);
+                    table.PrimaryKey("PK_AutoParts", x => x.AutoPartId);
                     table.ForeignKey(
-                        name: "FK_Autoparts_Manufacturers_ManufacturerId",
+                        name: "FK_AutoParts_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
                         principalColumn: "ManufacturerId",
@@ -89,19 +85,18 @@ namespace CarService.Api.Migrations
                 name: "OrderedParts",
                 columns: table => new
                 {
-                    OrderedPartId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    AutoPartId = table.Column<int>(type: "int", nullable: false),
+                    OrderedPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderedParts", x => x.OrderedPartId);
                     table.ForeignKey(
-                        name: "FK_OrderedParts_Autoparts_AutoPartId",
+                        name: "FK_OrderedParts_AutoParts_AutoPartId",
                         column: x => x.AutoPartId,
-                        principalTable: "Autoparts",
+                        principalTable: "AutoParts",
                         principalColumn: "AutoPartId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -113,8 +108,8 @@ namespace CarService.Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Autoparts_ManufacturerId",
-                table: "Autoparts",
+                name: "IX_AutoParts_ManufacturerId",
+                table: "AutoParts",
                 column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
@@ -140,7 +135,7 @@ namespace CarService.Api.Migrations
                 name: "OrderedParts");
 
             migrationBuilder.DropTable(
-                name: "Autoparts");
+                name: "AutoParts");
 
             migrationBuilder.DropTable(
                 name: "Orders");

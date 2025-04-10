@@ -10,7 +10,7 @@ namespace CarService.Models.Entities
     public class Order
     {
         [Key]
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
         public DateTime OrderDate { get; set; }
         public Client Client { get; set; } = null!;
         public string OrderStatus { get; set; } = null!;
