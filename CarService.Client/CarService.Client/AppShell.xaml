@@ -5,20 +5,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CarService.Client.Pages"
     Shell.FlyoutBehavior="Locked"
-    Title="Автозапчасти.Логистика">
-   
-    <ShellContent
-        Title="Клиентские заказы"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
-    
-    <ShellContent
-        Title="Поиск запчастей"
-        ContentTemplate="{DataTemplate local:SearchAutoPart}"
-        Route="SearchAutoPart" />
+    Title="Автозапчасти.Логистика"
+    Shell.BackgroundColor="OrangeRed">
 
     <ShellContent
-        Title="Заказать запчасти"
-        ContentTemplate="{DataTemplate local:OrderPage}"
-        Route="OrderPage" />
+            Title="Клиентские заказы"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+
+    <ShellContent
+            Title="Поиск запчастей"
+            ContentTemplate="{DataTemplate local:SearchAutoPart}"
+            Route="SearchAutoPart" />
+
+    <ShellContent
+            Title="Заказать запчасти"
+            ContentTemplate="{DataTemplate local:OrderPage}"
+            Route="OrderPage" />
 </Shell>

@@ -41,6 +41,11 @@ namespace CarService.Client.ViewModels
                     IsVisibleItems = true;
                     IsVisibleNotFoundView = false;
                 }
+                else
+                {
+                    IsVisibleItems = false;
+                    IsVisibleNotFoundView = true;
+                }
             }
             catch (HttpRequestException)
             {

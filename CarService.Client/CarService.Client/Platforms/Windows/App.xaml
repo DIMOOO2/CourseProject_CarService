@@ -5,4 +5,8 @@
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:CarService.Client.WinUI">
 
+    <maui:MauiWinUIApplication.Resources>
+        <StaticResource x:Key="NavigationViewSelectionIndicatorForeground" ResourceKey="SystemControlForegroundAccentBrush" />
+        <SolidColorBrush x:Key="SystemControlForegroundAccentBrush"  Color="OrangeRed" />
+    </maui:MauiWinUIApplication.Resources>
 </maui:MauiWinUIApplication>

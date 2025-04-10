@@ -35,7 +35,12 @@ public partial class MainPageViewModel : ObservableObject
                 Clients = collectionClient;
                 IsVisibleItems = true;
                 IsVisibleUpdate = false;
-            }     
+            } 
+            else
+            {
+                IsVisibleItems = false;
+                IsVisibleUpdate = true;
+            }
         }
         catch (HttpRequestException)
         {
