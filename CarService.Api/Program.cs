@@ -1,4 +1,5 @@
 using CarService.Api.DbContextAPI.ConnectDB;
+using CarService.Api.Services;
 using CarService.Models.Entities;
 
 namespace CarService.Api
@@ -27,9 +28,7 @@ namespace CarService.Api
 
             app.MapPost("/clients", (Client client) =>
             {
-                client.ClientId = Guid.NewGuid();
-                appDbContext.Clients.Add(client);
-                appDbContext.SaveChangesAsync();
+                ClientService.AddClient(client).GetAwaiter();
             });
 
             app.MapPost("/manufacturers", (Manufacturer manufacturer) =>
@@ -60,10 +59,9 @@ namespace CarService.Api
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/clients", (int id) =>
+            app.MapDelete("/clients", (Guid id) =>
             {
-                appDbContext.Clients.Remove(appDbContext.Clients.Find(id)!);
-                appDbContext.SaveChangesAsync();
+                ClientService.DeleteClient(id).GetAwaiter();
             });
 
             app.MapDelete("/manufacturers", (int id) =>
@@ -97,16 +95,9 @@ namespace CarService.Api
                 appDbContext.AutoParts.Update(newAutopart);
                 appDbContext.SaveChangesAsync();
             });
-            app.MapPut("/clients", (Client newClient) =>
+            app.MapPut("/clients", (Guid id, Client newClient) =>
             {
-                Client oldClient = appDbContext.Clients.Find(newClient)!;
-                oldClient.FirstName = newClient.FirstName;
-                oldClient.LastName = newClient.LastName;
-                oldClient.PhoneNumber = newClient.PhoneNumber;
-                oldClient.Email = newClient.Email;
-
-                appDbContext.Update(oldClient);
-                appDbContext.SaveChangesAsync();
+                ClientService.UpdateClient(id, newClient).GetAwaiter();
             });
             app.MapPut("/manufacturers", (Manufacturer newManufacturer) =>
             {
