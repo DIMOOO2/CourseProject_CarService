@@ -109,9 +109,8 @@ namespace CarService.Api.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OrderStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("OrderStatus")
+                        .HasColumnType("bit");
 
                     b.HasKey("OrderId");
 

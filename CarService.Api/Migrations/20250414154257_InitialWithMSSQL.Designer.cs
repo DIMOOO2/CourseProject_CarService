@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250410163422_InitialWithMSSQL")]
+    [Migration("20250414154257_InitialWithMSSQL")]
     partial class InitialWithMSSQL
     {
         /// <inheritdoc />
@@ -112,9 +112,8 @@ namespace CarService.Api.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OrderStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("OrderStatus")
+                        .HasColumnType("bit");
 
                     b.HasKey("OrderId");
 
