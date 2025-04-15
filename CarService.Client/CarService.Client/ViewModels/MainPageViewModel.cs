@@ -51,4 +51,18 @@ public partial class MainPageViewModel : ObservableObject
             IsVisibleUpdate = true;
         }
     }
+    
+
+    [RelayCommand]
+    private async void PushCreateOrderPage()
+    {
+        try
+        {
+            //await NavigationService.NavigateToAsync("//Main");
+        }
+        catch(Exception ex)
+        {
+           await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+        }
+    }
 }

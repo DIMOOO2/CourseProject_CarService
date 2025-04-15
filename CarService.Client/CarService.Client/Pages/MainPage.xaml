@@ -45,7 +45,8 @@
         </StackLayout>
 
         <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
-                     Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"/>
+                     Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
+                Command="{Binding PushCreateOrderPageCommand}"/>
 
         <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding OrdersCollection}" 
                         IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
