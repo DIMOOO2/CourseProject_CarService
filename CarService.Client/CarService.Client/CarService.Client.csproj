@@ -56,6 +56,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\Images_Flyout\main_page_logo.png" />
+	  <None Remove="Resources\Images\Images_Flyout\order_page_logo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
@@ -75,6 +80,18 @@
 	  <MauiXaml Update="Pages\SearchAutoPart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Images_Flyout\main_page_logo.png" />
+	  <MauiImage Include="Resources\Images\Images_Flyout\order_page_logo.png" />
+	  <MauiImage Include="Resources\Images\Images_Page\icon_add_to_cart.png" />
+	  <MauiImage Include="Resources\Images\Images_Page\not_found_icon.png" />
+	  <MauiImage Include="Resources\Images\Images_Page\purchase_order.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Images_Flyout\search_auto_part_logo.png" />
 	</ItemGroup>
 
 </Project>

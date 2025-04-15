@@ -10,16 +10,19 @@
 
     <ShellContent
             Title="Клиентские заказы"
+            Icon="main_page_logo.png"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
     <ShellContent
             Title="Поиск запчастей"
+            Icon="search_auto_part_logo.png"
             ContentTemplate="{DataTemplate local:SearchAutoPart}"
             Route="SearchAutoPart" />
 
     <ShellContent
             Title="Заказать запчасти"
+            Icon="order_page_logo.png"
             ContentTemplate="{DataTemplate local:OrderPage}"
             Route="OrderPage" />
 </Shell>
