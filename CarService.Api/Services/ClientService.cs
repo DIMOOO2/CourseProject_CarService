@@ -1,7 +1,6 @@
 ﻿using CarService.Api.DbContextAPI.ConnectDB;
 using CarService.Models.Entities;
 using System.Diagnostics;
-using System.Net;
 using System.Text.RegularExpressions;
 
 namespace CarService.Api.Services

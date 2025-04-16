@@ -44,9 +44,14 @@ namespace CarService.Api.Migrations
                     b.Property<int>("StockAmount")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("WarehouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("AutoPartId");
 
                     b.HasIndex("ManufacturerId");
+
+                    b.HasIndex("WarehouseId");
 
                     b.ToTable("AutoParts");
                 });
@@ -56,6 +61,14 @@ namespace CarService.Api.Migrations
                     b.Property<Guid>("ClientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -69,13 +82,42 @@ namespace CarService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OrganizationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ClientId");
 
+                    b.HasIndex("OrganizationId");
+
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.CorporateAccount", b =>
+                {
+                    b.Property<Guid>("AccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LogIn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("WarehouseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AccountId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("CorporateAccounts");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.Manufacturer", b =>
@@ -128,7 +170,13 @@ namespace CarService.Api.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ArrivalWarehouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("AutoPartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DepartureWarehouseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OrderId")
@@ -136,11 +184,72 @@ namespace CarService.Api.Migrations
 
                     b.HasKey("OrderedPartId");
 
+                    b.HasIndex("ArrivalWarehouseId");
+
                     b.HasIndex("AutoPartId");
+
+                    b.HasIndex("DepartureWarehouseId");
 
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderedParts");
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.Organization", b =>
+                {
+                    b.Property<Guid>("OrganizationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CorporateEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CorporateNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TIN")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TitleOrganization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationId");
+
+                    b.ToTable("Organizations");
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.Warehouse", b =>
+                {
+                    b.Property<Guid>("WarehouseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WarehouseId");
+
+                    b.ToTable("Warehouses");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.AutoPart", b =>
@@ -151,7 +260,35 @@ namespace CarService.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CarService.Models.Entities.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Manufacturer");
+
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.Client", b =>
+                {
+                    b.HasOne("CarService.Models.Entities.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.CorporateAccount", b =>
+                {
+                    b.HasOne("CarService.Models.Entities.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.Order", b =>
@@ -167,9 +304,21 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
                 {
+                    b.HasOne("CarService.Models.Entities.Warehouse", "ArrivalWarehouse")
+                        .WithMany()
+                        .HasForeignKey("ArrivalWarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarService.Models.Entities.AutoPart", "AutoPart")
                         .WithMany()
                         .HasForeignKey("AutoPartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarService.Models.Entities.Warehouse", "DepartureWarhouse")
+                        .WithMany()
+                        .HasForeignKey("DepartureWarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -179,7 +328,11 @@ namespace CarService.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("ArrivalWarehouse");
+
                     b.Navigation("AutoPart");
+
+                    b.Navigation("DepartureWarhouse");
 
                     b.Navigation("Order");
                 });

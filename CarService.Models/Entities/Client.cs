@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarService.Models.Entities
 {
@@ -17,6 +11,11 @@ namespace CarService.Models.Entities
         public string LastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Email { get; set; } = null!;
+        public string Address { get; set; } = null!;
+        public string City { get; set; } = null!;
+
+        [ForeignKey("OrganizationId")]
+        public Organization? Organization { get; set; } = null!;
 
         [NotMapped]
         public string FullName
@@ -26,5 +25,30 @@ namespace CarService.Models.Entities
                 return $"{FirstName} {LastName}";
             }
         }
+
+        [NotMapped]
+        public string GetEmail
+        {
+            get
+            {
+                if (Organization != null)
+                    return Organization.CorporateEmail;
+                else
+                    return Email;
+            }
+        }
+
+        [NotMapped]
+        public string GetNumber
+        {
+            get
+            {
+                if (Organization != null)
+                    return Organization.CorporateNumber;
+                else
+                    return PhoneNumber;
+            }
+        }
+
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarService.Models.Entities
 {
@@ -16,14 +11,17 @@ namespace CarService.Models.Entities
         public int PartNumber { get; set; }
         public decimal Price { get; set; }
         public int StockAmount { get; set; }
+        [ForeignKey("ManufacturerId")]
         public Manufacturer Manufacturer { get; set; } = null!;
+        [ForeignKey("WarehouseId")]
+        public Warehouse Warehouse { get; set; }
 
         [NotMapped]
         public string GetPrice
         {
             get => $"{Price}₽";
         }
-
+         
 
         [NotMapped]
         public string GetStockAmount { get => $"{StockAmount} шт."; }

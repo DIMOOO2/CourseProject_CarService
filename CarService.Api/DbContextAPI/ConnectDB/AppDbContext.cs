@@ -21,6 +21,9 @@ namespace CarService.Api.DbContextAPI.ConnectDB
             modelBuilder.Entity<Manufacturer>().HasKey(u => u.ManufacturerId);
             modelBuilder.Entity<Order>().HasKey(u => u.OrderId);
             modelBuilder.Entity<OrderedPart>().HasKey(u => u.OrderedPartId);
+            modelBuilder.Entity<Warehouse>().HasKey(u => u.WarehouseId);
+            modelBuilder.Entity<CorporateAccount>().HasKey(u => u.AccountId);
+            modelBuilder.Entity<Organization>().HasKey(u => u.OrganizationId);
         }
 
         public DbSet<AutoPart> AutoParts { get; set; }
@@ -28,5 +31,8 @@ namespace CarService.Api.DbContextAPI.ConnectDB
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderedPart> OrderedParts { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<CorporateAccount> CorporateAccounts { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
     }
 }
