@@ -14,7 +14,7 @@ namespace CarService.Models.Entities
         [ForeignKey("ManufacturerId")]
         public Manufacturer Manufacturer { get; set; } = null!;
         [ForeignKey("WarehouseId")]
-        public Warehouse Warehouse { get; set; }
+        public Warehouse Warehouse { get; set; } = null!;
 
         [NotMapped]
         public string GetPrice

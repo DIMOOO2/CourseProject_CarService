@@ -316,7 +316,7 @@ namespace CarService.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarService.Models.Entities.Warehouse", "DepartureWarhouse")
+                    b.HasOne("CarService.Models.Entities.Warehouse", "DepartureWarehouse")
                         .WithMany()
                         .HasForeignKey("DepartureWarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -332,7 +332,7 @@ namespace CarService.Api.Migrations
 
                     b.Navigation("AutoPart");
 
-                    b.Navigation("DepartureWarhouse");
+                    b.Navigation("DepartureWarehouse");
 
                     b.Navigation("Order");
                 });

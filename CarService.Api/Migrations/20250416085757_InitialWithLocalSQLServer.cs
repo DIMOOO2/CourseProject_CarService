@@ -152,9 +152,9 @@ namespace CarService.Api.Migrations
                 columns: table => new
                 {
                     OrderedPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false),
                     DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ArrivalWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
