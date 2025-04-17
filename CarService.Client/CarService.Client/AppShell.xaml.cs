@@ -1,10 +1,14 @@
-﻿namespace CarService.Client
+﻿using CarService.Client.Pages;
+
+namespace CarService.Client
 {
     public partial class AppShell : Shell
     {
         public AppShell()
         {
             InitializeComponent();
+
+            Routing.RegisterRoute(nameof(CreateOrderPage), typeof(CreateOrderPage));
         }
     }
 }

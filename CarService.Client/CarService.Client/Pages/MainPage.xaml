@@ -47,18 +47,23 @@
         <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
                      Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
                 Command="{Binding PushCreateOrderPageCommand}"/>
+        
 
         <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding OrdersCollection}" 
-                        IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
+                        IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" 
+                        SelectionMode="None" HorizontalOptions="Fill" Margin="5">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Order">
-                    <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}">
-                        <StackLayout Orientation="Horizontal" Spacing="20">
+                    <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
+                        <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
                             <Label Text="{Binding FullOrderId}"/>
                             <Label Text="{Binding Client.FullName}"/>
                             <Label Text="{Binding GetDate}"/>
                             <Label Text="{Binding GetStatus}"/>
                         </StackLayout>
+                        <!--<Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command=""/> для просмотра необходимой информации
+                        </Frame.GestureRecognizers>-->
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

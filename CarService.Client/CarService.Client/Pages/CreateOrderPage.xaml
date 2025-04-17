@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarService.Client.Pages.CreateOrderPage" 
+             Title=""
+             Shell.ForegroundColor="OrangeRed"
+             xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="Background" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
+               Grid.Row="0">
+            <Label Text="Создание нового заказа" FontSize="30" FontAttributes="Bold"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Vertical" Grid.Row="1" Padding="40" Spacing="20">
+            <uran:TextField Title="Имя клиента" 
+                                        FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
+            <uran:TextField Title="Фамилия клиента" 
+                                        FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
+            
+        </StackLayout>
+
+
+        <Button Text="Создать" HorizontalOptions="Fill"
+                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
+            Command="{Binding PushCreateOrderPageCommand}" Margin="10"/>
+    </Grid>
+    
+</ContentPage>

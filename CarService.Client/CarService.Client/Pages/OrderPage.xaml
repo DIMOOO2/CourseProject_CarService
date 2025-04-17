@@ -41,6 +41,6 @@
         </StackLayout>
 
         <ListView Grid.Row="1"/>
-        <Button Text="Заказать" Grid.Row="2" Style="{StaticResource ButtonStyle}" Margin="10"/>
+        <Button Text="Заказать" Grid.Row="2" Style="{StaticResource ButtonStyle}" Margin="10" FontSize="20"/>
     </Grid>
 </ContentPage>

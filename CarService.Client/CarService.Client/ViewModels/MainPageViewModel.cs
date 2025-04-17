@@ -1,4 +1,5 @@
-﻿using CarService.Models.Entities;
+﻿using CarService.Client.Pages;
+using CarService.Models.Entities;
 using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -54,11 +55,11 @@ public partial class MainPageViewModel : ObservableObject
     
 
     [RelayCommand]
-    private async void PushCreateOrderPage()
+    private async Task PushCreateOrderPage()
     {
         try
         {
-            //await NavigationService.NavigateToAsync("//Main");
+            await Shell.Current.GoToAsync(nameof(CreateOrderPage));
         }
         catch(Exception ex)
         {
