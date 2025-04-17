@@ -16,40 +16,43 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="Поиск запчастей" FontSize="30" FontAttributes="Bold" Margin="10,0,0,0" VerticalOptions="Center"/>
-            <ur:AutoCompleteTextField HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
-                                      Margin="0,0,10,0"/>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Label Text="Поиск запчастей" FontSize="30" FontAttributes="Bold" Margin="10,0,0,0" VerticalOptions="Center"/>
+                <ur:AutoCompleteTextField HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
+                                   Margin="0,0,10,0"/>
 
-        </StackLayout>
+            </StackLayout>
 
-        <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding AutoParts}" 
-                 IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:AutoPart">
-                    <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding AutoPartName}"/>
-                            <Label Text="{Binding PartNumber}"/>
-                            <Label Text="{Binding GetPrice}"/>
-                            <Label Text="{Binding GetStockAmount}"/>
-                            <Label Text="{Binding GetNameManufacturer}"/>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding AutoParts}" 
+              IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:AutoPart">
+                        <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding AutoPartName}"/>
+                                <Label Text="{Binding PartNumber}"/>
+                                <Label Text="{Binding GetPrice}"/>
+                                <Label Text="{Binding GetStockAmount}"/>
+                                <Label Text="{Binding GetNameManufacturer}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding IsVisibleNotFoundView}" Spacing="20">
-            <Image Source="not_found_icon.png" WidthRequest="200" HeightRequest="200"/>
-            <Label Text="Данные не найдены." FontSize="Default"
-           FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
-        </StackLayout>
-    </Grid>
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding IsVisibleNotFoundView}" Spacing="20">
+                <Image Source="not_found_icon.png" WidthRequest="200" HeightRequest="200"/>
+                <Label Text="Данные не найдены." FontSize="Default"
+        FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+   
 </ContentPage>

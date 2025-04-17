@@ -23,60 +23,63 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition Height="10"/>
-        </Grid.RowDefinitions>
+    
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center"
-                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
-            <Label Text="Заказы клиентов" FontSize="30" FontAttributes="Bold"/>
-        </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center"
+                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+                <Label Text="Заказы клиентов" FontSize="30" FontAttributes="Bold"/>
+            </StackLayout>
 
-        <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
-                     Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
-                Command="{Binding PushCreateOrderPageCommand}"/>
-        
+            <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
+                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
+            Command="{Binding PushCreateOrderPageCommand}"/>
 
-        <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding OrdersCollection}" 
-                        IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" 
-                        SelectionMode="None" HorizontalOptions="Fill" Margin="5">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Order">
-                    <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
-                        <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
-                            <Label Text="{Binding FullOrderId}"/>
-                            <Label Text="{Binding Client.FullName}"/>
-                            <Label Text="{Binding GetDate}"/>
-                            <Label Text="{Binding GetStatus}"/>
-                        </StackLayout>
-                        <!--<Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command=""/> для просмотра необходимой информации
-                        </Frame.GestureRecognizers>-->
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5"/>
-            </CollectionView.ItemsLayout>
-        </CollectionView>
 
-        <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Spacing="20" IsVisible="{Binding IsVisibleUpdate}">
-            <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
-            <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
-                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-            <Button Text="Обновить" Command="{Binding UpdateRequestCommand}" Style="{StaticResource ButtonStyle}"/>
-        </StackLayout>
-    </Grid>
+            <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding OrdersCollection}" 
+                    IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" 
+                    SelectionMode="None" HorizontalOptions="Fill" Margin="5">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Order">
+                        <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
+                            <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
+                                <Label Text="{Binding FullOrderId}"/>
+                                <Label Text="{Binding Client.FullName}"/>
+                                <Label Text="{Binding GetDate}"/>
+                                <Label Text="{Binding GetStatus}"/>
+                            </StackLayout>
+                            <!--<Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command=""/> для просмотра необходимой информации
+                    </Frame.GestureRecognizers>-->
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Spacing="20" IsVisible="{Binding IsVisibleUpdate}">
+                <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
+                <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
+               FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                <Button Text="Обновить" Command="{Binding UpdateRequestCommand}" Style="{StaticResource ButtonStyle}"/>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

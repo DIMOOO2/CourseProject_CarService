@@ -21,7 +21,7 @@ namespace CarService.Models.Entities
             get
             {
                 byte[] data = OrderId.ToByteArray();
-                return BitConverter.ToInt32(data, 0).ToString();
+                return Math.Abs(BitConverter.ToInt32(data, 0)).ToString();
             }
         }
 
