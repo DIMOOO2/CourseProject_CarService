@@ -15,7 +15,7 @@ namespace CarService.Models.Entities
         public string City { get; set; } = null!;
 
         [ForeignKey("OrganizationId")]
-        public Organization? Organization { get; set; } = null!;
+        public Organization? Organization { get; set; }
 
         [NotMapped]
         public string FullName

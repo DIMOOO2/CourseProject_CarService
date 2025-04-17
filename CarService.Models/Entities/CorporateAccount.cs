@@ -10,6 +10,6 @@ namespace CarService.Models.Entities
         public string LogIn { get; set; } = null!;
         public string Password { get; set; } = null!;
         [ForeignKey("WarehouseId")]
-        public Warehouse Warehouse { get; set; } = null!;
+        public Warehouse Warehouse { get; set; }
     }
 }

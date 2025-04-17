@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarService.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialWithLocalSQLServer : Migration
+    public partial class InitialWithLocalDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

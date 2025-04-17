@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250416085757_InitialWithLocalSQLServer")]
-    partial class InitialWithLocalSQLServer
+    [Migration("20250417184437_InitialWithLocalDb")]
+    partial class InitialWithLocalDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

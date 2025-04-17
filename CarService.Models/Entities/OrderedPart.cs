@@ -8,11 +8,11 @@ namespace CarService.Models.Entities
         [Key]
         public Guid OrderedPartId { get; set; }
         public int Amount { get; set; }
-        public Order Order { get; set; } = null!;
-        public AutoPart AutoPart { get; set; } = null!;
+        public Order Order { get; set; }
+        public AutoPart AutoPart { get; set; } 
         [ForeignKey("DepartureWarehouseId")]
-        public Warehouse DepartureWarehouse { get; set; } = null!;
+        public Warehouse DepartureWarehouse { get; set; }
         [ForeignKey("ArrivalWarehouseId")]
-        public Warehouse ArrivalWarehouse { get; set; } = null!;
+        public Warehouse ArrivalWarehouse { get; set; }
     }
 }

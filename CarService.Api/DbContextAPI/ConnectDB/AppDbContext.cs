@@ -12,8 +12,9 @@ namespace CarService.Api.DbContextAPI.ConnectDB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server = localhost; DataBase = CarServiceDB; Trusted_Connection = true; TrustServerCertificate = true");
+            optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; DataBase = CarServiceDB; Trusted_Connection = true; TrustServerCertificate = true");
         }
+
 
         public DbSet<AutoPart> AutoParts { get; set; }
         public DbSet<Client> Clients { get; set; }
