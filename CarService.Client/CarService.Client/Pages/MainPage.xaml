@@ -5,7 +5,8 @@
              Title=""
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
              x:DataType="vm:MainPageViewModel"
-             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models">
+             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models"
+             >
     <!--Источник иконок: Uniconlabs</a>-->
     <ContentPage.Resources>
         <ResourceDictionary>

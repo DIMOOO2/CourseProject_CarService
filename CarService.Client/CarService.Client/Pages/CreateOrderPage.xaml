@@ -4,7 +4,9 @@
              x:Class="CarService.Client.Pages.CreateOrderPage" 
              Title=""
              Shell.ForegroundColor="OrangeRed"
-             xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
+             xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:vm="clr-namespace:CarService.Client.ViewModels"
+             x:DataType="vm:CreateOrderViewModel">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="ButtonStyle">
@@ -53,25 +55,31 @@
 
                 <uran:BackdropView Background="Transparent" Padding="0">
                     <HorizontalStackLayout Spacing="20">
-                        <uran:RadioButton Text="Физическое лицо" Color="OrangeRed" IsChecked="False"/>
-                        <uran:RadioButton Text="Организация" Color="OrangeRed" IsChecked="False"/>
+                        <uran:RadioButtonGroupView Orientation="Horizontal">
+                            <uran:RadioButton Text="Физическое лицо" Color="OrangeRed" IsChecked="{Binding IsNaturalPerson}"/>
+                            <uran:RadioButton Text="Организация" Color="OrangeRed" IsChecked="{Binding IsLegalEntity}"/>
+                        </uran:RadioButtonGroupView>
+                        
                     </HorizontalStackLayout>
                 </uran:BackdropView>
 
                 <uran:TextField Title="Название организации" 
-                         FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
+                         FontSize="18" TitleFontSize="16" 
+                                AccentColor="OrangeRed" IsVisible="{Binding IsLegalEntity}"/>
+                
                 <uran:TextField Title="ИНН Организации" 
-                         FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
+                         FontSize="18" TitleFontSize="16" 
+                                AccentColor="OrangeRed" IsVisible="{Binding IsLegalEntity}"/>
             </StackLayout>
 
 
             <VerticalStackLayout Grid.Row="2" Grid.RowSpan="2" Spacing="10" Padding="10">
                 <Button Text="Запчасти"  HorizontalOptions="Fill"
       Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
- Command="{Binding PushCreateOrderPageCommand}"/>
+        Command="{Binding PushAutoPartForClientCommand}"/>
                 <Button Text="Создать" HorizontalOptions="Fill"
       Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
- Command="{Binding PushCreateOrderPageCommand}"/>
+        />
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

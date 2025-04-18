@@ -9,6 +9,7 @@ namespace CarService.Client
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(CreateOrderPage), typeof(CreateOrderPage));
+            Routing.RegisterRoute(nameof(AutoPartForClient), typeof(AutoPartForClient));
         }
     }
 }

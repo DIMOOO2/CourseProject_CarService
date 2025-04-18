@@ -32,7 +32,7 @@ public partial class MainPageViewModel : ObservableObject
     {
         try
         {
-            ObservableCollection<Order>? collectionOrders = await client.GetFromJsonAsync<ObservableCollection<Order>>("https://localhost:7196/orders");
+            ObservableCollection<Order>? collectionOrders = await client.GetFromJsonAsync<ObservableCollection<Order>>("https://localhost:7196/api/orders");
             if (collectionOrders!.Count != 0)
             {
                 OrdersCollection = collectionOrders;

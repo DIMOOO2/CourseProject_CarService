@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarService.Client.Pages.AutoPartForClient"
+             Title=""
+             Shell.BackgroundColor="Transparent"
+             Shell.ForegroundColor="OrangeRed">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="Background" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
+Grid.Row="0">
+                <Label Text="Запчасти:" FontSize="30" FontAttributes="Bold"/>
+            </StackLayout>
+
+            <CollectionView x:Name="TestCollection" Grid.Row="1">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="Transparent" VerticalOptions="Center">
+                            <Label Text="{Binding .}"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
+Grid.Row="2">
+                <Label Text="Корзина:" FontSize="30" FontAttributes="Bold"/>
+            </StackLayout>
+
+            <CollectionView x:Name="TestCollection1" Grid.Row="3">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="Transparent" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="20">
+                                <Label Text="{Binding .}"/>
+                                <Button Text="+" Style="{StaticResource ButtonStyle}" HorizontalOptions="End" VerticalOptions="Center"/>
+                                <Label Text="0" VerticalOptions="Center"/>
+                                <Button Text="-" Style="{StaticResource ButtonStyle}" HorizontalOptions="End" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Сохранить" Grid.Row="4" Style="{StaticResource ButtonStyle}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>
