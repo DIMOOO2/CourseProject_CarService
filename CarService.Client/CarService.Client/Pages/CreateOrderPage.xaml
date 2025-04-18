@@ -47,6 +47,8 @@
                                     FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
                 <uran:TextField Title="Город" 
              FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
+                <uran:TextField Title="Адрес" 
+             FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
 
 
                 <uran:BackdropView Background="Transparent" Padding="0">

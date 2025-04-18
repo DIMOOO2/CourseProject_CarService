@@ -82,6 +82,9 @@ namespace CarService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("OrganizationId")
                         .HasColumnType("uniqueidentifier");
 

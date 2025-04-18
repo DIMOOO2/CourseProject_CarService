@@ -7,14 +7,14 @@ namespace CarService.Models.Entities
     {
         [Key]
         public Guid AutoPartId { get; set; }
-        public string AutoPartName { get; set; }
+        public string AutoPartName { get; set; } = null!;
         public int PartNumber { get; set; }
         public decimal Price { get; set; }
         public int StockAmount { get; set; }
         [ForeignKey("ManufacturerId")]
-        public Manufacturer Manufacturer { get; set; }
+        public Manufacturer Manufacturer { get; set; } = null!;
         [ForeignKey("WarehouseId")]
-        public Warehouse Warehouse { get; set; }
+        public Warehouse Warehouse { get; set; } = null!;
 
         [NotMapped]
         public string GetPrice

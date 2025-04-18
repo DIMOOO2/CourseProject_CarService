@@ -12,7 +12,7 @@ namespace CarService.Models.Entities
         public DateTime OrderDate { get; set; }
         public bool OrderStatus { get; set; }
         [ForeignKey("ClientId")]
-        public Client Client { get; set; }
+        public Client Client { get; set; } = null!;
 
 
         [NotMapped]

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250417184437_InitialWithLocalDb")]
-    partial class InitialWithLocalDb
+    [Migration("20250418112947_InitialWithLocalDB")]
+    partial class InitialWithLocalDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,9 @@ namespace CarService.Api.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("OrganizationId")
