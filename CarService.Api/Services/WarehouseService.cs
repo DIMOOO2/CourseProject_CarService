@@ -4,20 +4,20 @@ using System.Diagnostics;
 
 namespace CarService.Api.Services
 {
-    public static class ClientService
+    public static class WarehouseService
     {
-        public async static Task<bool> AddClient(Client client)
+        public static async Task<bool> AddWarehouse(Warehouse warehouse)
         {
             await using (AppDbContext context = new AppDbContext())
-            { 
+            {
                 try
                 {
-                    if (client.IsCorrectName &&
-                        client.IsCorrectEmail
-                        && client.IsCorrectPhoneNumber)
+                    if (warehouse.Title != string.Empty &&
+                        warehouse.City != string.Empty
+                        && warehouse.Address != string.Empty)
                     {
-                        client.ClientId = Guid.NewGuid();
-                        context.Clients.Add(client);
+                        warehouse.WarehouseId = Guid.NewGuid();
+                        context.Warehouses.Add(warehouse);
                         await context.SaveChangesAsync();
                         return true;
                     }
@@ -31,25 +31,25 @@ namespace CarService.Api.Services
                 }
             };
         }
-        public async static Task<bool> UpdateClient(Guid oldClientId, Client newClient)
+        
+        public static async Task<bool> AddWarehouse(Guid oldWarehouseId, Warehouse newWarehouse)
         {
             await using (AppDbContext context = new AppDbContext())
             {
                 try
                 {
-                    Client oldClient = context.Clients.Find(oldClientId)!; 
+                    Warehouse oldWarehouse = context.Warehouses.Find(oldWarehouseId)!;
 
 
-                    if (newClient.IsCorrectName &&
-                        newClient.IsCorrectEmail
-                        && newClient.IsCorrectPhoneNumber)
+                    if (newWarehouse.Title != string.Empty &&
+                        newWarehouse.City != string.Empty
+                        && newWarehouse.Address != string.Empty)
                     {
-                        oldClient.FirstName = newClient.FirstName;
-                        oldClient.LastName = newClient.LastName;
-                        oldClient.Email = newClient.Email;
-                        oldClient.PhoneNumber = newClient.PhoneNumber;
+                        oldWarehouse.Title = newWarehouse.Title;
+                        oldWarehouse.Address = newWarehouse.Address;
+                        oldWarehouse.City = newWarehouse.City;
 
-                        context.Clients.Update(oldClient);
+                        context.Warehouses.Update(oldWarehouse);
                         await context.SaveChangesAsync();
                         return true;
                     }
@@ -63,16 +63,16 @@ namespace CarService.Api.Services
                 }
             };
         }
-
-        public async static Task<bool> DeleteClient(Guid id)
+        
+        public static async Task<bool> AddWarehouse(Guid warehouseId)
         {
             await using (AppDbContext context = new AppDbContext())
             {
                 try
                 {
-                    Client client = context.Clients.Find(id)!;
+                    Warehouse warehouse = context.Warehouses.Find(warehouseId)!;
 
-                    context.Clients.Remove(client);
+                    context.Warehouses.Remove(warehouse);
                     await context.SaveChangesAsync();
                     return true;
                 }

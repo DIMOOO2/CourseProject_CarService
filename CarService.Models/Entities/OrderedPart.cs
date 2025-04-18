@@ -14,5 +14,19 @@ namespace CarService.Models.Entities
         public Warehouse DepartureWarehouse { get; set; } = null!;
         [ForeignKey("ArrivalWarehouseId")]
         public Warehouse ArrivalWarehouse { get; set; } = null!;
+
+        [NotMapped]
+        public bool IsCorrectData
+        {
+            get
+            {
+                if(Amount > 0
+                   && Order != null
+                   && AutoPart != null
+                   && DepartureWarehouse != null
+                   && ArrivalWarehouse != null) return true;
+                else return false;
+            }
+        }
     }
 }

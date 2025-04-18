@@ -4,20 +4,18 @@ using System.Diagnostics;
 
 namespace CarService.Api.Services
 {
-    public static class ClientService
+    public static class OrderedPartService
     {
-        public async static Task<bool> AddClient(Client client)
+        public async static Task<bool> AddOrderedPart(OrderedPart orderedPart)
         {
             await using (AppDbContext context = new AppDbContext())
-            { 
+            {
                 try
                 {
-                    if (client.IsCorrectName &&
-                        client.IsCorrectEmail
-                        && client.IsCorrectPhoneNumber)
+                    if (orderedPart.IsCorrectData)
                     {
-                        client.ClientId = Guid.NewGuid();
-                        context.Clients.Add(client);
+                        orderedPart.OrderedPartId = Guid.NewGuid();
+                        context.OrderedParts.Add(orderedPart);
                         await context.SaveChangesAsync();
                         return true;
                     }
@@ -31,25 +29,24 @@ namespace CarService.Api.Services
                 }
             };
         }
-        public async static Task<bool> UpdateClient(Guid oldClientId, Client newClient)
+        public async static Task<bool> UpdateOrderedPart(Guid oldOrderedPartId, OrderedPart newOrderedPar)
         {
             await using (AppDbContext context = new AppDbContext())
             {
                 try
                 {
-                    Client oldClient = context.Clients.Find(oldClientId)!; 
+                    OrderedPart oldOrderedPart = context.OrderedParts.Find(oldOrderedPartId)!;
 
 
-                    if (newClient.IsCorrectName &&
-                        newClient.IsCorrectEmail
-                        && newClient.IsCorrectPhoneNumber)
+                    if (newOrderedPar.IsCorrectData)
                     {
-                        oldClient.FirstName = newClient.FirstName;
-                        oldClient.LastName = newClient.LastName;
-                        oldClient.Email = newClient.Email;
-                        oldClient.PhoneNumber = newClient.PhoneNumber;
+                        oldOrderedPart.Amount = newOrderedPar.Amount;
+                        oldOrderedPart.Order = newOrderedPar.Order;
+                        oldOrderedPart.AutoPart = newOrderedPar.AutoPart;
+                        oldOrderedPart.DepartureWarehouse = newOrderedPar.DepartureWarehouse;
+                        oldOrderedPart.ArrivalWarehouse = newOrderedPar.ArrivalWarehouse;
 
-                        context.Clients.Update(oldClient);
+                        context.OrderedParts.Update(oldOrderedPart);
                         await context.SaveChangesAsync();
                         return true;
                     }
@@ -64,15 +61,15 @@ namespace CarService.Api.Services
             };
         }
 
-        public async static Task<bool> DeleteClient(Guid id)
+        public async static Task<bool> DeleteOrderedPart(Guid orderedPartId)
         {
             await using (AppDbContext context = new AppDbContext())
             {
                 try
                 {
-                    Client client = context.Clients.Find(id)!;
+                    OrderedPart orderedPart = context.OrderedParts.Find(orderedPartId)!;
 
-                    context.Clients.Remove(client);
+                    context.OrderedParts.Remove(orderedPart);
                     await context.SaveChangesAsync();
                     return true;
                 }

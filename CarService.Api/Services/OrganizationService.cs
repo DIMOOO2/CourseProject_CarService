@@ -4,20 +4,18 @@ using System.Diagnostics;
 
 namespace CarService.Api.Services
 {
-    public static class ClientService
+    public static class OrganizationService
     {
-        public async static Task<bool> AddClient(Client client)
+        public async static Task<bool> AddOrganization(Organization organization)
         {
             await using (AppDbContext context = new AppDbContext())
-            { 
+            {
                 try
                 {
-                    if (client.IsCorrectName &&
-                        client.IsCorrectEmail
-                        && client.IsCorrectPhoneNumber)
+                    if (organization.IsCorrectData)
                     {
-                        client.ClientId = Guid.NewGuid();
-                        context.Clients.Add(client);
+                        organization.OrganizationId = Guid.NewGuid();
+                        context.Organizations.Add(organization);
                         await context.SaveChangesAsync();
                         return true;
                     }
@@ -31,25 +29,25 @@ namespace CarService.Api.Services
                 }
             };
         }
-        public async static Task<bool> UpdateClient(Guid oldClientId, Client newClient)
+        public async static Task<bool> UpdateOrganization(Guid oldOrganizationId, Organization newOrganization)
         {
             await using (AppDbContext context = new AppDbContext())
             {
                 try
                 {
-                    Client oldClient = context.Clients.Find(oldClientId)!; 
+                    Organization oldOrganization = context.Organizations.Find(oldOrganizationId)!;
 
 
-                    if (newClient.IsCorrectName &&
-                        newClient.IsCorrectEmail
-                        && newClient.IsCorrectPhoneNumber)
+                    if (newOrganization.IsCorrectData)
                     {
-                        oldClient.FirstName = newClient.FirstName;
-                        oldClient.LastName = newClient.LastName;
-                        oldClient.Email = newClient.Email;
-                        oldClient.PhoneNumber = newClient.PhoneNumber;
+                        oldOrganization.TitleOrganization = newOrganization.TitleOrganization;
+                        oldOrganization.TIN = newOrganization.TIN;
+                        oldOrganization.CorporateNumber = newOrganization.CorporateNumber;
+                        oldOrganization.CorporateEmail = newOrganization.CorporateEmail;
+                        oldOrganization.City = newOrganization.City;
+                        oldOrganization.Address = newOrganization.Address;
 
-                        context.Clients.Update(oldClient);
+                        context.Organizations.Update(oldOrganization);
                         await context.SaveChangesAsync();
                         return true;
                     }
@@ -64,15 +62,15 @@ namespace CarService.Api.Services
             };
         }
 
-        public async static Task<bool> DeleteClient(Guid id)
+        public async static Task<bool> DeleteOrderedPart(Guid OrganizationId)
         {
             await using (AppDbContext context = new AppDbContext())
             {
                 try
                 {
-                    Client client = context.Clients.Find(id)!;
+                    Organization organization = context.Organizations.Find(OrganizationId)!;
 
-                    context.Clients.Remove(client);
+                    context.Organizations.Remove(organization);
                     await context.SaveChangesAsync();
                     return true;
                 }
@@ -84,4 +82,5 @@ namespace CarService.Api.Services
             };
         }
     }
+}
 }
