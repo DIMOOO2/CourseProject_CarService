@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250419174438_Init1")]
+    [Migration("20250419175312_Init1")]
     partial class Init1
     {
         /// <inheritdoc />
