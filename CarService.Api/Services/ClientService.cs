@@ -12,11 +12,15 @@ namespace CarService.Api.Services
             { 
                 try
                 {
+                    Client? dublicate = context.Clients.FirstOrDefault(d => d.ClientId == client.ClientId 
+                    && d.PhoneNumber == client.PhoneNumber
+                    && d.Email == client.Email);
+
                     if (client.IsCorrectName &&
                         client.IsCorrectEmail
-                        && client.IsCorrectPhoneNumber)
+                        && client.IsCorrectPhoneNumber
+                        && dublicate == null)
                     {
-                        client.ClientId = Guid.NewGuid();
                         context.Clients.Add(client);
                         await context.SaveChangesAsync();
                         return true;

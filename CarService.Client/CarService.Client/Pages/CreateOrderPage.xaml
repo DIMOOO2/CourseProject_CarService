@@ -6,7 +6,10 @@
              Shell.ForegroundColor="OrangeRed"
              xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
-             x:DataType="vm:CreateOrderViewModel">
+             x:DataType="vm:CreateOrderViewModel"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:localValidate="clr-namespace:CarService.Client.Others.Validates">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="ButtonStyle">
@@ -26,61 +29,100 @@
     
     <ScrollView>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="30"/>
-            </Grid.RowDefinitions>
+            <input:FormView SubmitCommand="{Binding CreateOrderCommand}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
-           Grid.Row="0">
-                <Label Text="Создание нового заказа" FontSize="30" FontAttributes="Bold"/>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
+     Grid.Row="0">
+                        <Label Text="Создание нового заказа" FontSize="30" FontAttributes="Bold"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Vertical" Grid.Row="1" Padding="40" Spacing="20">
-                <uran:TextField Title="Имя" 
-                                    FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
-                <uran:TextField Title="Фамилия" 
-                                    FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
-                <uran:TextField Title="Номер телефона" 
-                                    FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
-                <uran:TextField Title="Электронная почта" 
-                                    FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
-                <uran:TextField Title="Город" 
-             FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
-                <uran:TextField Title="Адрес" 
-             FontSize="18" TitleFontSize="16" AccentColor="OrangeRed"/>
+                    <StackLayout Orientation="Vertical" Grid.Row="1" Padding="40" Spacing="20">
+                        <uran:TextField Title="Имя" Text="{Binding FirstName}"
+                              FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_NONDIGITS}" 
+                                          Message="Данное поле не должно содержать цифры"/>
+                        </uran:TextField>
+
+                        <uran:TextField Title="Фамилия" Text="{Binding LastName}" 
+                              FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_NONDIGITS}" 
+                      Message="Данное поле не должно содержать цифры"/>
+                        </uran:TextField>
+
+                        <uran:TextField Title="Отчество" Text="{Binding MiddleName}"
+                              FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_NONDIGITS}" 
+                      Message="Данное поле не должно содержать цифры"/>
+                        </uran:TextField>
+
+                        <uran:TextField Title="Номер телефона" Text="{Binding PhoneNumber}" MaxLength="12"
+                              FontSize="18" TitleFontSize="16" AccentColor="OrangeRed" Keyboard="Numeric">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_PHONE}" 
+                       Message="Неправильно введен номер телефона" />
+
+                        </uran:TextField>
+                        <uran:TextField Title="Электронная почта" Text="{Binding Email}"
+                              FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" 
+                                          Message="Неправильно введена электронная почта" />
+                        </uran:TextField>
+                        <uran:TextField Title="Город" Text="{Binding City}"
+       FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                        </uran:TextField>
+
+                        <uran:TextField Title="Адрес" Text="{Binding Address}"
+       FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                        </uran:TextField>
 
 
-                <uran:BackdropView Background="Transparent" Padding="0">
-                    <HorizontalStackLayout Spacing="20">
-                        <uran:RadioButtonGroupView Orientation="Horizontal">
-                            <uran:RadioButton Text="Физическое лицо" Color="OrangeRed" IsChecked="{Binding IsNaturalPerson}"/>
-                            <uran:RadioButton Text="Организация" Color="OrangeRed" IsChecked="{Binding IsLegalEntity}"/>
-                        </uran:RadioButtonGroupView>
-                        
-                    </HorizontalStackLayout>
-                </uran:BackdropView>
+                        <uran:BackdropView Background="Transparent" Padding="0">
+                            <HorizontalStackLayout Spacing="20">
+                                <uran:RadioButtonGroupView Orientation="Horizontal">
+                                    <uran:RadioButton Text="Физическое лицо" Color="OrangeRed" IsChecked="{Binding IsNaturalPerson}"/>
+                                    <uran:RadioButton Text="Организация" Color="OrangeRed" IsChecked="{Binding IsLegalEntity}"/>
+                                </uran:RadioButtonGroupView>
 
-                <uran:TextField Title="Название организации" 
-                         FontSize="18" TitleFontSize="16" 
-                                AccentColor="OrangeRed" IsVisible="{Binding IsLegalEntity}"/>
-                
-                <uran:TextField Title="ИНН Организации" 
-                         FontSize="18" TitleFontSize="16" 
-                                AccentColor="OrangeRed" IsVisible="{Binding IsLegalEntity}"/>
-            </StackLayout>
+                            </HorizontalStackLayout>
+                        </uran:BackdropView>
+                    
+                        <uran:TextField Title="Название организации" 
+                   FontSize="18" TitleFontSize="16" Text="{Binding TitleOrganization}" 
+                          AccentColor="OrangeRed" IsVisible="{Binding IsLegalEntity}">
+                            <localValidate:OrganizationValidateRequired Message="Это обязательное поле ввода"/>
+                        </uran:TextField>
+
+                        <uran:TextField Title="ИНН Организации" 
+                   FontSize="18" TitleFontSize="16" Text="{Binding TinOrganization}" MaxLength="10"
+                          AccentColor="OrangeRed" IsVisible="{Binding IsLegalEntity}">
+                            <localValidate:OrganizationValidateRequired Message="Это обязательное поле ввода"/>
+                            <localValidate:OrganizationValidateOnlyDigits Message="Поле должно включать в себя только цифры"/>
+                        </uran:TextField>
+                    </StackLayout>
 
 
-            <VerticalStackLayout Grid.Row="2" Grid.RowSpan="2" Spacing="10" Padding="10">
-                <Button Text="Запчасти"  HorizontalOptions="Fill"
-      Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
-        Command="{Binding PushAutoPartForClientCommand}"/>
-                <Button Text="Создать" HorizontalOptions="Fill"
-      Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
-        />
-            </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Row="2" Grid.RowSpan="2" Spacing="10" Padding="10">
+                        <Button Text="Запчасти"  HorizontalOptions="Fill"
+                Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
+                    Command="{Binding PushAutoPartForClientCommand}"/>
+                        <Button Text="Создать" HorizontalOptions="Fill" input:FormView.IsSubmitButton="True"
+                    Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
+                    Command="{Binding CreateOrderCommand}"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </input:FormView>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -50,6 +50,7 @@ namespace CarService.Api
             app.MapPost("/api/clients", (Client client) =>
             {
                 ClientService.AddClient(client).GetAwaiter();
+                return client;
             });
 
             app.MapPost("/api/manufacturers", (Manufacturer manufacturer) =>
@@ -64,6 +65,7 @@ namespace CarService.Api
                 order.OrderId = Guid.NewGuid();
                 appDbContext.Orders.Add(order);
                 appDbContext.SaveChangesAsync();
+                return order;
             });
 
             app.MapPost("/api/orderParts", (OrderedPart orderPart) =>
@@ -71,6 +73,7 @@ namespace CarService.Api
                 orderPart.OrderedPartId = Guid.NewGuid();
                 appDbContext.OrderedParts.Add(orderPart);
                 appDbContext.SaveChangesAsync();
+                return orderPart;
             });
 
             app.MapPost("/api/accounts", (CorporateAccount corporateAccount) =>
@@ -85,6 +88,7 @@ namespace CarService.Api
                 organization.OrganizationId = Guid.NewGuid();
                 appDbContext.Organizations.Add(organization);
                 appDbContext.SaveChangesAsync();
+                return organization;
             });
             
             app.MapPost("/api/warehouses", (Warehouse warehouse) =>

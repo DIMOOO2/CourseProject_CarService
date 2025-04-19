@@ -14,7 +14,6 @@ namespace CarService.Api.Services
                 {
                     if (orderedPart.IsCorrectData)
                     {
-                        orderedPart.OrderedPartId = Guid.NewGuid();
                         context.OrderedParts.Add(orderedPart);
                         await context.SaveChangesAsync();
                         return true;

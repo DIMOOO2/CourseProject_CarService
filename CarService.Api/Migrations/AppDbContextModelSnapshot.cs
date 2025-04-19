@@ -187,11 +187,7 @@ namespace CarService.Api.Migrations
 
                     b.HasKey("OrderedPartId");
 
-                    b.HasIndex("ArrivalWarehouseId");
-
                     b.HasIndex("AutoPartId");
-
-                    b.HasIndex("DepartureWarehouseId");
 
                     b.HasIndex("OrderId");
 
@@ -212,16 +208,8 @@ namespace CarService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CorporateEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CorporateNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TIN")
-                        .HasColumnType("int");
+                    b.Property<long>("TIN")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("TitleOrganization")
                         .IsRequired()
@@ -242,15 +230,29 @@ namespace CarService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ArrivalWarehouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("DepartureWarehouseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("WarehouseId");
+
+                    b.HasIndex("ArrivalWarehouseId")
+                        .IsUnique()
+                        .HasFilter("[ArrivalWarehouseId] IS NOT NULL");
+
+                    b.HasIndex("DepartureWarehouseId")
+                        .IsUnique()
+                        .HasFilter("[DepartureWarehouseId] IS NOT NULL");
 
                     b.ToTable("Warehouses");
                 });
@@ -307,21 +309,9 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
                 {
-                    b.HasOne("CarService.Models.Entities.Warehouse", "ArrivalWarehouse")
-                        .WithMany()
-                        .HasForeignKey("ArrivalWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CarService.Models.Entities.AutoPart", "AutoPart")
                         .WithMany()
                         .HasForeignKey("AutoPartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarService.Models.Entities.Warehouse", "DepartureWarehouse")
-                        .WithMany()
-                        .HasForeignKey("DepartureWarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -331,13 +321,31 @@ namespace CarService.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ArrivalWarehouse");
-
                     b.Navigation("AutoPart");
 
-                    b.Navigation("DepartureWarehouse");
-
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.Warehouse", b =>
+                {
+                    b.HasOne("CarService.Models.Entities.OrderedPart", null)
+                        .WithOne("ArrivalWarehouse")
+                        .HasForeignKey("CarService.Models.Entities.Warehouse", "ArrivalWarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CarService.Models.Entities.OrderedPart", null)
+                        .WithOne("DepartureWarehouse")
+                        .HasForeignKey("CarService.Models.Entities.Warehouse", "DepartureWarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
+                {
+                    b.Navigation("ArrivalWarehouse")
+                        .IsRequired();
+
+                    b.Navigation("DepartureWarehouse")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

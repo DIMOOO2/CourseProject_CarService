@@ -16,7 +16,6 @@ namespace CarService.Api.Services
                         warehouse.City != string.Empty
                         && warehouse.Address != string.Empty)
                     {
-                        warehouse.WarehouseId = Guid.NewGuid();
                         context.Warehouses.Add(warehouse);
                         await context.SaveChangesAsync();
                         return true;

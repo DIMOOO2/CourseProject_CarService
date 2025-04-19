@@ -12,9 +12,10 @@ namespace CarService.Api.Services
             {
                 try
                 {
-                    if (organization.IsCorrectData)
+                    Organization? dublicate = context.Organizations.FirstOrDefault(d => d.OrganizationId == organization.OrganizationId
+                                                                        && d.TIN == organization.TIN);
+                    if (organization.IsCorrectData && dublicate == null)
                     {
-                        organization.OrganizationId = Guid.NewGuid();
                         context.Organizations.Add(organization);
                         await context.SaveChangesAsync();
                         return true;
@@ -42,8 +43,6 @@ namespace CarService.Api.Services
                     {
                         oldOrganization.TitleOrganization = newOrganization.TitleOrganization;
                         oldOrganization.TIN = newOrganization.TIN;
-                        oldOrganization.CorporateNumber = newOrganization.CorporateNumber;
-                        oldOrganization.CorporateEmail = newOrganization.CorporateEmail;
                         oldOrganization.City = newOrganization.City;
                         oldOrganization.Address = newOrganization.Address;
 
@@ -82,5 +81,4 @@ namespace CarService.Api.Services
             };
         }
     }
-}
 }

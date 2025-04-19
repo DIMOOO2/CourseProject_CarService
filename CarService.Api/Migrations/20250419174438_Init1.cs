@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarService.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialWithLocalDB : Migration
+    public partial class Init1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,29 +30,13 @@ namespace CarService.Api.Migrations
                 {
                     OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TitleOrganization = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TIN = table.Column<int>(type: "int", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CorporateNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CorporateEmail = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Organizations", x => x.OrganizationId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Warehouses",
-                columns: table => new
-                {
-                    WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TIN = table.Column<long>(type: "bigint", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Warehouses", x => x.WarehouseId);
+                    table.PrimaryKey("PK_Organizations", x => x.OrganizationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,55 +64,6 @@ namespace CarService.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AutoParts",
-                columns: table => new
-                {
-                    AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AutoPartName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PartNumber = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StockAmount = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AutoParts", x => x.AutoPartId);
-                    table.ForeignKey(
-                        name: "FK_AutoParts_Manufacturers_ManufacturerId",
-                        column: x => x.ManufacturerId,
-                        principalTable: "Manufacturers",
-                        principalColumn: "ManufacturerId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AutoParts_Warehouses_WarehouseId",
-                        column: x => x.WarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CorporateAccounts",
-                columns: table => new
-                {
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LogIn = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CorporateAccounts", x => x.AccountId);
-                    table.ForeignKey(
-                        name: "FK_CorporateAccounts_Warehouses_WarehouseId",
-                        column: x => x.WarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -149,6 +84,29 @@ namespace CarService.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AutoParts",
+                columns: table => new
+                {
+                    AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AutoPartName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PartNumber = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StockAmount = table.Column<int>(type: "int", nullable: false),
+                    ManufacturerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AutoParts", x => x.AutoPartId);
+                    table.ForeignKey(
+                        name: "FK_AutoParts_Manufacturers_ManufacturerId",
+                        column: x => x.ManufacturerId,
+                        principalTable: "Manufacturers",
+                        principalColumn: "ManufacturerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderedParts",
                 columns: table => new
                 {
@@ -156,8 +114,8 @@ namespace CarService.Api.Migrations
                     Amount = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ArrivalWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ArrivalWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,15 +132,51 @@ namespace CarService.Api.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Warehouses",
+                columns: table => new
+                {
+                    WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArrivalWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Warehouses", x => x.WarehouseId);
                     table.ForeignKey(
-                        name: "FK_OrderedParts_Warehouses_ArrivalWarehouseId",
+                        name: "FK_Warehouses_OrderedParts_ArrivalWarehouseId",
                         column: x => x.ArrivalWarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId",
+                        principalTable: "OrderedParts",
+                        principalColumn: "OrderedPartId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderedParts_Warehouses_DepartureWarehouseId",
+                        name: "FK_Warehouses_OrderedParts_DepartureWarehouseId",
                         column: x => x.DepartureWarehouseId,
+                        principalTable: "OrderedParts",
+                        principalColumn: "OrderedPartId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CorporateAccounts",
+                columns: table => new
+                {
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LogIn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CorporateAccounts", x => x.AccountId);
+                    table.ForeignKey(
+                        name: "FK_CorporateAccounts_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "WarehouseId",
                         onDelete: ReferentialAction.Cascade);
@@ -209,19 +203,9 @@ namespace CarService.Api.Migrations
                 column: "WarehouseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderedParts_ArrivalWarehouseId",
-                table: "OrderedParts",
-                column: "ArrivalWarehouseId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderedParts_AutoPartId",
                 table: "OrderedParts",
                 column: "AutoPartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderedParts_DepartureWarehouseId",
-                table: "OrderedParts",
-                column: "DepartureWarehouseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderedParts_OrderId",
@@ -232,13 +216,49 @@ namespace CarService.Api.Migrations
                 name: "IX_Orders_ClientId",
                 table: "Orders",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warehouses_ArrivalWarehouseId",
+                table: "Warehouses",
+                column: "ArrivalWarehouseId",
+                unique: true,
+                filter: "[ArrivalWarehouseId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warehouses_DepartureWarehouseId",
+                table: "Warehouses",
+                column: "DepartureWarehouseId",
+                unique: true,
+                filter: "[DepartureWarehouseId] IS NOT NULL");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AutoParts_Warehouses_WarehouseId",
+                table: "AutoParts",
+                column: "WarehouseId",
+                principalTable: "Warehouses",
+                principalColumn: "WarehouseId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AutoParts_Manufacturers_ManufacturerId",
+                table: "AutoParts");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AutoParts_Warehouses_WarehouseId",
+                table: "AutoParts");
+
             migrationBuilder.DropTable(
                 name: "CorporateAccounts");
+
+            migrationBuilder.DropTable(
+                name: "Manufacturers");
+
+            migrationBuilder.DropTable(
+                name: "Warehouses");
 
             migrationBuilder.DropTable(
                 name: "OrderedParts");
@@ -248,12 +268,6 @@ namespace CarService.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Manufacturers");
-
-            migrationBuilder.DropTable(
-                name: "Warehouses");
 
             migrationBuilder.DropTable(
                 name: "Clients");

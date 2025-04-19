@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace CarService.Models.Entities
@@ -28,29 +29,6 @@ namespace CarService.Models.Entities
             }
         }
 
-        [NotMapped]
-        public string GetEmail
-        {
-            get
-            {
-                if (Organization != null)
-                    return Organization.CorporateEmail;
-                else
-                    return Email;
-            }
-        }
-
-        [NotMapped]
-        public string GetNumber
-        {
-            get
-            {
-                if (Organization != null)
-                    return Organization.CorporateNumber;
-                else
-                    return PhoneNumber;
-            }
-        }
 
         [NotMapped]
         public bool IsCorrectName
@@ -75,26 +53,15 @@ namespace CarService.Models.Entities
         {
             get
             {
-                bool isContainsSeparator = false;
-                bool isContainsDomen = false;
-
-                foreach (char c in Email)
+                try
                 {
-                    if (c == '@')
-                    {
-                        isContainsSeparator = true;
-                    }
-                    else if (c == '.' && isContainsSeparator)
-                        isContainsDomen |= true;
+                    MailAddress mailAddress = new MailAddress(Email);
+                    return true;
                 }
-
-                if (Email == string.Empty)
+                catch(FormatException)
+                {
                     return false;
-
-                else if (!isContainsDomen || !isContainsSeparator)
-                    return false;
-
-                else return true;
+                }
             }      
         }
 

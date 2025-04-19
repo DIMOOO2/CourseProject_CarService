@@ -14,21 +14,21 @@ namespace CarService.Api.DbContextAPI.ConnectDB
         {
             optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; DataBase = CarServiceDB; Trusted_Connection = true; TrustServerCertificate = true");
         }
-        //На случай, если опять придется менять БД
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<OrderedPart>()
-        //        .HasOne(o => o.DepartureWarehouse)
-        //        .WithOne()
-        //        .HasForeignKey<Warehouse>("DepartureWarehouseId")
-        //        .OnDelete(DeleteBehavior.SetNull);
-            
-        //    modelBuilder.Entity<OrderedPart>()
-        //        .HasOne(o => o.ArrivalWarehouse)
-        //        .WithOne()
-        //        .HasForeignKey<Warehouse>("ArrivalWarehouseId")
-        //        .OnDelete(DeleteBehavior.SetNull);
-        //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderedPart>()
+                .HasOne(o => o.DepartureWarehouse)
+                .WithOne()
+                .HasForeignKey<Warehouse>("DepartureWarehouseId")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrderedPart>()
+                .HasOne(o => o.ArrivalWarehouse)
+                .WithOne()
+                .HasForeignKey<Warehouse>("ArrivalWarehouseId")
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 
         public DbSet<AutoPart> AutoParts { get; set; }
         public DbSet<Client> Clients { get; set; }
