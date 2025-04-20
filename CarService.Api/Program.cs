@@ -42,7 +42,6 @@ namespace CarService.Api
             #region POST-Запросы
             app.MapPost("/api/autoParts", (AutoPart autoPart) =>
             {
-                autoPart.AutoPartId = Guid.NewGuid();
                 appDbContext.AutoParts.Add(autoPart);
                 appDbContext.SaveChangesAsync();
             });
@@ -55,14 +54,12 @@ namespace CarService.Api
 
             app.MapPost("/api/manufacturers", (Manufacturer manufacturer) =>
             {
-                manufacturer.ManufacturerId = Guid.NewGuid();
                 appDbContext.Manufacturers.Add(manufacturer);
                 appDbContext.SaveChangesAsync();
             });
 
             app.MapPost("/api/orders", (Order order) =>
             {
-                order.OrderId = Guid.NewGuid();
                 appDbContext.Orders.Add(order);
                 appDbContext.SaveChangesAsync();
                 return order;
@@ -70,7 +67,6 @@ namespace CarService.Api
 
             app.MapPost("/api/orderParts", (OrderedPart orderPart) =>
             {
-                orderPart.OrderedPartId = Guid.NewGuid();
                 appDbContext.OrderedParts.Add(orderPart);
                 appDbContext.SaveChangesAsync();
                 return orderPart;
@@ -78,14 +74,12 @@ namespace CarService.Api
 
             app.MapPost("/api/accounts", (CorporateAccount corporateAccount) =>
             {
-                corporateAccount.AccountId = Guid.NewGuid();
                 appDbContext.CorporateAccounts.Add(corporateAccount);
                 appDbContext.SaveChangesAsync();
             });
             
             app.MapPost("/api/organizations", (Organization organization) =>
             {
-                organization.OrganizationId = Guid.NewGuid();
                 appDbContext.Organizations.Add(organization);
                 appDbContext.SaveChangesAsync();
                 return organization;
@@ -93,54 +87,53 @@ namespace CarService.Api
             
             app.MapPost("/api/warehouses", (Warehouse warehouse) =>
             {
-                warehouse.WarehouseId = Guid.NewGuid();
                 appDbContext.Warehouses.Add(warehouse);
                 appDbContext.SaveChangesAsync();
             });
             #endregion
             #region DELETE-Запросы
-            app.MapDelete("/api/autoParts", (Guid id) =>
+            app.MapDelete("/api/autoParts", (long id) =>
             {
                 appDbContext.AutoParts.Remove(appDbContext.AutoParts.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/api/clients", (Guid id) =>
+            app.MapDelete("/api/clients", (long id) =>
             {
                 ClientService.DeleteClient(id).GetAwaiter();
             });
 
-            app.MapDelete("/api/manufacturers", (Guid id) =>
+            app.MapDelete("/api/manufacturers", (long id) =>
             {
                 appDbContext.Manufacturers.Remove(appDbContext.Manufacturers.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/api/orders", (Guid id) =>
+            app.MapDelete("/api/orders", (long id) =>
             {
                 appDbContext.Orders.Remove(appDbContext.Orders.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/api/orderParts", (Guid id) =>
+            app.MapDelete("/api/orderParts", (long id) =>
             {
                 appDbContext.OrderedParts.Remove(appDbContext.OrderedParts.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/api/accounts", (Guid id) =>
+            app.MapDelete("/api/accounts", (long id) =>
             {
                 appDbContext.CorporateAccounts.Remove(appDbContext.CorporateAccounts.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/api/organizations", (Guid id) =>
+            app.MapDelete("/api/organizations", (long id) =>
             {
                 appDbContext.Organizations.Remove(appDbContext.Organizations.Find(id)!);
                 appDbContext.SaveChangesAsync();
             });
 
-            app.MapDelete("/api/warehouses", (Guid id) =>
+            app.MapDelete("/api/warehouses", (long id) =>
             {
                 appDbContext.Warehouses.Remove(appDbContext.Warehouses.Find(id)!);
                 appDbContext.SaveChangesAsync();
@@ -159,7 +152,7 @@ namespace CarService.Api
                 appDbContext.AutoParts.Update(newAutopart);
                 appDbContext.SaveChangesAsync();
             });
-            app.MapPut("/api/clients", (Guid id, Client newClient) =>
+            app.MapPut("/api/clients", (long id, Client newClient) =>
             {
                 ClientService.UpdateClient(id, newClient).GetAwaiter();
             });

@@ -30,7 +30,7 @@ namespace CarService.Api.Services
                 }
             };
         }
-        public async static Task<bool> UpdateOrganization(Guid oldOrganizationId, Organization newOrganization)
+        public async static Task<bool> UpdateOrganization(long oldOrganizationId, Organization newOrganization)
         {
             await using (AppDbContext context = new AppDbContext())
             {
@@ -61,7 +61,7 @@ namespace CarService.Api.Services
             };
         }
 
-        public async static Task<bool> DeleteOrderedPart(Guid OrganizationId)
+        public async static Task<bool> DeleteOrderedPart(long OrganizationId)
         {
             await using (AppDbContext context = new AppDbContext())
             {

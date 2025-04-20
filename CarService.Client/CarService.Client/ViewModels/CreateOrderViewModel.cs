@@ -78,7 +78,6 @@ namespace CarService.Client.ViewModels
                 {
                     Models.Entities.Client newClient = new Models.Entities.Client()
                     {
-                        ClientId = Guid.NewGuid(),
                         FirstName = FirstName,
                         LastName = LastName,
                         MiddleName = MiddleName,
@@ -88,7 +87,6 @@ namespace CarService.Client.ViewModels
                         City = City,
                         Organization = new Organization()
                         {
-                            OrganizationId = Guid.NewGuid(),
                             Address = Address,
                             City = City,
                             TIN = Convert.ToInt64(TinOrganization),
@@ -101,7 +99,7 @@ namespace CarService.Client.ViewModels
                     string resultClient = await persponseClient.Content.ReadAsStringAsync();
                     Debug.WriteLine(resultClient);
 
-                    Order order = new Order() { OrderId = Guid.NewGuid(), Client = newClient, OrderDate = DateTime.Now, OrderStatus = false };
+                    Order order = new Order() { ArticulGuid = Guid.NewGuid(), Client = newClient, OrderDate = DateTime.Now, OrderStatus = false };
 
                     using var responseOrder = await client.PostAsJsonAsync<Order>("https://localhost:7196/api/orders", order);
                     //Доделать логику добавления запчастей

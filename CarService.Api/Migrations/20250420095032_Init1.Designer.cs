@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250419175312_Init1")]
+    [Migration("20250420095032_Init1")]
     partial class Init1
     {
         /// <inheritdoc />
@@ -27,16 +27,18 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.AutoPart", b =>
                 {
-                    b.Property<Guid>("AutoPartId")
+                    b.Property<long>("AutoPartId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("AutoPartId"));
 
                     b.Property<string>("AutoPartName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ManufacturerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ManufacturerId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("PartNumber")
                         .HasColumnType("int");
@@ -47,8 +49,8 @@ namespace CarService.Api.Migrations
                     b.Property<int>("StockAmount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("WarehouseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("WarehouseId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AutoPartId");
 
@@ -61,9 +63,11 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.Client", b =>
                 {
-                    b.Property<Guid>("ClientId")
+                    b.Property<long>("ClientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ClientId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -88,8 +92,11 @@ namespace CarService.Api.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OrganizationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("OrganizationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrganizationTIN")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -97,16 +104,18 @@ namespace CarService.Api.Migrations
 
                     b.HasKey("ClientId");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("OrganizationId", "OrganizationTIN");
 
                     b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.CorporateAccount", b =>
                 {
-                    b.Property<Guid>("AccountId")
+                    b.Property<long>("AccountId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("AccountId"));
 
                     b.Property<string>("LogIn")
                         .IsRequired()
@@ -116,8 +125,8 @@ namespace CarService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("WarehouseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("WarehouseId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("AccountId");
 
@@ -128,9 +137,11 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.Manufacturer", b =>
                 {
-                    b.Property<Guid>("ManufacturerId")
+                    b.Property<long>("ManufacturerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ManufacturerId"));
 
                     b.Property<string>("ContactInfo")
                         .IsRequired()
@@ -147,12 +158,17 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.Order", b =>
                 {
-                    b.Property<Guid>("OrderId")
+                    b.Property<long>("OrderId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"));
+
+                    b.Property<Guid>("ArticulGuid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -169,28 +185,37 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
                 {
-                    b.Property<Guid>("OrderedPartId")
+                    b.Property<long>("OrderedPartId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderedPartId"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ArrivalWarehouseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("ArrivalWarehouseId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("AutoPartId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("AutoPartId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("DepartureWarehouseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("DepartureWarehouseId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("OrderedPartId");
 
+                    b.HasIndex("ArrivalWarehouseId")
+                        .IsUnique()
+                        .HasFilter("[ArrivalWarehouseId] IS NOT NULL");
+
                     b.HasIndex("AutoPartId");
+
+                    b.HasIndex("DepartureWarehouseId")
+                        .IsUnique();
 
                     b.HasIndex("OrderId");
 
@@ -199,9 +224,14 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.Organization", b =>
                 {
-                    b.Property<Guid>("OrganizationId")
+                    b.Property<long>("OrganizationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrganizationId"));
+
+                    b.Property<long>("TIN")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -211,51 +241,36 @@ namespace CarService.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("TIN")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("TitleOrganization")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OrganizationId");
+                    b.HasKey("OrganizationId", "TIN");
 
                     b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("CarService.Models.Entities.Warehouse", b =>
                 {
-                    b.Property<Guid>("WarehouseId")
+                    b.Property<long>("WarehouseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("WarehouseId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ArrivalWarehouseId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("DepartureWarehouseId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("WarehouseId");
-
-                    b.HasIndex("ArrivalWarehouseId")
-                        .IsUnique()
-                        .HasFilter("[ArrivalWarehouseId] IS NOT NULL");
-
-                    b.HasIndex("DepartureWarehouseId")
-                        .IsUnique()
-                        .HasFilter("[DepartureWarehouseId] IS NOT NULL");
 
                     b.ToTable("Warehouses");
                 });
@@ -283,7 +298,7 @@ namespace CarService.Api.Migrations
                 {
                     b.HasOne("CarService.Models.Entities.Organization", "Organization")
                         .WithMany()
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId", "OrganizationTIN");
 
                     b.Navigation("Organization");
                 });
@@ -312,10 +327,21 @@ namespace CarService.Api.Migrations
 
             modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
                 {
+                    b.HasOne("CarService.Models.Entities.Warehouse", "ArrivalWarehouse")
+                        .WithOne()
+                        .HasForeignKey("CarService.Models.Entities.OrderedPart", "ArrivalWarehouseId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("CarService.Models.Entities.AutoPart", "AutoPart")
                         .WithMany()
                         .HasForeignKey("AutoPartId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarService.Models.Entities.Warehouse", "DepartureWarehouse")
+                        .WithOne()
+                        .HasForeignKey("CarService.Models.Entities.OrderedPart", "DepartureWarehouseId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CarService.Models.Entities.Order", "Order")
@@ -324,31 +350,13 @@ namespace CarService.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("ArrivalWarehouse");
+
                     b.Navigation("AutoPart");
 
+                    b.Navigation("DepartureWarehouse");
+
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("CarService.Models.Entities.Warehouse", b =>
-                {
-                    b.HasOne("CarService.Models.Entities.OrderedPart", null)
-                        .WithOne("ArrivalWarehouse")
-                        .HasForeignKey("CarService.Models.Entities.Warehouse", "ArrivalWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CarService.Models.Entities.OrderedPart", null)
-                        .WithOne("DepartureWarehouse")
-                        .HasForeignKey("CarService.Models.Entities.Warehouse", "DepartureWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("CarService.Models.Entities.OrderedPart", b =>
-                {
-                    b.Navigation("ArrivalWarehouse")
-                        .IsRequired();
-
-                    b.Navigation("DepartureWarehouse")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

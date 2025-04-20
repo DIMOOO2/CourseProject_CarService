@@ -35,7 +35,7 @@ namespace CarService.Api.Services
                 }
             };
         }
-        public async static Task<bool> UpdateClient(Guid oldClientId, Client newClient)
+        public async static Task<bool> UpdateClient(long oldClientId, Client newClient)
         {
             await using (AppDbContext context = new AppDbContext())
             {
@@ -68,7 +68,7 @@ namespace CarService.Api.Services
             };
         }
 
-        public async static Task<bool> DeleteClient(Guid id)
+        public async static Task<bool> DeleteClient(long id)
         {
             await using (AppDbContext context = new AppDbContext())
             {

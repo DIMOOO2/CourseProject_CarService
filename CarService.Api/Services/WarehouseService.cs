@@ -31,7 +31,7 @@ namespace CarService.Api.Services
             };
         }
         
-        public static async Task<bool> AddWarehouse(Guid oldWarehouseId, Warehouse newWarehouse)
+        public static async Task<bool> AddWarehouse(long oldWarehouseId, Warehouse newWarehouse)
         {
             await using (AppDbContext context = new AppDbContext())
             {
@@ -63,7 +63,7 @@ namespace CarService.Api.Services
             };
         }
         
-        public static async Task<bool> AddWarehouse(Guid warehouseId)
+        public static async Task<bool> AddWarehouse(long warehouseId)
         {
             await using (AppDbContext context = new AppDbContext())
             {

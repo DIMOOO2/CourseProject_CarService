@@ -8,7 +8,7 @@ namespace CarService.Models.Entities
     public class Client
     {
         [Key]
-        public Guid ClientId { get; set; }
+        public long ClientId { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string? MiddleName { get; set; }
@@ -16,8 +16,6 @@ namespace CarService.Models.Entities
         public string Email { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string City { get; set; } = null!;
-
-        [ForeignKey("OrganizationId")]
         public Organization? Organization { get; set; }
 
         [NotMapped]

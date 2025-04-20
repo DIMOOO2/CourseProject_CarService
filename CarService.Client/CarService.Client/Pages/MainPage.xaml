@@ -59,7 +59,7 @@
                     <DataTemplate x:DataType="model:Order">
                         <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
                             <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
-                                <Label Text="{Binding FullOrderId}"/>
+                                <Label Text="{Binding ArticulNumber}"/>
                                 <Label Text="{Binding Client.FullName}"/>
                                 <Label Text="{Binding GetDate}"/>
                                 <Label Text="{Binding GetStatus}"/>

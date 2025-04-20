@@ -17,17 +17,56 @@ namespace CarService.Api.DbContextAPI.ConnectDB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderedPart>()
-                .HasOne(o => o.DepartureWarehouse)
-                .WithOne()
-                .HasForeignKey<Warehouse>("DepartureWarehouseId")
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AutoPart>(b =>
+            {
+                b.Property(b => b.AutoPartId).ValueGeneratedOnAdd();
+            });
+            
+            modelBuilder.Entity<Client>(b =>
+            {
+                b.Property(b => b.ClientId).ValueGeneratedOnAdd();
+            });
+            
+            modelBuilder.Entity<CorporateAccount>(b =>
+            {
+                b.Property(b => b.AccountId).ValueGeneratedOnAdd();
+            });
+            
+            modelBuilder.Entity<Manufacturer>(b =>
+            {
+                b.Property(b => b.ManufacturerId).ValueGeneratedOnAdd();
+            });
+            
+            modelBuilder.Entity<Order>(b =>
+            {
+                b.Property(b => b.OrderId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<OrderedPart>(b =>
+            {
+                b.Property(b => b.OrderedPartId).ValueGeneratedOnAdd();
+            });
 
             modelBuilder.Entity<OrderedPart>()
-                .HasOne(o => o.ArrivalWarehouse)
+                .HasOne(b => b.DepartureWarehouse)
                 .WithOne()
-                .HasForeignKey<Warehouse>("ArrivalWarehouseId")
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<OrderedPart>()
+                .HasOne(b => b.ArrivalWarehouse)
+                .WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Organization>(b =>
+            {
+                b.Property(b => b.OrganizationId).ValueGeneratedOnAdd();
+            }).Entity<Organization>().HasKey(k => new { k.OrganizationId, k.TIN });
+
+            
+            modelBuilder.Entity<Warehouse>(b =>
+            {
+                b.Property(b => b.WarehouseId).ValueGeneratedOnAdd();
+            });
         }
 
         public DbSet<AutoPart> AutoParts { get; set; }

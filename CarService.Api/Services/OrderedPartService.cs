@@ -28,7 +28,7 @@ namespace CarService.Api.Services
                 }
             };
         }
-        public async static Task<bool> UpdateOrderedPart(Guid oldOrderedPartId, OrderedPart newOrderedPar)
+        public async static Task<bool> UpdateOrderedPart(long oldOrderedPartId, OrderedPart newOrderedPar)
         {
             await using (AppDbContext context = new AppDbContext())
             {
@@ -60,7 +60,7 @@ namespace CarService.Api.Services
             };
         }
 
-        public async static Task<bool> DeleteOrderedPart(Guid orderedPartId)
+        public async static Task<bool> DeleteOrderedPart(long orderedPartId)
         {
             await using (AppDbContext context = new AppDbContext())
             {

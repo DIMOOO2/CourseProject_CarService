@@ -8,19 +8,19 @@ namespace CarService.Models.Entities
     public class Order
     {
         [Key]
-        public Guid OrderId { get; set; }
+        public long OrderId { get; set; }
+        public Guid ArticulGuid { get; set; }
         public DateTime OrderDate { get; set; }
         public bool OrderStatus { get; set; }
-        [ForeignKey("ClientId")]
         public Client Client { get; set; } = null!;
 
 
         [NotMapped]
-        public string FullOrderId
+        public string ArticulNumber
         {
             get
             {
-                byte[] data = OrderId.ToByteArray();
+                byte[] data = ArticulGuid.ToByteArray();
                 return Math.Abs(BitConverter.ToInt32(data, 0)).ToString();
             }
         }
