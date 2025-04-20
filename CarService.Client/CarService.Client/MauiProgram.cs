@@ -26,7 +26,10 @@ namespace CarService.Client
     		builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<MainPageViewModel>(); 
+            builder.Services.AddSingleton<MainPageViewModel>();
+            
+            builder.Services.AddSingleton<AutorizationPage>();
+            builder.Services.AddSingleton<AutorizationViewModel>(); 
             
             builder.Services.AddSingleton<OrderPage>();
             //builder.Services.AddSingleton<>(); Для ViewModel OrderPage
@@ -35,7 +38,7 @@ namespace CarService.Client
             builder.Services.AddSingleton<SearchAutoPartViewModel>();
 
             builder.Services.AddTransient<CreateOrderPage>();
-            //builder.Services.AddTransient<CreateOrderViewModel>(); Для ViewModel CreateNewOrder
+            builder.Services.AddTransient<CreateOrderViewModel>();
 
             return builder.Build();
         }

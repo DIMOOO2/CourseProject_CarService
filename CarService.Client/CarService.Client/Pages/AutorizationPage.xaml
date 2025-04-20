@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarService.Client.Pages.AutorizationPage"
+             Title=""
+             Shell.BackgroundColor="Transparent"
+             xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:vm="clr-namespace:CarService.Client.ViewModels"
+             x:DataType="vm:AutorizationViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="Background" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="500"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="background_autorization.png" Grid.Column="2" Grid.RowSpan="3" Aspect="Center" Margin="170,0,0,0"/>
+
+            <Frame BorderColor="OrangeRed" BackgroundColor="Transparent" VerticalOptions="Fill" 
+                       Grid.Column="0" HorizontalOptions="FillAndExpand"  Margin="170,0,0,0"
+                       Grid.Row="1">
+
+                    <VerticalStackLayout>
+                        <VerticalStackLayout Spacing="20">
+                        <uran:TextField Title="Логин" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+                            FontSize="20" Text="{Binding Login}">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                        </uran:TextField>
+                        <uran:TextField Title="Пароль" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+                            FontSize="20" Text="{Binding Password}" IsPassword="True">
+                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                            <uran:TextField.Attachments>
+                                <uran:TextFieldPasswordShowHideAttachment/>
+                            </uran:TextField.Attachments>
+                        </uran:TextField>
+                    </VerticalStackLayout>
+
+                    <Button Text="Войти" FontSize="20" Margin="0,200,0,0" Style="{StaticResource ButtonStyle}"
+                input:FormView.IsSubmitButton="True" Command="{Binding LogInCommand}"/>
+    </VerticalStackLayout>
+
+                
+            </Frame>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

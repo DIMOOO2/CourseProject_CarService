@@ -58,6 +58,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\Images_Flyout\main_page_logo.png" />
 	  <None Remove="Resources\Images\Images_Flyout\order_page_logo.png" />
+	  <None Remove="Resources\Images\Images_Page\background_autorization.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,6 +78,9 @@
 	  <MauiXaml Update="Pages\AutoPartForClient.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\AutorizationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\CreateOrderPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -91,6 +95,8 @@
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\Images_Flyout\main_page_logo.png" />
 	  <MauiImage Include="Resources\Images\Images_Flyout\order_page_logo.png" />
+	  <MauiImage Include="Resources\Images\Images_Page\background_autorization.png" />
+	  <MauiImage Include="Resources\Images\Images_Page\icon_app.png" />
 	  <MauiImage Include="Resources\Images\Images_Page\icon_add_to_cart.png" />
 	  <MauiImage Include="Resources\Images\Images_Page\not_found_icon.png" />
 	  <MauiImage Include="Resources\Images\Images_Page\purchase_order.png" />

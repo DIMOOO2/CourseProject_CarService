@@ -90,6 +90,19 @@ namespace CarService.Api
                 appDbContext.Warehouses.Add(warehouse);
                 appDbContext.SaveChangesAsync();
             });
+
+            app.MapPost("/api/accounts/signin", (CorporateAccount account) =>
+            {
+                CorporateAccount? corporateAccount = appDbContext.CorporateAccounts.Include(w => w.Warehouse).FirstOrDefault(a => a.LogIn == account.LogIn);
+
+                if(corporateAccount != null)
+                {
+                    return Results.Ok(corporateAccount);
+                }                   
+                else
+                    return Results.NotFound();
+
+            });
             #endregion
             #region DELETE-Запросы
             app.MapDelete("/api/autoParts", (long id) =>

@@ -1,4 +1,7 @@
-﻿namespace CarService.Client
+﻿using CarService.Client.Others.LoginData;
+using CarService.Client.Pages;
+
+namespace CarService.Client
 {
     public partial class App : Application
     {
@@ -6,7 +9,18 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new AutorizationPage();
+        }
+
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = base.CreateWindow(activationState);
+            if (window != null)
+            {
+                window.Title = $"Автозапчасти.Логистика";
+            }
+
+            return window;
         }
     }
 }
