@@ -1,5 +1,4 @@
 ﻿using CarService.Client.Others.LoginData;
-using CarService.Client.Pages;
 using CarService.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,6 +28,7 @@ namespace CarService.Client.ViewModels
         {
             try
             {
+                if (Login == null || Password == null) return;
                 byte[] sha256Hash = GenerateSha256Hash(Password, GenerateSalt());
                 string sha256HashString = Convert.ToBase64String(sha256Hash);
                 using var response = await _httpClient.PostAsJsonAsync<CorporateAccount>("https://localhost:7196/api/accounts/signin", new CorporateAccount

@@ -38,14 +38,14 @@
                 <RowDefinition Height="500"/>
             </Grid.RowDefinitions>
 
-            <Image Source="background_autorization.png" Grid.Column="2" Grid.RowSpan="3" Aspect="Center" Margin="170,0,0,0"/>
+            <Image Source="background_autorization.png" Grid.Column="2" Grid.RowSpan="4" Aspect="Fill" Margin="0,0,0,0"/>
 
             <Frame BorderColor="OrangeRed" BackgroundColor="Transparent" VerticalOptions="Fill" 
-                       Grid.Column="0" HorizontalOptions="FillAndExpand"  Margin="170,0,0,0"
-                       Grid.Row="1">
+                       Grid.Column="0" HorizontalOptions="Fill" Margin="10"
+                       Grid.Row="1" >
 
-                    <VerticalStackLayout>
-                        <VerticalStackLayout Spacing="20">
+                <VerticalStackLayout>
+                    <VerticalStackLayout Spacing="20">
                         <uran:TextField Title="Логин" AccentColor="OrangeRed" BorderColor="OrangeRed" 
                             FontSize="20" Text="{Binding Login}">
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
@@ -61,9 +61,7 @@
 
                     <Button Text="Войти" FontSize="20" Margin="0,200,0,0" Style="{StaticResource ButtonStyle}"
                 input:FormView.IsSubmitButton="True" Command="{Binding LogInCommand}"/>
-    </VerticalStackLayout>
-
-                
+                </VerticalStackLayout>
             </Frame>
         </Grid>
     </VerticalStackLayout>
