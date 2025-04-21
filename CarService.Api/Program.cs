@@ -17,6 +17,11 @@ namespace CarService.Api
             .Include(m => m.Manufacturer)
             .Include(w => w.Warehouse));
 
+            app.MapGet("/api/autoParts/{id}", (long id) => appDbContext.AutoParts
+            .Include(m => m.Manufacturer)
+            .Include(w => w.Warehouse)
+            .Where(a => a.Warehouse!.WarehouseId == id));
+
             app.MapGet("/api/clients", () => appDbContext.Clients
             .Include(o => o.Organization));
 
@@ -93,7 +98,8 @@ namespace CarService.Api
 
             app.MapPost("/api/accounts/signin", (CorporateAccount account) =>
             {
-                CorporateAccount? corporateAccount = appDbContext.CorporateAccounts.Include(w => w.Warehouse).FirstOrDefault(a => a.LogIn == account.LogIn);
+                CorporateAccount? corporateAccount = appDbContext.CorporateAccounts.Include(w => w.Warehouse).FirstOrDefault(a => a.LogIn == account.LogIn 
+                && a.Password == account.Password);
 
                 if(corporateAccount != null)
                 {

@@ -46,7 +46,7 @@ namespace CarService.Api.Migrations
                     b.Property<int>("StockAmount")
                         .HasColumnType("int");
 
-                    b.Property<long>("WarehouseId")
+                    b.Property<long?>("WarehouseId")
                         .HasColumnType("bigint");
 
                     b.HasKey("AutoPartId");
@@ -282,9 +282,7 @@ namespace CarService.Api.Migrations
 
                     b.HasOne("CarService.Models.Entities.Warehouse", "Warehouse")
                         .WithMany()
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WarehouseId");
 
                     b.Navigation("Manufacturer");
 

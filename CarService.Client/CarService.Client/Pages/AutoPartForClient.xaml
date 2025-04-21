@@ -4,7 +4,10 @@
              x:Class="CarService.Client.Pages.AutoPartForClient"
              Title=""
              Shell.BackgroundColor="Transparent"
-             Shell.ForegroundColor="OrangeRed">
+             Shell.ForegroundColor="OrangeRed"
+             xmlns:vm="clr-namespace:CarService.Client.ViewModels"
+             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models"
+             x:DataType="vm:AutoPartForClientViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -21,6 +24,20 @@
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="ButtonStyleDelete">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </ContentPage.Resources>
     
     <ScrollView>
@@ -29,46 +46,79 @@
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
+            
+
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
 Grid.Row="0">
                 <Label Text="Запчасти:" FontSize="30" FontAttributes="Bold"/>
             </StackLayout>
 
-            <CollectionView x:Name="TestCollection" Grid.Row="1">
+            <CollectionView x:Name="AutopartsWarehouseCollection" Grid.Row="1"
+                            ItemsSource="{Binding AutoPartsWithCurrentWarehouse}" Margin="20"
+                            SelectedItem="{Binding SelectItem}" SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="Transparent" VerticalOptions="Center">
-                            <Label Text="{Binding .}"/>
+                        <Frame BackgroundColor="Transparent" VerticalOptions="Center" IsEnabled="{Binding IsEnabledItem}" IsVisible="{Binding VisibilityItem}">
+                            <Grid VerticalOptions="Center" x:DataType="model:AutoPart">
+                                <HorizontalStackLayout Spacing="20">
+                                    <Label Text="{Binding AutoPartName}" FontSize="18" VerticalOptions="Center"/>
+                                    <Label Text="{Binding PartNumber}" FontSize="18" VerticalOptions="Center"/>
+                                    <Label Text="{Binding GetPrice}" FontSize="18" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="End" Spacing="20">
+                                    <Label Text="{Binding GetStockAmount}" VerticalOptions="Center" FontSize="20"/>
+                                </HorizontalStackLayout>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
-Grid.Row="2">
-                <Label Text="Корзина:" FontSize="30" FontAttributes="Bold"/>
+            
+            
+            <StackLayout Orientation="Vertical" Grid.Row="1" VerticalOptions="Center" IsVisible="{Binding IsCollectionEmpty}" Spacing="20">
+                <Image Source="not_found_icon.png" WidthRequest="200" HeightRequest="200"/>
+                <Label Text="Данные не найдены." FontSize="Default"
+FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
             </StackLayout>
 
-            <CollectionView x:Name="TestCollection1" Grid.Row="3">
+            <Button Grid.Row="2" HorizontalOptions="Fill" Text="Добавить" Style="{StaticResource ButtonStyle}" Command="{Binding AddToCartCommand}" Margin="10,0,10,10"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" 
+Grid.Row="3">
+               
+                <Label Text="Корзина:" FontSize="30" FontAttributes="Bold"/>
+            </StackLayout>
+            
+
+            <CollectionView x:Name="TestCollection1" Grid.Row="4" Margin="20" ItemsSource="{Binding AutoPartsWithClient}" SelectionMode="Single" SelectedItem="{Binding SelectItemClient}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="model:AutoPart">
                         <Frame BackgroundColor="Transparent" VerticalOptions="Center">
-                            <HorizontalStackLayout Spacing="20">
-                                <Label Text="{Binding .}"/>
-                                <Button Text="+" Style="{StaticResource ButtonStyle}" HorizontalOptions="End" VerticalOptions="Center"/>
-                                <Label Text="0" VerticalOptions="Center"/>
-                                <Button Text="-" Style="{StaticResource ButtonStyle}" HorizontalOptions="End" VerticalOptions="Center"/>
-                            </HorizontalStackLayout>
+                            <Grid VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="20">
+                                    <Label Text="{Binding AutoPartName}" FontSize="20" VerticalOptions="Center"/>
+                                    <Label Text="{Binding PartNumber}" FontSize="20" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="End" Spacing="20" VerticalOptions="Center">
+                                    <Button Text="-" Style="{StaticResource ButtonStyle}"/>
+                                    <Label Text="0" FontSize="20" VerticalOptions="Center"/>
+                                    <Button Text="+" Style="{StaticResource ButtonStyle}"/>
+                                </HorizontalStackLayout>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Button Text="Сохранить" Grid.Row="4" Style="{StaticResource ButtonStyle}"/>
+            <StackLayout  Grid.Row="5" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Spacing="20">
+                <Button Text="Сохранить" Grid.Row="5" Style="{StaticResource ButtonStyle}" Margin="10,0,10,10"/>
+                <Button Text="🗑️" FontSize="20"  Style="{StaticResource ButtonStyleDelete}" Command="{Binding RemoveInCartCommand}" HorizontalOptions="Start"/>
+                <Label Text="Общая стоимость: " FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
+            </StackLayout>
         </Grid>
     </ScrollView>
 </ContentPage>

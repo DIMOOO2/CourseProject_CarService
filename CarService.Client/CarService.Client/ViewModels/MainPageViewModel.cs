@@ -1,4 +1,5 @@
-﻿using CarService.Client.Pages;
+﻿using CarService.Client.Others.DataServises;
+using CarService.Client.Pages;
 using CarService.Models.Entities;
 using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -30,29 +31,20 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     private async void UpdateRequest()
     {
-        try
+        ObservableCollection<Order>? collectionOrders = WebData.Orders;
+        if (collectionOrders!.Count != 0)
         {
-            ObservableCollection<Order>? collectionOrders = await client.GetFromJsonAsync<ObservableCollection<Order>>("https://localhost:7196/api/orders");
-            if (collectionOrders!.Count != 0)
-            {
-                OrdersCollection = collectionOrders;
-                IsVisibleItems = true;
-                IsVisibleUpdate = false;
-            }
-            else
-            {
-                IsVisibleItems = false;
-                IsVisibleUpdate = true;
-            }
+            OrdersCollection = collectionOrders;
+            IsVisibleItems = true;
+            IsVisibleUpdate = false;
         }
-        catch (HttpRequestException)
+        else
         {
-            await Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
             IsVisibleItems = false;
             IsVisibleUpdate = true;
         }
     }
-    
+
 
     [RelayCommand]
     private async Task PushCreateOrderPage()
@@ -61,9 +53,9 @@ public partial class MainPageViewModel : ObservableObject
         {
             await Shell.Current.GoToAsync(nameof(CreateOrderPage));
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-           await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
         }
     }
 }

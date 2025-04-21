@@ -12,7 +12,7 @@ namespace CarService.Models.Entities
         public decimal Price { get; set; }
         public int StockAmount { get; set; }
         public Manufacturer Manufacturer { get; set; } = null!;
-        public Warehouse Warehouse { get; set; } = null!;
+        public Warehouse? Warehouse { get; set; } = null!;
 
         [NotMapped]
         public string GetPrice

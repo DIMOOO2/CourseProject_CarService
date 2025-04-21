@@ -1,5 +1,4 @@
-﻿using CarService.Client.Others.LoginData;
-using CarService.Client.Pages;
+﻿using CarService.Client.Pages;
 
 namespace CarService.Client
 {
@@ -11,7 +10,6 @@ namespace CarService.Client
 
             Routing.RegisterRoute(nameof(CreateOrderPage), typeof(CreateOrderPage));
             Routing.RegisterRoute(nameof(AutoPartForClient), typeof(AutoPartForClient));
-            FlyoutFooter = "Склад: " + LoginData.CurrentWarehouse?.Title;
         }
     }
 }

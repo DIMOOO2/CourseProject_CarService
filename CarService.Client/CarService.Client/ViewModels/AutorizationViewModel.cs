@@ -1,7 +1,9 @@
-﻿using CarService.Client.Others.LoginData;
+﻿using CarService.Client.Others.DataServises;
 using CarService.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
@@ -32,13 +34,15 @@ namespace CarService.Client.ViewModels
                 byte[] sha256Hash = GenerateSha256Hash(Password, GenerateSalt());
                 string sha256HashString = Convert.ToBase64String(sha256Hash);
                 using var response = await _httpClient.PostAsJsonAsync<CorporateAccount>("https://localhost:7196/api/accounts/signin", new CorporateAccount
-                { LogIn = Login, Password = Password });
+                { LogIn = Login, Password = sha256HashString });
                 
                 if(response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     CorporateAccount? corporateAccount = await response.Content.ReadFromJsonAsync<CorporateAccount>();
                     await Application.Current!.MainPage!.DisplayAlert("Успешный ход", $"Добро пожаловать на склад {corporateAccount?.Warehouse.Title}", "ОК");
                     LoginData.SetWarehouse(corporateAccount.Warehouse);
+                    WebData.GetAutoPartsCollection(await _httpClient.GetFromJsonAsync<ObservableCollection<AutoPart>>($"https://localhost:7196/api/autoparts/{LoginData.CurrentWarehouse!.WarehouseId}"));
+                    WebData.GetOrdersCollection(await _httpClient.GetFromJsonAsync<ObservableCollection<Order>>("https://localhost:7196/api/orders"));
                     App.Current.MainPage = new AppShell();
                 }
                 else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
