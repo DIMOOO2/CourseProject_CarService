@@ -51,6 +51,7 @@ public partial class MainPageViewModel : ObservableObject
     {
         try
         {
+            CartData.SetCart(null);
             await Shell.Current.GoToAsync(nameof(CreateOrderPage));
         }
         catch (Exception ex)

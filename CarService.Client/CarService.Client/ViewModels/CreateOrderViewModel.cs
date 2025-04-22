@@ -1,7 +1,9 @@
-﻿using CarService.Client.Pages;
+﻿using CarService.Client.Others.DataServises;
+using CarService.Client.Pages;
 using CarService.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http.Json;
 
@@ -73,7 +75,11 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                Debug.WriteLine("FormView is worked!");
+                if(CartData.AutoParts == null)
+                {
+                    await Application.Current!.MainPage!.DisplayAlert("Ошибка создания", "Вы не добавили ни одной детали в корзину", "ОК");
+                    return;
+                }
                 if (IsLegalEntity) 
                 {
                     Models.Entities.Client newClient = new Models.Entities.Client()
@@ -94,18 +100,33 @@ namespace CarService.Client.ViewModels
                         }
                     };
 
-                    using var persponseClient = await client.PostAsJsonAsync<Models.Entities.Client>("https://localhost:7196/api/clients", newClient);
-
-                    string resultClient = await persponseClient.Content.ReadAsStringAsync();
-                    Debug.WriteLine(resultClient);
 
                     Order order = new Order() { ArticulGuid = Guid.NewGuid(), Client = newClient, OrderDate = DateTime.Now, OrderStatus = false };
 
+                    ObservableCollection<OrderedPart> orderedParts = new ObservableCollection<OrderedPart>();
+                    OrderedPart ordered = new OrderedPart();
+
+                    foreach(var item in CartData.AutoParts!)
+                    {
+                        ordered.Amount = item.StockAmount;
+                        ordered.Order = order;
+                        ordered.AutoPart = item;
+                        ordered.DepartureWarehouse = LoginData.CurrentWarehouse!;
+                        orderedParts.Add(ordered);
+                    }
+
+                    using var persponseClient = await client.PostAsJsonAsync<Models.Entities.Client>("https://localhost:7196/api/clients", newClient);
                     using var responseOrder = await client.PostAsJsonAsync<Order>("https://localhost:7196/api/orders", order);
-                    //Доделать логику добавления запчастей
+                    using var responseOrderedParts = await client.PostAsJsonAsync<ObservableCollection<OrderedPart>>("https://localhost:7196/api/orders", orderedParts);
+
+                    if(persponseClient.StatusCode == System.Net.HttpStatusCode.OK
+                        && responseOrder.StatusCode == System.Net.HttpStatusCode.OK
+                        && responseOrderedParts.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        await Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ оформлен", "ОК");
+                        await Shell.Current.Navigation.PopAsync();
+                    }
                 }
-
-
             }
             catch (Exception ex)
             {

@@ -1,10 +1,11 @@
 ﻿using CarService.Client.Others.DataServises;
+using CarService.Client.Others.Models;
 using CarService.Models.Entities;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Net.Http.Json;
 
 namespace CarService.Client.ViewModels
 {
@@ -14,7 +15,7 @@ namespace CarService.Client.ViewModels
         private ObservableCollection<AutoPart> autoPartsWithCurrentWarehouse;
 
         [ObservableProperty]
-        private ObservableCollection<AutoPart> autoPartsWithClient;
+        private ObservableCollection<CartAutoPart> autoPartsWithClient;
 
         [ObservableProperty]
         private bool isCollectionEmpty;
@@ -29,11 +30,7 @@ namespace CarService.Client.ViewModels
         private AutoPart selectItem;       
         
         [ObservableProperty]
-        private AutoPart selectItemClient;
-
-        [ObservableProperty]
-        private int desiredCount;
-
+        private CartAutoPart selectItemClient;
 
         private HttpClient httpClient = new HttpClient();
 
@@ -41,7 +38,7 @@ namespace CarService.Client.ViewModels
         {
             IsCollectionEmpty = false;
             AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
-            AutoPartsWithClient = new ObservableCollection<AutoPart>();
+            AutoPartsWithClient = new ObservableCollection<CartAutoPart>();
             UpdateCollectionLocal().GetAwaiter();
         }
 
@@ -77,14 +74,14 @@ namespace CarService.Client.ViewModels
                 if (AutoPartsWithClient.Count != 0)
                 {
                     currentAutoPart = AutoPartsWithClient.FirstOrDefault(s =>
-                    s.AutoPartName == SelectItem.AutoPartName &&
-                    s.PartNumber == SelectItem.PartNumber &&
-                    s.AutoPartId == SelectItem.AutoPartId);
+                    s.AutoPart.AutoPartName == SelectItem.AutoPartName &&
+                    s.AutoPart.PartNumber == SelectItem.PartNumber &&
+                    s.AutoPart.AutoPartId == SelectItem.AutoPartId)!.AutoPart;
                 }
 
                 if (currentAutoPart == null)
                 {
-                    AutoPartsWithClient.Add(SelectItem);
+                    AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1});
                     IsEnabledItem = false;
                     VisibilityItem = Visibility.Hidden;
                 }
@@ -104,13 +101,40 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                if (SelectItemClient == null) return;
+                if (SelectItemClient == null)
+                {
+                    await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();
+                    return;
+                }
                 AutoPartsWithClient?.Remove(SelectItemClient);
             }
             catch (Exception ex) 
             {
                 await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }       
+        }
+
+        [RelayCommand] 
+        private async Task SaveCart()
+        {
+            if (AutoPartsWithClient.Count == 0)
+            {
+                await Application.Current!.MainPage!.DisplayAlert("", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
+                return;
+            }
+            else
+            {
+                ObservableCollection<AutoPart> newCart = new ObservableCollection<AutoPart>();
+
+                foreach (var item in AutoPartsWithClient)
+                {
+                    newCart.Add(item.AutoPart);
+                }
+
+                CartData.SetCart(newCart);
+
+                await Shell.Current.Navigation.PopAsync();
+            }
         }
     }
 }

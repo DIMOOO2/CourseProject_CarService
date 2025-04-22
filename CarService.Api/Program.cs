@@ -2,6 +2,7 @@ using CarService.Api.DbContextAPI.ConnectDB;
 using CarService.Api.Services;
 using CarService.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 namespace CarService.Api
 {
@@ -33,6 +34,7 @@ namespace CarService.Api
             app.MapGet("/api/orderParts", () => appDbContext.OrderedParts
             .Include(o => o.Order)
             .Include(a => a.AutoPart)
+            .Include(m => m.AutoPart.Manufacturer)
             .Include(dw => dw.DepartureWarehouse)
             .Include(aw => aw.ArrivalWarehouse));
 
@@ -70,10 +72,13 @@ namespace CarService.Api
                 return order;
             });
 
-            app.MapPost("/api/orderParts", (OrderedPart orderPart) =>
+            app.MapPost("/api/orderParts", (ObservableCollection<OrderedPart> orderPart) =>
             {
-                appDbContext.OrderedParts.Add(orderPart);
-                appDbContext.SaveChangesAsync();
+                foreach (OrderedPart part in orderPart)
+                {
+                    OrderedPartService.AddOrderedPart(part).GetAwaiter();
+                }
+
                 return orderPart;
             });
 

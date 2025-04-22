@@ -7,7 +7,8 @@
              Shell.ForegroundColor="OrangeRed"
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
              xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models"
-             x:DataType="vm:AutoPartForClientViewModel">
+             x:DataType="vm:AutoPartForClientViewModel"
+             xmlns:modelCart="clr-namespace:CarService.Client.Others.Models">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -96,17 +97,17 @@ Grid.Row="3">
 
             <CollectionView x:Name="TestCollection1" Grid.Row="4" Margin="20" ItemsSource="{Binding AutoPartsWithClient}" SelectionMode="Single" SelectedItem="{Binding SelectItemClient}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:AutoPart">
+                    <DataTemplate x:DataType="modelCart:CartAutoPart">
                         <Frame BackgroundColor="Transparent" VerticalOptions="Center">
                             <Grid VerticalOptions="Center">
                                 <HorizontalStackLayout Spacing="20">
-                                    <Label Text="{Binding AutoPartName}" FontSize="20" VerticalOptions="Center"/>
-                                    <Label Text="{Binding PartNumber}" FontSize="20" VerticalOptions="Center"/>
+                                    <Label Text="{Binding AutoPart.AutoPartName}" FontSize="20" VerticalOptions="Center"/>
+                                    <Label Text="{Binding AutoPart.PartNumber}" FontSize="20" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout HorizontalOptions="End" Spacing="20" VerticalOptions="Center">
-                                    <Button Text="-" Style="{StaticResource ButtonStyle}"/>
-                                    <Label Text="0" FontSize="20" VerticalOptions="Center"/>
-                                    <Button Text="+" Style="{StaticResource ButtonStyle}"/>
+                                    <Button Text="-" Style="{StaticResource ButtonStyle}" Command="{Binding DiffDisiredCountCommand}"/>
+                                    <Label Text="{Binding DesiredCount}" FontSize="20" VerticalOptions="Center"/>
+                                    <Button Text="+" Style="{StaticResource ButtonStyle}" Command="{Binding AddDisiredCountCommand}"/>
                                 </HorizontalStackLayout>
                             </Grid>
                         </Frame>
@@ -114,9 +115,9 @@ Grid.Row="3">
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <StackLayout  Grid.Row="5" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Spacing="20">
-                <Button Text="Сохранить" Grid.Row="5" Style="{StaticResource ButtonStyle}" Margin="10,0,10,10"/>
-                <Button Text="🗑️" FontSize="20"  Style="{StaticResource ButtonStyleDelete}" Command="{Binding RemoveInCartCommand}" HorizontalOptions="Start"/>
+            <StackLayout  Grid.Row="5" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Spacing="20" Margin="10">
+                <Button Text="Сохранить" Grid.Row="5" Style="{StaticResource ButtonStyle}" Command="{Binding SaveCartCommand}"/>
+                <Button Text="Удалить из корзины"  Style="{StaticResource ButtonStyle}" Command="{Binding RemoveInCartCommand}" VerticalOptions="Center"/>
                 <Label Text="Общая стоимость: " FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
             </StackLayout>
         </Grid>
