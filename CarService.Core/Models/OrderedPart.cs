@@ -9,34 +9,34 @@ namespace CarService.Core.Models
 {
     public class OrderedPart
     {
-        public OrderedPart(Guid orderedPartId, uint amount, Order order, AutoPart autoPart, 
-            Warehouse departureWarehouse, Warehouse? arrivalWarehouse)
+        public OrderedPart(Guid orderedPartId, uint amount, Guid orderId, Guid autoPartId,
+            Guid departureWarehouseId, Guid? arrivalWarehouseId)
         {
             OrderedPartId = orderedPartId;
             Amount = amount;
-            Order = order;
-            AutoPart = autoPart;
-            DepartureWarehouse = departureWarehouse;
-            ArrivalWarehouse = arrivalWarehouse;
+            OrderId = orderId;
+            AutoPartId = autoPartId;
+            DepartureWarehouseId = departureWarehouseId;
+            ArrivalWarehouseId = arrivalWarehouseId;
         }
 
         public Guid OrderedPartId { get; }
         public uint Amount { get; }
-        public Order Order { get; } = null!;
-        public AutoPart AutoPart { get; } = null!;
-        public Warehouse DepartureWarehouse { get; } = null!;
-        public Warehouse? ArrivalWarehouse { get; } = null!;
+        public Guid OrderId { get; }
+        public Guid AutoPartId { get; }
+        public Guid DepartureWarehouseId { get; }
+        public Guid? ArrivalWarehouseId { get; }
 
         public static (OrderedPart OrderedPart, string error) Create(Guid orderedPartId, uint amount,
-            Order order, AutoPart autoPart,
-            Warehouse departureWarehouse, Warehouse? arrivalWarehouse)
+            Guid order, Guid autoPart,
+            Guid departureWarehouse, Guid? arrivalWarehouse)
         {
             string error = string.Empty;
 
             if (amount == 0 ||
-                order == null ||
-                autoPart == null ||
-                departureWarehouse == null)
+                order == Guid.Empty ||
+                autoPart == Guid.Empty ||
+                departureWarehouse == Guid.Empty)
             {
                 error = "Error warehouse is not created";
             }

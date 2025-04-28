@@ -8,24 +8,24 @@ namespace CarService.Core.Models
 {
     public class Order
     {
-        private Order(Guid orderId, DateTime orderDate, bool orderStatus, Client client)
+        private Order(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId)
         {
             OrderId = orderId;
             OrderDate = orderDate;
             OrderStatus = orderStatus;
-            Client = client;
+            ClientId = clientId;
         }
 
         public Guid OrderId { get; }
         public DateTime OrderDate { get; }
         public bool OrderStatus { get; }
-        public Client Client { get; } = null!;
+        public Guid ClientId { get; }
 
-        public static (Order Order, string error) Create(Guid orderId, DateTime orderDate, bool orderStatus, Client client)
+        public static (Order Order, string error) Create(Guid orderId, DateTime orderDate, bool orderStatus, Guid client)
         {
             string error = string.Empty;
 
-            if (client == null)
+            if (client == Guid.Empty)
             {
                 error = "Error order is not created";
             }

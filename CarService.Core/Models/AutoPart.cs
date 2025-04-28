@@ -10,15 +10,15 @@ namespace CarService.Core.Models
     {
         const int COUNT_SYMBOLS_PART_NUMBER = 6;
         private AutoPart(Guid autoPartId, string autoPartName, long partNumber, 
-            decimal price, uint stockAmount, Manufacturer manufacturer, Warehouse? warehouse)
+            decimal price, uint stockAmount, Guid manufacturerId, Guid? warehouseId)
         {
             AutoPartId = autoPartId;
             AutoPartName = autoPartName;
             PartNumber = partNumber;
             Price = price;
             StockAmount = stockAmount;
-            Manufacturer = manufacturer;
-            Warehouse = warehouse;
+            ManufacturerId = manufacturerId;
+            WarehouseId = warehouseId;
         }
 
         public Guid AutoPartId { get; }
@@ -26,19 +26,18 @@ namespace CarService.Core.Models
         public long PartNumber { get; }
         public decimal Price { get; }
         public uint StockAmount { get; }
-        public Manufacturer Manufacturer { get; } = null!;
-        public Warehouse? Warehouse { get; } = null!;
+        public Guid ManufacturerId { get; }
+        public Guid? WarehouseId { get; }
 
         public static (AutoPart AutoPart, string error) Create(Guid autoPartId, string autoPartName, long partNumber,
-            decimal price, uint stockAmount, Manufacturer manufacturer, Warehouse? warehouse)
+            decimal price, uint stockAmount, Guid manufacturer, Guid? warehouse)
         {
             string error = string.Empty;
 
             if (string.IsNullOrEmpty(autoPartName) || 
                 partNumber.ToString().Length != COUNT_SYMBOLS_PART_NUMBER ||
-                price <= 0 ||
-                manufacturer == null ||
-                stockAmount == 0)
+                price <= 0 || stockAmount == 0
+                || manufacturer == Guid.Empty)
             {
                 error = "Error auto part is not created";
             }

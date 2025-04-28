@@ -9,7 +9,7 @@ namespace CarService.Core.Models
     public class Client
     {
         private Client(Guid clientId, string firstName, string lastName, string? middleName, 
-            string phoneNumber, string email, string address, string city, Organization? organization)
+            string phoneNumber, string email, string address, string city, Guid? organizationId)
         {
             ClientId = clientId;
             FirstName = firstName;
@@ -19,7 +19,7 @@ namespace CarService.Core.Models
             Email = email;
             Address = address;
             City = city;
-            Organization = organization;
+            OrganizationId = organizationId;
         }
 
         public Guid ClientId { get; }
@@ -30,11 +30,11 @@ namespace CarService.Core.Models
         public string Email { get; } = string.Empty;
         public string Address { get; } = string.Empty;
         public string City { get; } = string.Empty;
-        public Organization? Organization { get; }
+        public Guid? OrganizationId { get; }
 
         public static (Client Client, string error) Create(Guid clientId, string firstName, 
             string lastName, string? middleName,
-            string phoneNumber, string email, string address, string city, Organization? organization)
+            string phoneNumber, string email, string address, string city, Guid? organization)
         {
             string error = string.Empty;
 

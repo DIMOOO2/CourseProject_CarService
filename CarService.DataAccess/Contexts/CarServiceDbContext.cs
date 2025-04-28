@@ -11,5 +11,12 @@ namespace CarService.DataAccess.Contexts
         }
 
         public DbSet<WarehouseEntity> Warehouses { get; set; }
+        public DbSet<ManufacturerEntity> Manufacturers { get; set; }
+        public DbSet<OrganizationEntity> Organizations { get; set; }
+        public DbSet<CorporateAccountEntity> CorporateAccounts { get; set; }
+        public DbSet<ClientEntity> Clients { get; set; }
+        public DbSet<AutoPartEntity> AutoParts { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<OrderPartEntity> OrderParts { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace CarService.Core.Models
         public string ManufacturerName { get; } = string.Empty;
         public string ContactInfo { get; } = string.Empty;
 
-        public (Manufacturer Manufacturer, string error) Create(Guid id, string name, string contactInfo)
+        public static (Manufacturer Manufacturer, string error) Create(Guid id, string name, string contactInfo)
         {
             string error = string.Empty;
 
