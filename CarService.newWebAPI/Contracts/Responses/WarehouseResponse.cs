@@ -1,4 +1,4 @@
-﻿namespace CarService.newWebAPI.Contracts
+﻿namespace CarService.newWebAPI.Contracts.Responses
 {
     public record WarehouseResponse
         (

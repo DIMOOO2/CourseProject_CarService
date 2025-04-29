@@ -9,7 +9,8 @@ namespace CarService.Core.Models
     public class Organization
     {
         const int COUNT_SYMBOLS_TIN = 10;
-        private Organization(Guid organizationId, string titleOrganization, long tIN, string address, string city)
+        private Organization(Guid organizationId, string titleOrganization, long tIN, 
+            string address, string city)
         {
             OrganizationId = organizationId;
             TitleOrganization = titleOrganization;

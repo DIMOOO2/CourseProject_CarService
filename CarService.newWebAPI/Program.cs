@@ -3,7 +3,6 @@ using CarService.Core.Abstractions;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace CarService.newWebAPI
 {
@@ -25,6 +24,27 @@ namespace CarService.newWebAPI
 
             builder.Services.AddScoped<IWarehouseService, WarehouseService>();
             builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+
+            builder.Services.AddScoped<IAutoPartService, AutoPartService>();
+            builder.Services.AddScoped<IAutoPartRepository, AutoPartRepository>();
+
+            builder.Services.AddScoped<IClientService, ClientService>();
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
+            builder.Services.AddScoped<ICorporateAccountService, CorporateAccountService>();
+            builder.Services.AddScoped<ICorporateAccountRepository, CorporateAccountRepository>();
+
+            builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+            builder.Services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+            builder.Services.AddScoped<IOrderedPartService, OrderedPartService>();
+            builder.Services.AddScoped<IOrderPartRepository, OrderPartRepository>();
+
+            builder.Services.AddScoped<IOrganizationService, OrganizationService>();
+            builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
             var app = builder.Build();
 
