@@ -16,11 +16,7 @@ namespace CarService.newWebAPI
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<CarServiceDbContext>(
-                options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(CarServiceDbContext)));
-                });
+            builder.Services.AddDbContext<CarServiceDbContext>();
 
             builder.Services.AddScoped<IWarehouseService, WarehouseService>();
             builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();

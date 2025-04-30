@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace CarService.DataAccess.Entities
         public Guid AutoPartId { get; set; }
         public string AutoPartName { get; set; } = string.Empty;
         public long PartNumber { get; set; }
+        [Precision(10, 2)]
         public decimal Price { get; set; }
         public uint StockAmount { get; set; }
         public Guid ManufacturerId { get; set; }

@@ -1,5 +1,7 @@
-﻿using CarService.DataAccess.Entities;
+﻿using CarService.DataAccess.Configurations;
+using CarService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace CarService.DataAccess.Contexts
 {
@@ -8,6 +10,25 @@ namespace CarService.DataAccess.Contexts
         public CarServiceDbContext(DbContextOptions<CarServiceDbContext> options) 
             : base(options)
         {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = CarServiceDB;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration<AutoPartEntity>(new AutoPartConfiguration());
+            modelBuilder.ApplyConfiguration<ClientEntity>(new ClientConfiguration());
+            modelBuilder.ApplyConfiguration<CorporateAccountEntity>(new CorporateAccountConfiguration());
+            modelBuilder.ApplyConfiguration<ManufacturerEntity>(new ManufacturerConfiguration());
+            modelBuilder.ApplyConfiguration<OrderEntity>(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration<OrderPartEntity>(new OrderPartConfiguration());
+            modelBuilder.ApplyConfiguration<OrganizationEntity>(new OrganizationConfiguration());
+            modelBuilder.ApplyConfiguration<WarehouseEntity>(new WarehouseConfiguration());
         }
 
         public DbSet<WarehouseEntity> Warehouses { get; set; }
