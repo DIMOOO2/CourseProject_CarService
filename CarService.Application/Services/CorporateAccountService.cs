@@ -31,5 +31,10 @@ namespace CarService.Application.Services
         {
             return await _corporateAccountRepository.Delete(id);
         }
+
+        public async Task<CorporateAccount> FindWithProfile(string login, string password)
+        {
+            return await _corporateAccountRepository.GetWithLoginAndPassword(login, password);
+        }
     }
 }

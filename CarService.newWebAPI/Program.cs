@@ -42,6 +42,8 @@ namespace CarService.newWebAPI
             builder.Services.AddScoped<IOrganizationService, OrganizationService>();
             builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
+            builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
