@@ -31,6 +31,22 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("SignIn")]
+        public async Task<ActionResult<CorporateAccount>> SignIn(string login, string passwordHash)
+        {
+            var account = await _corporateAccountService.FindWithProfile(login, passwordHash);
+
+            if(account == null)
+            {
+                return NotFound(login);
+            }
+
+            else
+            {
+                return Ok(account);
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateAccount([FromBody] CorporateAccountRequest request)
         {
