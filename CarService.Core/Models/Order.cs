@@ -16,6 +16,10 @@ namespace CarService.Core.Models
             ClientId = clientId;
         }
 
+        public Order()
+        {
+        }
+
         public Guid OrderId { get; }
         public DateTime OrderDate { get; }
         public bool OrderStatus { get; }

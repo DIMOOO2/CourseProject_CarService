@@ -1,4 +1,4 @@
-﻿using CarService.Models.Entities;
+﻿using CarService.Core.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http.Json;
@@ -8,7 +8,6 @@ namespace CarService.Client.Others.DataServises
 {
     public static class WebData
     {
-        private static HttpClient httpClient = new HttpClient();
         public static ObservableCollection<AutoPart>? AutoParts { get; set; }
         public static ObservableCollection<Order>? Orders { get; set; }
 

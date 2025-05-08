@@ -1,7 +1,7 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
-using CarService.newWebAPI.Contracts.Requests;
-using CarService.newWebAPI.Contracts.Responses;
+using CarService.ApplicationService.Contracts.Requests;
+using CarService.ApplicationService.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.newWebAPI.Controllers

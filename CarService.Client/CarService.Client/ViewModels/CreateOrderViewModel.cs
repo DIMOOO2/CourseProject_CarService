@@ -66,7 +66,7 @@ namespace CarService.Client.ViewModels
             }
             catch (Exception ex)
             {
-                await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 
@@ -77,7 +77,7 @@ namespace CarService.Client.ViewModels
             {
                 if(CartData.AutoParts == null)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Ошибка создания", "Вы не добавили ни одной детали в корзину", "ОК");
+                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка создания", "Вы не добавили ни одной детали в корзину", "ОК");
                     return;
                 }
                 if (IsLegalEntity) 
@@ -111,7 +111,7 @@ namespace CarService.Client.ViewModels
                         ordered.Amount = item.StockAmount;
                         ordered.Order = order;
                         ordered.AutoPart = item;
-                        ordered.DepartureWarehouse = LoginData.CurrentWarehouse!;
+                        //ordered.DepartureWarehouse = LoginData.CurrentWarehouse!;
                         orderedParts.Add(ordered);
                     }
 
@@ -123,14 +123,14 @@ namespace CarService.Client.ViewModels
                         && responseOrder.StatusCode == System.Net.HttpStatusCode.OK
                         && responseOrderedParts.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        await Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ оформлен", "ОК");
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ оформлен", "ОК");
                         await Shell.Current.Navigation.PopAsync();
                     }
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
     }

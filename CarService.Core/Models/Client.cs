@@ -21,7 +21,9 @@ namespace CarService.Core.Models
             City = city;
             OrganizationId = organizationId;
         }
-
+        public Client()
+        {         
+        }
         public Guid ClientId { get; }
         public string FirstName { get; } = string.Empty;
         public string LastName { get; } = string.Empty;

@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.DataAccess", "Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.newWebAPI", "CarService.newWebAPI\CarService.newWebAPI.csproj", "{44783B12-6B53-47D3-BDFD-E6B851783EC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Application", "CarService.Application\CarService.Application.csproj", "{CFE976C6-12B9-40AA-8250-DC8E07C66073}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.ApplicationService", "CarService.Application\CarService.ApplicationService.csproj", "{CFE976C6-12B9-40AA-8250-DC8E07C66073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,13 +1,8 @@
-﻿using CarService.Models.Entities;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CarService.Client.ViewModels
 {
@@ -49,7 +44,7 @@ namespace CarService.Client.ViewModels
             }
             catch (HttpRequestException)
             {
-                await Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
                 IsVisibleItems = false;
                 IsVisibleNotFoundView = true;
             }

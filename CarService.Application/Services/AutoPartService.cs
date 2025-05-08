@@ -1,5 +1,6 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
+using System.Collections.ObjectModel;
 
 namespace CarService.Application.Services
 {
@@ -15,6 +16,11 @@ namespace CarService.Application.Services
         public async Task<List<AutoPart>> GetAllAutoParts()
         {
             return await _autoPartRepository.Get();
+        }
+        
+        public async Task<ObservableCollection<AutoPart>> GetAutoPartsFromCurrentWarehouse(Guid warehouseId)
+        {
+            return await _autoPartRepository.GetByCurrentWarehouse(warehouseId);
         }
 
         public async Task<AutoPart> GetByIdAutoPart(Guid id)

@@ -72,7 +72,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\CarService.Models\CarService.Models.csproj" />
+	  <ProjectReference Include="..\..\CarService.Application\CarService.ApplicationService.csproj" />
+	  <ProjectReference Include="..\..\CarService.Core\CarService.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

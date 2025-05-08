@@ -22,7 +22,7 @@ namespace CarService.DataAccess.Contexts
             modelBuilder.ApplyConfiguration<OrderEntity>(new OrderConfiguration());
             modelBuilder.ApplyConfiguration<OrderPartEntity>(new OrderPartConfiguration());
             modelBuilder.ApplyConfiguration<OrganizationEntity>(new OrganizationConfiguration());
-            modelBuilder.ApplyConfiguration<WarehouseEntity>(new WarehouseConfiguration());
+            modelBuilder.ApplyConfiguration<WarehouseEntity>(new WarehouseConfiguration());             
         }
 
         public DbSet<WarehouseEntity> Warehouses { get; set; }

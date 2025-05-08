@@ -3,6 +3,7 @@ using CarService.Core.Models;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 namespace CarService.DataAccess.Repositories
 {
@@ -28,7 +29,22 @@ namespace CarService.DataAccess.Repositories
 
             return autoParts;
         }
-        
+
+        public async Task<ObservableCollection<AutoPart>> GetByCurrentWarehouse(Guid warehouseId)
+        {
+            var autoPartEntities = await _context.AutoParts
+                .AsNoTracking()
+                .Where(a => a.WarehouseId == warehouseId)
+                .ToListAsync();
+
+            var autoParts = autoPartEntities
+                .Select(a => AutoPart.Create(a.AutoPartId, a.AutoPartName, a.PartNumber,
+                a.Price, a.StockAmount, a.ManufacturerId, a.WarehouseId).AutoPart)
+              as ObservableCollection<AutoPart>;
+
+            return autoParts!;
+        }
+
         public async Task<AutoPart> GetById(Guid id)
         {
             var autoPartEntity = await _context.AutoParts.FirstOrDefaultAsync(a => a.AutoPartId == id);

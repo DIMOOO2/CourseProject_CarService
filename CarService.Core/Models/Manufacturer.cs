@@ -16,7 +16,10 @@ namespace CarService.Core.Models
             ManufacturerName = manufacturerName;
             ContactInfo = contactInfo;
         }
-
+        public Manufacturer()
+        {
+            
+        }
         public Guid ManufacturerId { get; }
         public string ManufacturerName { get; } = string.Empty;
         public string ContactInfo { get; } = string.Empty;

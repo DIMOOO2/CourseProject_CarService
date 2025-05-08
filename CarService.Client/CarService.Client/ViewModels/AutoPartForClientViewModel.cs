@@ -1,6 +1,6 @@
 ﻿using CarService.Client.Others.DataServises;
 using CarService.Client.Others.Models;
-using CarService.Models.Entities;
+using CarService.Core.Models;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -37,7 +37,7 @@ namespace CarService.Client.ViewModels
         public AutoPartForClientViewModel()
         {
             IsCollectionEmpty = false;
-            AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
+            //AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
             AutoPartsWithClient = new ObservableCollection<CartAutoPart>();
             UpdateCollectionLocal().GetAwaiter();
         }
@@ -52,12 +52,12 @@ namespace CarService.Client.ViewModels
                 {
                     IsCollectionEmpty = true;
                 }
-                else AutoPartsWithCurrentWarehouse = autoparts!;
+                //else AutoPartsWithCurrentWarehouse = autoparts!;
             }
             catch (HttpRequestException)
             {
-                await Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
-                await Application.Current!.MainPage!.Navigation.PopAsync();
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.Navigation.PopAsync();
             }
         }
 
@@ -73,15 +73,15 @@ namespace CarService.Client.ViewModels
 
                 if (AutoPartsWithClient.Count != 0)
                 {
-                    currentAutoPart = AutoPartsWithClient.FirstOrDefault(s =>
-                    s.AutoPart.AutoPartName == SelectItem.AutoPartName &&
-                    s.AutoPart.PartNumber == SelectItem.PartNumber &&
-                    s.AutoPart.AutoPartId == SelectItem.AutoPartId)!.AutoPart;
+                    //currentAutoPart = AutoPartsWithClient.FirstOrDefault(s =>
+                    //s.AutoPart.AutoPartName == SelectItem.AutoPartName &&
+                    //s.AutoPart.PartNumber == SelectItem.PartNumber &&
+                    //s.AutoPart.AutoPartId == SelectItem.AutoPartId)!.AutoPart;
                 }
 
                 if (currentAutoPart == null)
                 {
-                    AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1});
+                    //AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1});
                     IsEnabledItem = false;
                     VisibilityItem = Visibility.Hidden;
                 }
@@ -92,7 +92,7 @@ namespace CarService.Client.ViewModels
             }
             catch(Exception ex)
             {
-                await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }         
         }
 
@@ -110,7 +110,7 @@ namespace CarService.Client.ViewModels
             }
             catch (Exception ex) 
             {
-                await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }       
         }
 
@@ -119,19 +119,19 @@ namespace CarService.Client.ViewModels
         {
             if (AutoPartsWithClient.Count == 0)
             {
-                await Application.Current!.MainPage!.DisplayAlert("", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
                 return;
             }
             else
             {
                 ObservableCollection<AutoPart> newCart = new ObservableCollection<AutoPart>();
 
-                foreach (var item in AutoPartsWithClient)
-                {
-                    newCart.Add(item.AutoPart);
-                }
+                //foreach (var item in AutoPartsWithClient)
+                //{
+                //    newCart.Add(item.AutoPart);
+                //}
 
-                CartData.SetCart(newCart);
+                //CartData.SetCart(newCart);
 
                 await Shell.Current.Navigation.PopAsync();
             }

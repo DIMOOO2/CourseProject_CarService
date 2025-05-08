@@ -1,4 +1,4 @@
-﻿using CarService.Models.Entities;
+﻿using CarService.Core.Models;
 
 
 namespace CarService.Client.Others.DataServises

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarService.Application\CarService.Application.csproj" />
+    <ProjectReference Include="..\CarService.Application\CarService.ApplicationService.csproj" />
     <ProjectReference Include="..\CarService.DataAccess\CarService.DataAccess.csproj" />
   </ItemGroup>
 

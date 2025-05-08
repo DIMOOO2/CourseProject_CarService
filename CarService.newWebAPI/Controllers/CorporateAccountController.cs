@@ -1,7 +1,7 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
-using CarService.newWebAPI.Contracts.Requests;
-using CarService.newWebAPI.Contracts.Responses;
+using CarService.ApplicationService.Contracts.Requests;
+using CarService.ApplicationService.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.newWebAPI.Controllers
@@ -49,19 +49,19 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound(account);
         }
 
-        [HttpGet("SignIn")]
-        public async Task<ActionResult<CorporateAccount>> SignIn(string login, string passwordHash)
+        [HttpPost("SignIn")]
+        public async Task<ActionResult<CorporateAccount>> SignIn([FromBody] CorporateAccountRequest request)
         {
-            var account = await _corporateAccountService.FindWithProfile(login, passwordHash);
+            var account = await _corporateAccountService.FindWithProfile(request.logIn, request.password);
 
             if(account == null)
             {
-                return NotFound(login);
+                return NotFound(request);
             }
 
             else
             {
-                return Ok(account);
+                return Ok(new CorporateAccountResponse(account.AccountId, account.LogIn, account.Password, account.WarehouseId));
             }
         }
 

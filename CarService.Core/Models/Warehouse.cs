@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.Core.Models
+﻿namespace CarService.Core.Models
 {
     public class Warehouse
     {
@@ -14,6 +8,10 @@ namespace CarService.Core.Models
             Title = title;
             Address = address;
             City = city;
+        }
+
+        public Warehouse()
+        {
         }
 
         public Guid WarehouseId { get; }

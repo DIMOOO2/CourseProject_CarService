@@ -21,6 +21,8 @@ namespace CarService.Core.Models
             WarehouseId = warehouseId;
         }
 
+        public AutoPart() { }
+
         public Guid AutoPartId { get; }
         public string AutoPartName { get; } = string.Empty;
         public long PartNumber { get; }
@@ -28,6 +30,12 @@ namespace CarService.Core.Models
         public uint StockAmount { get; }
         public Guid ManufacturerId { get; }
         public Guid? WarehouseId { get; }
+
+        public string GetPrice
+        {
+            get => $"{Price}₽";
+        }
+        public string GetStockAmount { get => $"{StockAmount} шт."; }
 
         public static (AutoPart AutoPart, string error) Create(Guid autoPartId, string autoPartName, long partNumber,
             decimal price, uint stockAmount, Guid manufacturer, Guid? warehouse)

@@ -31,18 +31,18 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     private async void UpdateRequest()
     {
-        ObservableCollection<Order>? collectionOrders = WebData.Orders;
-        if (collectionOrders!.Count != 0)
-        {
-            OrdersCollection = collectionOrders;
-            IsVisibleItems = true;
-            IsVisibleUpdate = false;
-        }
-        else
-        {
-            IsVisibleItems = false;
-            IsVisibleUpdate = true;
-        }
+        //ObservableCollection<Order>? collectionOrders = WebData.Orders;
+        //if (collectionOrders!.Count != 0)
+        //{
+        //    OrdersCollection = collectionOrders;
+        //    IsVisibleItems = true;
+        //    IsVisibleUpdate = false;
+        //}
+        //else
+        //{
+        //    IsVisibleItems = false;
+        //    IsVisibleUpdate = true;
+        //}
     }
 
 
@@ -56,7 +56,7 @@ public partial class MainPageViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
         }
     }
 }

@@ -19,6 +19,10 @@ namespace CarService.Core.Models
             City = city;
         }
 
+        public Organization()
+        {
+        }
+
         public Guid OrganizationId { get; }
         public string TitleOrganization { get; } = string.Empty;
         public long TIN { get; }

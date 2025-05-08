@@ -1,4 +1,4 @@
-﻿namespace CarService.newWebAPI.Contracts.Responses
+﻿namespace CarService.ApplicationService.Contracts.Responses
 {
     public record AutoPartResponse
         (

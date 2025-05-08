@@ -16,9 +16,13 @@ namespace CarService.Core.Models
             WarehouseId = warehouseId;
         }
 
+        public CorporateAccount()
+        {
+        }
+
         public Guid AccountId { get; }
-        public string LogIn { get; } = string.Empty;
-        public string Password { get; } = string.Empty;
+        public string LogIn { get; }
+        public string Password { get; }
         public Guid WarehouseId { get; }
 
         public static (CorporateAccount CorporateAccount, string error) Create(Guid accountId, string logIn, string password, Guid warehouse)

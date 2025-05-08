@@ -6,7 +6,7 @@
              Shell.BackgroundColor="Transparent"
              Shell.ForegroundColor="OrangeRed"
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
-             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models"
+             xmlns:model="clr-namespace:CarService.Core.Models;assembly=CarService.Core"
              x:DataType="vm:AutoPartForClientViewModel"
              xmlns:modelCart="clr-namespace:CarService.Client.Others.Models">
 

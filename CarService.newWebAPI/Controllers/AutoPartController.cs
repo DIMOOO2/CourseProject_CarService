@@ -1,8 +1,9 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
-using CarService.newWebAPI.Contracts.Requests;
-using CarService.newWebAPI.Contracts.Responses;
+using CarService.ApplicationService.Contracts.Requests;
+using CarService.ApplicationService.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
 
 namespace CarService.newWebAPI.Controllers
 {
@@ -37,7 +38,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<List<AutoPartResponse>>> GetAutoPartById(Guid id)
+        public async Task<ActionResult<AutoPartResponse>> GetAutoPartById(Guid id)
         {
             var autopart = await _autoPartService.GetByIdAutoPart(id);
 
@@ -57,6 +58,25 @@ namespace CarService.newWebAPI.Controllers
                 return Ok(response);
             }
             else return NotFound(autopart);
+        }
+
+        [HttpGet("fromWarehouse/{warehouesId:guid}")]
+        public async Task<ActionResult<ObservableCollection<AutoPart>>> GetAutoPartFromCurrentWarehouse(Guid warehouesId)
+        {
+            var autopartsFromWarehouse = await _autoPartService.GetAutoPartsFromCurrentWarehouse(warehouesId);
+
+            var response = autopartsFromWarehouse.Select(a => new AutoPartResponse
+            (
+                a.AutoPartId,
+                a.AutoPartName,
+                a.PartNumber,
+                a.Price,
+                a.StockAmount,
+                a.ManufacturerId,
+                a.WarehouseId
+            ));
+
+            return Ok(response);
         }
 
         [HttpPost]

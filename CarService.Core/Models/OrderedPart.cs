@@ -20,6 +20,10 @@ namespace CarService.Core.Models
             ArrivalWarehouseId = arrivalWarehouseId;
         }
 
+        public OrderedPart()
+        {
+        }
+
         public Guid OrderedPartId { get; }
         public uint Amount { get; }
         public Guid OrderId { get; }
