@@ -1,4 +1,4 @@
-﻿using CarService.Models.Entities;
+﻿using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

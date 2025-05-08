@@ -18,7 +18,7 @@ namespace CarService.Application.Services
             return await _autoPartRepository.Get();
         }
         
-        public async Task<ObservableCollection<AutoPart>> GetAutoPartsFromCurrentWarehouse(Guid warehouseId)
+        public async Task<List<AutoPart>> GetAutoPartsFromCurrentWarehouse(Guid warehouseId)
         {
             return await _autoPartRepository.GetByCurrentWarehouse(warehouseId);
         }

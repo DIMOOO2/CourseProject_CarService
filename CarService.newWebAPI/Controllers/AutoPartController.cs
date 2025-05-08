@@ -61,7 +61,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpGet("fromWarehouse/{warehouesId:guid}")]
-        public async Task<ActionResult<ObservableCollection<AutoPart>>> GetAutoPartFromCurrentWarehouse(Guid warehouesId)
+        public async Task<ActionResult<ObservableCollection<AutoPartResponse>>> GetAutoPartFromCurrentWarehouse(Guid warehouesId)
         {
             var autopartsFromWarehouse = await _autoPartService.GetAutoPartsFromCurrentWarehouse(warehouesId);
 

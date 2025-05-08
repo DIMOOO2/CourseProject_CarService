@@ -1,4 +1,5 @@
-﻿using CarService.Core.Models;
+﻿using CarService.ApplicationService.Contracts.Responses;
+using CarService.Core.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http.Json;
@@ -12,9 +13,16 @@ namespace CarService.Client.Others.DataServises
         public static ObservableCollection<Order>? Orders { get; set; }
 
 
-        public static async void GetAutoPartsCollection(ObservableCollection<AutoPart>? autoParts)
+        public static async void GetAutoPartsCollection(List<AutoPartResponse>? autoParts)
         {
-            AutoParts = autoParts;
+            ObservableCollection<AutoPart> currentAutoParts = new ObservableCollection<AutoPart>();
+            foreach(var item in autoParts!)
+            {
+                currentAutoParts.Add(AutoPart.Create(item.autoPartId, item.autoPartName, item.partNumber,
+                    item.price, item.stockAmount, item.manufacturerId, item.warehouseId).AutoPart);
+            }
+
+            AutoParts = currentAutoParts;
             Debug.WriteLine(AutoParts?.Count);
         }
 

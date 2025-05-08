@@ -52,7 +52,7 @@ namespace CarService.Client.ViewModels
                 {
                     IsCollectionEmpty = true;
                 }
-                //else AutoPartsWithCurrentWarehouse = autoparts!;
+                else AutoPartsWithCurrentWarehouse = autoparts!;
             }
             catch (HttpRequestException)
             {
@@ -73,15 +73,15 @@ namespace CarService.Client.ViewModels
 
                 if (AutoPartsWithClient.Count != 0)
                 {
-                    //currentAutoPart = AutoPartsWithClient.FirstOrDefault(s =>
-                    //s.AutoPart.AutoPartName == SelectItem.AutoPartName &&
-                    //s.AutoPart.PartNumber == SelectItem.PartNumber &&
-                    //s.AutoPart.AutoPartId == SelectItem.AutoPartId)!.AutoPart;
+                    currentAutoPart = AutoPartsWithClient.FirstOrDefault(s =>
+                    s.AutoPart.AutoPartName == SelectItem.AutoPartName &&
+                    s.AutoPart.PartNumber == SelectItem.PartNumber &&
+                    s.AutoPart.AutoPartId == SelectItem.AutoPartId)!.AutoPart;
                 }
 
                 if (currentAutoPart == null)
                 {
-                    //AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1});
+                    AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1 });
                     IsEnabledItem = false;
                     VisibilityItem = Visibility.Hidden;
                 }

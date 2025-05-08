@@ -1,10 +1,7 @@
-﻿using CarService.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using CarService.Core.Models;
+
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CarService.Client.Others.DataServises
 {

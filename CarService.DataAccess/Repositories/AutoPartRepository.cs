@@ -30,17 +30,16 @@ namespace CarService.DataAccess.Repositories
             return autoParts;
         }
 
-        public async Task<ObservableCollection<AutoPart>> GetByCurrentWarehouse(Guid warehouseId)
+        public async Task<List<AutoPart>> GetByCurrentWarehouse(Guid warehouseId)
         {
             var autoPartEntities = await _context.AutoParts
-                .AsNoTracking()
                 .Where(a => a.WarehouseId == warehouseId)
+                .AsNoTracking()
                 .ToListAsync();
 
             var autoParts = autoPartEntities
                 .Select(a => AutoPart.Create(a.AutoPartId, a.AutoPartName, a.PartNumber,
-                a.Price, a.StockAmount, a.ManufacturerId, a.WarehouseId).AutoPart)
-              as ObservableCollection<AutoPart>;
+                a.Price, a.StockAmount, a.ManufacturerId, a.WarehouseId).AutoPart).ToList();
 
             return autoParts!;
         }

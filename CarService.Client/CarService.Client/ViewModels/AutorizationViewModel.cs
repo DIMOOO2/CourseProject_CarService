@@ -42,7 +42,8 @@ namespace CarService.Client.ViewModels
                     CorporateAccountResponse? corporateAccount = await response.Content.ReadFromJsonAsync<CorporateAccountResponse>();
                     WarehouseRequest? warehouse = await _httpClient.GetFromJsonAsync<WarehouseRequest>($"https://localhost:1488/Warehouse/{corporateAccount!.warehouseId}");
                     LoginData.SetWarehouse(Warehouse.Create(corporateAccount.warehouseId, warehouse!.Title, warehouse.Address, warehouse.City).Warehouse);
-                    WebData.GetAutoPartsCollection(await _httpClient.GetFromJsonAsync<ObservableCollection<AutoPart>>($"https://localhost:1488/AutoPart/fromWarehouse/{corporateAccount.warehouseId}"));
+                    WebData.GetAutoPartsCollection(
+                        await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{corporateAccount.warehouseId}"));
                     //WebData.GetOrdersCollection(await _httpClient.GetFromJsonAsync<ObservableCollection<Order>>("https://localhost:7196/api/orders"));
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Успешный ход", $"Добро пожаловать на склад {warehouse?.Title}", "ОК");
                     App.Current!.MainPage = new AppShell();
@@ -53,9 +54,9 @@ namespace CarService.Client.ViewModels
                     Password = "";
                 }
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже\nСообщение: {ex.Message}", "ОК");
                 Password = "";
             }
             catch(Exception ex) 
