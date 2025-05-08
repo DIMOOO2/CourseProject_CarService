@@ -7,6 +7,7 @@ namespace CarService.Core.Abstractions
         Task<Guid> Create(Warehouse warehouse);
         Task<Guid> Delete(Guid id);
         Task<List<Warehouse>> Get();
+        Task<Warehouse> GetById(Guid id);
         Task<Guid> Update(Guid id, string title, string address, string city);
     }
 }

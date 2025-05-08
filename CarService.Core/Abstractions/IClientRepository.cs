@@ -7,6 +7,7 @@ namespace CarService.Core.Abstractions
         Task<Guid> Create(Client client);
         Task<Guid> Delete(Guid id);
         Task<List<Client>> Get();
+        Task<Client> GetById(Guid id);
         Task<Guid> Update(Guid clientId, string firstName, string lastName, string? middleName, string phoneNumber, string email, string address, string city, Guid? organizationId);
     }
 }

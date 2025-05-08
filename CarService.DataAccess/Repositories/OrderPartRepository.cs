@@ -29,6 +29,21 @@ namespace CarService.DataAccess.Repositories
             return orderedParts;
         }
 
+        public async Task<OrderedPart> GetById(Guid id)
+        {
+            var orderedpartEntity = await _context.OrderParts.FirstOrDefaultAsync(op => op.OrderedPartId == id);
+
+            if (orderedpartEntity != null)
+            {
+                var orderedPart = OrderedPart.Create(orderedpartEntity.OrderedPartId, orderedpartEntity.Amount,
+                    orderedpartEntity.OrderId, orderedpartEntity.AutoPartId,
+                    orderedpartEntity.DepartureWarehouseId, orderedpartEntity.ArrivalWarehouseId).OrderedPart;
+
+                return orderedPart;
+            }
+            else return null!;
+        }
+
         public async Task<Guid> Create(OrderedPart orderedPart)
         {
             OrderPartEntity orderPartEntity = new OrderPartEntity()

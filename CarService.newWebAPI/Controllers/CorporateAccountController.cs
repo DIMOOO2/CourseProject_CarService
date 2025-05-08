@@ -18,7 +18,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CorporateAccountResponse>>> GetWarehouses()
+        public async Task<ActionResult<List<CorporateAccountResponse>>> GetAccounts()
         {
             var warehouses = await _corporateAccountService.GetAllAccounts();
 
@@ -29,6 +29,24 @@ namespace CarService.newWebAPI.Controllers
                 a.WarehouseId));
 
             return Ok(response);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<CorporateAccountResponse>>> GetAccountById(Guid id)
+        {
+            var account = await _corporateAccountService.GetByIdAccount(id);
+
+            if (account != null)
+            {
+                var response = new CorporateAccountResponse(
+                account.AccountId,
+                account.LogIn,
+                account.Password,
+                account.WarehouseId);
+
+                return Ok(response);
+            }
+            else return NotFound(account);
         }
 
         [HttpGet("SignIn")]

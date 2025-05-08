@@ -28,6 +28,20 @@ namespace CarService.DataAccess.Repositories
 
             return autoParts;
         }
+        
+        public async Task<AutoPart> GetById(Guid id)
+        {
+            var autoPartEntity = await _context.AutoParts.FirstOrDefaultAsync(a => a.AutoPartId == id);
+
+            if (autoPartEntity != null)
+            {
+                var autoPart = AutoPart.Create(autoPartEntity.AutoPartId, autoPartEntity.AutoPartName, autoPartEntity.PartNumber,
+                autoPartEntity.Price, autoPartEntity.StockAmount, autoPartEntity.ManufacturerId, autoPartEntity.WarehouseId).AutoPart;
+
+                return autoPart;
+            }
+            else return null!;
+        }
 
         public async Task<Guid> Create(AutoPart autoPart)
         {

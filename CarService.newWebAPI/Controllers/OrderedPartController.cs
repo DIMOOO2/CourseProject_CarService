@@ -33,6 +33,27 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<OrderedPartResponse>>> GetOrderedPartById(Guid id)
+        {
+            var orderedPart = await _orderedPartService.GetByIdOrderedPart(id);
+
+            if (orderedPart != null)
+            {
+                var response = new OrderedPartResponse(
+                orderedPart.OrderedPartId,
+                orderedPart.Amount,
+                orderedPart.OrderId,
+                orderedPart.AutoPartId,
+                orderedPart.DepartureWarehouseId,
+                orderedPart.ArrivalWarehouseId);
+
+                return Ok(response);
+            }
+
+            else return NotFound(orderedPart);         
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateOrderedPart([FromBody] OrderedPartRequest request)
         {

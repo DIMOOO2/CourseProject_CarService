@@ -17,6 +17,11 @@ namespace CarService.Application.Services
             return await _corporateAccountRepository.Get();
         }
 
+        public async Task<CorporateAccount> GetByIdAccount(Guid id)
+        {
+            return await _corporateAccountRepository.GetById(id);
+        }
+
         public async Task<Guid> CreateAccount(CorporateAccount corporateAccount)
         {
             return await _corporateAccountRepository.Create(corporateAccount);

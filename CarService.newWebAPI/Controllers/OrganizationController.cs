@@ -32,6 +32,26 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<OrganizationResponose>> GetOrgaanizationById(Guid id)
+        {
+            var organization = await _organizationService.GetByIdOrganization(id);
+
+            if(organization != null)
+            {
+               var response =  new OrganizationResponose(
+               organization.OrganizationId,
+               organization.TitleOrganization,
+               organization.TIN,
+               organization.Address,
+               organization.City);
+
+               return Ok(response);
+            }
+
+            else return NotFound(organization);           
+        }
+
         [HttpPost]  
         public async Task<ActionResult<Guid>> CreateOrganization([FromBody] OrganizationRequest request)
         {

@@ -36,6 +36,29 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<AutoPartResponse>>> GetAutoPartById(Guid id)
+        {
+            var autopart = await _autoPartService.GetByIdAutoPart(id);
+
+            if (autopart != null)
+            {
+                var response = new AutoPartResponse
+                (
+                    autopart.AutoPartId,
+                    autopart.AutoPartName,
+                    autopart.PartNumber,
+                    autopart.Price,
+                    autopart.StockAmount,
+                    autopart.ManufacturerId,
+                    autopart.WarehouseId
+                );
+
+                return Ok(response);
+            }
+            else return NotFound(autopart);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateAutoPart([FromBody] AutoPartRequest request)
         {
@@ -48,7 +71,7 @@ namespace CarService.newWebAPI.Controllers
                 request.manufacturerId,
                 request.warehouseId);
 
-            if(!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
                 return BadRequest(error);
 
             await _autoPartService.CreateAutopart(autopart);

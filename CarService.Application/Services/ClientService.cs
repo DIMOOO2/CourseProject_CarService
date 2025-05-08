@@ -17,6 +17,11 @@ namespace CarService.Application.Services
             return await _clientRepository.Get();
         }
 
+        public async Task<Client> GetByIdClient(Guid id)
+        {
+            return await _clientRepository.GetById(id);
+        }
+
         public async Task<Guid> CreateClient(Client client)
         {
             return await _clientRepository.Create(client);

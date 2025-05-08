@@ -17,6 +17,11 @@ namespace CarService.Application.Services
             return await _autoPartRepository.Get();
         }
 
+        public async Task<AutoPart> GetByIdAutoPart(Guid id)
+        {
+            return await _autoPartRepository.GetById(id);
+        }
+
         public async Task<Guid> CreateAutopart(AutoPart autoPart)
         {
             return await _autoPartRepository.Create(autoPart);

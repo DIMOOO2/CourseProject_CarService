@@ -30,6 +30,23 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<ManufacturerResponse>>> GatManufacturerById(Guid id)
+        {
+            var manufacturer = await _manufacturerService.GetByIdManufacturer(id);
+
+            if (manufacturer != null)
+            {
+                var response = new ManufacturerResponse(
+                manufacturer.ManufacturerId,
+                manufacturer.ManufacturerName,
+                manufacturer.ContactInfo);
+
+                return Ok(response);
+            }
+            else return NotFound(manufacturer);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateManufacturer([FromBody] ManufacturerRequest request)
         {

@@ -17,7 +17,7 @@ namespace CarService.DataAccess.Configurations
                 .IsRequired();
 
             builder.HasOne(c => c.Warehouse)
-                .WithOne(w => w.CorporateAccount);
+                .WithOne();
         }
     }
 }

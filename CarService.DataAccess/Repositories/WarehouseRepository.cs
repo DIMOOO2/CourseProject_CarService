@@ -28,6 +28,21 @@ namespace CarService.DataAccess.Repositories
             return warehouses;
         }
 
+        public async Task<Warehouse> GetById(Guid id)
+        {
+            var warehouseEntities = await _context.Warehouses.FirstOrDefaultAsync(w => w.WarehouseId == id);
+
+            if (warehouseEntities != null)
+            {
+                var warehouse = Warehouse.Create(warehouseEntities.WarehouseId, warehouseEntities.Title,
+                    warehouseEntities.Address, warehouseEntities.City).Warehouse;
+
+                return warehouse;
+            }
+
+            else return null!;
+        }
+
         public async Task<Guid> Create(Warehouse warehouse)
         {
             WarehouseEntity warehouseEntity = new WarehouseEntity

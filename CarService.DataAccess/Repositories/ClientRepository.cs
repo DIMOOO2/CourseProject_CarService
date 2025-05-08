@@ -3,6 +3,7 @@ using CarService.Core.Abstractions;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace CarService.DataAccess.Repositories
@@ -28,6 +29,18 @@ namespace CarService.DataAccess.Repositories
                 .ToList();
 
             return clients;
+        }
+
+        public async Task<Client> GetById(Guid id)
+        {
+            var clientEntity = await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == id);
+            if (clientEntity != null)
+            {
+                var client = Client.Create(clientEntity.ClientId, clientEntity.FirstName, clientEntity.LastName, clientEntity.MiddleName,
+                clientEntity.PhoneNumber, clientEntity.Email, clientEntity.Address, clientEntity.City, clientEntity.OrganizationId).Client;
+                return client;
+            }
+            else return null!;
         }
 
         public async Task<Guid> Create(Client client)

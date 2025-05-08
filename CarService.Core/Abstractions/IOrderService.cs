@@ -7,6 +7,7 @@ namespace CarService.Core.Abstractions
         Task<Guid> CreateOrder(Order order);
         Task<Guid> DeleteOrder(Guid id);
         Task<List<Order>> GetAllOrders();
+        Task<Order> GetByIdOrder(Guid id);
         Task<Guid> UpdateOrder(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId);
     }
 }

@@ -17,6 +17,11 @@ namespace CarService.Application.Services
             return await _orderRepository.Get();
         }
 
+        public async Task<Order> GetByIdOrder(Guid id)
+        {
+            return await _orderRepository.GetById(id);
+        }
+
         public async Task<Guid> CreateOrder(Order order)
         {
             return await _orderRepository.Create(order);

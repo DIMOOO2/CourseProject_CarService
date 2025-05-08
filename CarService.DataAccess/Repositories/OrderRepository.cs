@@ -28,6 +28,21 @@ namespace CarService.DataAccess.Repositories
             return orders;
         }
 
+        public async Task<Order> GetById(Guid id)
+        {
+            var orderEntity = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == id);
+
+            if (orderEntity != null)
+            {
+                var order = Order.Create(orderEntity.OrderId, orderEntity.OrderDate,
+                orderEntity.OrderStatus, orderEntity.ClientId).Order;
+
+                return order;
+            }
+
+            else return null!;
+        }
+       
         public async Task<Guid> Create(Order order)
         {
             OrderEntity orderEntity = new OrderEntity()

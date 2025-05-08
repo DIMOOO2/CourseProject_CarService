@@ -238,9 +238,6 @@ namespace CarService.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -287,7 +284,7 @@ namespace CarService.DataAccess.Migrations
             modelBuilder.Entity("CarService.DataAccess.Entities.CorporateAccountEntity", b =>
                 {
                     b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "Warehouse")
-                        .WithOne("CorporateAccount")
+                        .WithOne()
                         .HasForeignKey("CarService.DataAccess.Entities.CorporateAccountEntity", "WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -362,8 +359,6 @@ namespace CarService.DataAccess.Migrations
             modelBuilder.Entity("CarService.DataAccess.Entities.WarehouseEntity", b =>
                 {
                     b.Navigation("AutoParts");
-
-                    b.Navigation("CorporateAccount");
                 });
 #pragma warning restore 612, 618
         }

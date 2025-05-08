@@ -8,6 +8,7 @@ namespace CarService.Core.Abstractions
         Task<Guid> DeleteAccount(Guid id);
         Task<CorporateAccount> FindWithProfile(string login, string password);
         Task<List<CorporateAccount>> GetAllAccounts();
+        Task<CorporateAccount> GetByIdAccount(Guid id);
         Task<Guid> UpdateAccount(Guid accountId, string logIn, string password, Guid warehouseId);
     }
 }

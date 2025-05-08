@@ -18,11 +18,6 @@ namespace CarService.DataAccess.Configurations
 
             builder.Property(b => b.City)
                 .IsRequired();
-
-            builder.HasOne(w => w.CorporateAccount)
-                .WithOne(a => a.Warehouse)
-                .IsRequired();
-
         }
     }
 }

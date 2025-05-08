@@ -29,6 +29,21 @@ namespace CarService.DataAccess.Repositories
             return organizations;
         }
 
+        public async Task<Organization> GetById(Guid id)
+        {
+            var organizationEntity = await _context.Organizations.FirstOrDefaultAsync(o => o.OrganizationId == id);
+
+            if (organizationEntity != null)
+            {
+                var organization = Organization.Create(organizationEntity.OrganizationId, organizationEntity.TitleOrganization, organizationEntity.TIN,
+                organizationEntity.Address, organizationEntity.City).Organization;
+
+                return organization;
+            }
+
+            else return null!;
+        }
+
         public async Task<Guid> Create(Organization organization)
         {
             OrganizationEntity organizationEntity = new OrganizationEntity()

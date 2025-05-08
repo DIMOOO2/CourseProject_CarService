@@ -30,6 +30,25 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<WarehouseResponse>>> GetWarehouseById(Guid id)
+        {
+            var warehouse = await _warehouseService.GetByIdWarehouse(id);
+
+            if (warehouse != null)
+            {
+                var response = new WarehouseResponse(
+                warehouse.WarehouseId,
+                warehouse.Title,
+                warehouse.Address,
+                warehouse.City);
+
+                return Ok(response);
+            }
+
+            else return NotFound(warehouse);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateWarehouse([FromBody] WarehouseRequest request)
         {

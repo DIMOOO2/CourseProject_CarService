@@ -17,6 +17,11 @@ namespace CarService.Application.Services
             return await _organizationRepository.Get();
         }
 
+        public async Task<Organization> GetByIdOrganization(Guid id)
+        {
+            return await GetByIdOrganization(id);
+        }
+
         public async Task<Guid> CreateOrganization(Organization organization)
         {
             return await _organizationRepository.Create(organization);

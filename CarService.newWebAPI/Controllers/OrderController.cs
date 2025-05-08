@@ -32,6 +32,26 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<OrderResponse>>> GetOrderById(Guid id)
+        {
+            var order = await _orderService.GetByIdOrder(id);
+
+            if (order != null)
+            {
+                var response = new OrderResponse(
+                order.OrderId,
+                order.OrderDate,
+                order.OrderStatus,
+                order.ClientId
+                );
+
+                return Ok(response);
+            }
+
+            else return NotFound();
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateOrder([FromBody] OrderRequest request)
         {

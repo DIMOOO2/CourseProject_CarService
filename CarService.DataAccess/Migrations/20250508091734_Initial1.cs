@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarService.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Init1 : Migration
+    public partial class Initial1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,8 +46,7 @@ namespace CarService.DataAccess.Migrations
                     WarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

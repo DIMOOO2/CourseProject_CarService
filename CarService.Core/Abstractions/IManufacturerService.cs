@@ -7,6 +7,7 @@ namespace CarService.Core.Abstractions
         Task<Guid> CreateManufacturer(Manufacturer manufacturer);
         Task<Guid> DeleteManufacturer(Guid id);
         Task<List<Manufacturer>> GetAllManufacturers();
+        Task<Manufacturer> GetByIdManufacturer(Guid id);
         Task<Guid> UpdateManufacturer(Guid id, string name, string contactInfo);
     }
 }

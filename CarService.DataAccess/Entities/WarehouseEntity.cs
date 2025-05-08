@@ -12,8 +12,6 @@ namespace CarService.DataAccess.Entities
         public string Title { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string City { get; set;  } = string.Empty;
-        public Guid AccountId { get; set; }
-        public CorporateAccountEntity? CorporateAccount { get; set; } = null!;
         public List<AutoPartEntity> AutoParts { get; set; } = [];
     }
 }

@@ -29,6 +29,21 @@ namespace CarService.DataAccess.Repositories
             return accounts;
         }
 
+        public async Task<CorporateAccount> GetById(Guid id)
+        {
+            var accountEntity = await _context.CorporateAccounts.FirstOrDefaultAsync(c => c.AccountId == id);
+            if (accountEntity != null)
+            {
+                var account = CorporateAccount.Create(accountEntity.AccountId, accountEntity.LogIn,
+                    accountEntity.Password, accountEntity.WarehouseId)
+                .CorporateAccount;
+
+                return account;
+            }
+
+            else return null!;
+        }
+
         public async Task<CorporateAccount> GetWithLoginAndPassword(string login, string password)
         {
             var account = await _context.CorporateAccounts.FirstOrDefaultAsync(a => a.LogIn == login && a.Password == password);

@@ -17,6 +17,10 @@ namespace CarService.Application.Services
         {
             return await _manufacturerRepository.Get();
         }
+        public async Task<Manufacturer> GetByIdManufacturer(Guid id)
+        {
+            return await _manufacturerRepository.GetById(id);
+        }
 
         public async Task<Guid> CreateManufacturer(Manufacturer manufacturer)
         {

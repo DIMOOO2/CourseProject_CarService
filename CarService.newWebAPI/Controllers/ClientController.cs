@@ -33,6 +33,26 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<ClientResponse>>> GetByIdClient(Guid id)
+        {
+            var client = await _clientService.GetByIdClient(id);
+
+            if (client != null)
+            {
+                var response = new ClientResponse
+                (
+                    client.ClientId,
+                    client.FirstName, client.LastName, client.MiddleName,
+                    client.PhoneNumber,
+                    client.Email, client.Address, client.City, client.OrganizationId
+                );
+
+                return Ok(response);
+            }
+            else return NotFound(client);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateClient([FromBody] ClientRequest request)
         {

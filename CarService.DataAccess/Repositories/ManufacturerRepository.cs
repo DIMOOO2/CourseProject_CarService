@@ -28,6 +28,20 @@ namespace CarService.DataAccess.Repositories
             return manufacturers;
         }
 
+        public async Task<Manufacturer> GetById(Guid id)
+        {
+            var manufacturerEntity = await _context.Manufacturers.FirstOrDefaultAsync(m => m.ManufacturerId == id);
+
+            if (manufacturerEntity != null)
+            {
+                var manufacturer = Manufacturer.Create(manufacturerEntity.ManufacturerId, manufacturerEntity.ManufacturerName,
+                    manufacturerEntity.ContactInfo).Manufacturer;
+
+                return manufacturer;
+            }
+            else return null!;
+        }
+
         public async Task<Guid> Create(Manufacturer manufacturer)
         {
             ManufacturerEntity manufacturerEntity = new ManufacturerEntity()

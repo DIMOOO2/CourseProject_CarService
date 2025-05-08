@@ -17,6 +17,10 @@ namespace CarService.Application.Services
             return await _warehouseRepository.Get();
         }
 
+        public async Task<Warehouse> GetByIdWarehouse(Guid id)
+        {
+            return await _warehouseRepository.GetById(id);
+        }
         public async Task<Guid> CreateWarehouse(Warehouse warehouse)
         {
             return await _warehouseRepository.Create(warehouse);
