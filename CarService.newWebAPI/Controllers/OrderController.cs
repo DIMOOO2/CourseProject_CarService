@@ -3,6 +3,7 @@ using CarService.Core.Models;
 using CarService.ApplicationService.Contracts.Requests;
 using CarService.ApplicationService.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
 
 namespace CarService.newWebAPI.Controllers
 {
@@ -26,7 +27,8 @@ namespace CarService.newWebAPI.Controllers
                 o.OrderId,
                 o.OrderDate,
                 o.OrderStatus,
-                o.ClientId
+                o.ClientId,
+                o.WarehouseContractorId
                 ));
 
             return Ok(response);
@@ -43,7 +45,8 @@ namespace CarService.newWebAPI.Controllers
                 order.OrderId,
                 order.OrderDate,
                 order.OrderStatus,
-                order.ClientId
+                order.ClientId,
+                order.WarehouseContractorId
                 );
 
                 return Ok(response);
@@ -52,14 +55,32 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound();
         }
 
+        [HttpGet("fromWarehouse/{warehouesId:guid}")]
+        public async Task<ActionResult<ObservableCollection<OrderResponse>>> GetOrdersFromCurrentWarehouse(Guid warehouesId)
+        {
+            var orderFromWarehouse = await _orderService.GetOrdersFromCurrentWarehouse(warehouesId);
+
+            var response = orderFromWarehouse.Select(o => new OrderResponse
+            (
+                o.OrderId,
+                o.OrderDate,
+                o.OrderStatus,
+                o.ClientId,
+                o.WarehouseContractorId
+            ));
+
+            return Ok(response);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateOrder([FromBody] OrderRequest request)
+        public async Task<ActionResult<OrderResponse>> CreateOrder([FromBody] OrderRequest request)
         {
             var (order, error) = Order.Create(
                     Guid.NewGuid(),
                     DateTime.Now, 
                     false,
-                    request.clientId
+                    request.clientId,
+                    request.warehouseContractorId
                 );
 
             if (!string.IsNullOrEmpty(error))
@@ -69,7 +90,7 @@ namespace CarService.newWebAPI.Controllers
 
             await _orderService.CreateOrder(order);
 
-            return Ok(order.OrderId);
+            return Ok(order);
         }
 
         [HttpPut("{id:guid}")]
@@ -78,7 +99,8 @@ namespace CarService.newWebAPI.Controllers
             var orderId = await _orderService.UpdateOrder(id,
                 request.orderDate,
                 request.orderStatus,
-                request.clientId);
+                request.clientId,
+                request.warehouseContractorId);
 
             return Ok(orderId); 
         }

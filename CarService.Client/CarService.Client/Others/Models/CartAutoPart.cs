@@ -8,25 +8,25 @@ namespace CarService.Client.Others.Models
     public partial class CartAutoPart : ObservableObject
     {
         [ObservableProperty]
-        private int desiredCount;
+        private uint desiredCount;
 
         public CartAutoPart()
         {
             DesiredCount = 1;
         }
 
-        public AutoPart AutoPart { get; set; }
+        public AutoPart AutoPart { get; set; } = null!;
 
 
         [RelayCommand]
-        private async Task AddDisiredCount()
+        private void AddDisiredCount()
         {
             if (AutoPart.StockAmount > DesiredCount)
                 DesiredCount++;
         }
 
         [RelayCommand]
-        private async Task DiffDisiredCount()
+        private void DiffDisiredCount()
         {
             if (DesiredCount > 0)
                 DesiredCount--;

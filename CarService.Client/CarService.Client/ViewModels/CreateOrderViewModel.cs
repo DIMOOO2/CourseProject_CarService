@@ -1,4 +1,6 @@
-﻿using CarService.Client.Others.DataServises;
+﻿using CarService.ApplicationService.Contracts.Requests;
+using CarService.ApplicationService.Contracts.Responses;
+using CarService.Client.Others.DataServises;
 using CarService.Client.Pages;
 using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,48 +15,47 @@ namespace CarService.Client.ViewModels
         #region Properties
         [ObservableProperty]
         private bool isNaturalPerson;
-        
+
         [ObservableProperty]
         private bool isLegalEntity;
 
         [ObservableProperty]
-        private string firstName;
+        private string firstName = null!;
 
         [ObservableProperty]
-        private string lastName;
+        private string lastName = null!;
 
         [ObservableProperty]
-        private string middleName;
+        private string middleName = null!;
 
         [ObservableProperty]
-        private string phoneNumber;
+        private string phoneNumber = null!;
 
         [ObservableProperty]
-        private string email;
+        private string email = null!;
 
         [ObservableProperty]
-        private string city;
+        private string city = null!;
 
         [ObservableProperty]
-        private string address;
+        private string address = null!;
 
         [ObservableProperty]
-        private string titleOrganization;
+        private string titleOrganization = null!;
 
         [ObservableProperty]
-        private string tinOrganization;
+        private string tinOrganization = null!;
 
-       
-        #endregion 
+
+        #endregion
         public CreateOrderViewModel()
         {
             IsNaturalPerson = true;
             IsLegalEntity = false;
         }
 
-        private List<OrderedPart> orderedParts;
         private HttpClient client = new HttpClient();
-        
+
 
         [RelayCommand]
         private async Task PushAutoPartForClient()
@@ -69,67 +70,92 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        private bool isActiveCatch = false;
+        private Guid clientGuid;
+        private Guid? organizationGuid;
+        private Guid orderGuid;
+        private ObservableCollection<AutoPart> autoPartList = WebData.AutoParts!;
+        private List<AutoPartResponse> changedAutoPart = new List<AutoPartResponse>();
+
+
         [RelayCommand]
         private async Task CreateOrder()
         {
             try
             {
-                if(CartData.AutoParts == null)
+                if (CartData.AutoParts == null)
                 {
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка создания", "Вы не добавили ни одной детали в корзину", "ОК");
                     return;
                 }
-                if (IsLegalEntity) 
+
+                OrganizationResponose? organizationResponose = null!;
+
+                if (IsLegalEntity)
                 {
-                    //Core.Models.Client newClient = new Core.Models.Client()
-                    //{
-                    //    FirstName = FirstName,
-                    //    LastName = LastName,
-                    //    MiddleName = MiddleName,
-                    //    PhoneNumber = PhoneNumber,
-                    //    Email = Email,
-                    //    Address = Address,
-                    //    City = City,
-                    //    Organization = new Organization()
-                    //    {
-                    //        Address = Address,
-                    //        City = City,
-                    //        TIN = Convert.ToInt64(TinOrganization),
-                    //        TitleOrganization = TitleOrganization
-                    //    }
-                    //};
+                    if(TinOrganization.Length != 10)
+                    {
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка создания", "ИНН Должен содержать 10 цифр", "ОК");
+                        return;
+                    }
 
-
-                    //Order order = new Order() { ArticulGuid = Guid.NewGuid(), Client = newClient, OrderDate = DateTime.Now, OrderStatus = false };
-
-                    ObservableCollection<OrderedPart> orderedParts = new ObservableCollection<OrderedPart>();
-                    OrderedPart ordered = new OrderedPart();
-
-                    //foreach(var item in CartData.AutoParts!)
-                    //{
-                    //    ordered.Amount = item.StockAmount;
-                    //    ordered.Order = order;
-                    //    ordered.AutoPart = item;
-                    //    ordered.DepartureWarehouse = LoginData.CurrentWarehouse!;
-                    //    orderedParts.Add(ordered);
-                    //}
-
-                    //using var persponseClient = await client.PostAsJsonAsync<Models.Entities.Client>("https://localhost:7196/api/clients", newClient);
-                    //using var responseOrder = await client.PostAsJsonAsync<Order>("https://localhost:7196/api/orders", order);
-                    //using var responseOrderedParts = await client.PostAsJsonAsync<ObservableCollection<OrderedPart>>("https://localhost:7196/api/orders", orderedParts);
-
-                    //if(persponseClient.StatusCode == System.Net.HttpStatusCode.OK
-                    //    && responseOrder.StatusCode == System.Net.HttpStatusCode.OK
-                    //    && responseOrderedParts.StatusCode == System.Net.HttpStatusCode.OK)
-                    //{
-                    //    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ оформлен", "ОК");
-                    //    await Shell.Current.Navigation.PopAsync();
-                    //}
+                    OrganizationRequest organizationRequest = new OrganizationRequest(TitleOrganization, Convert.ToInt64(TinOrganization), Address, City);
+                    using var response1 = await client.PostAsJsonAsync<OrganizationRequest>("https://localhost:1488/Organization", organizationRequest);
+                    organizationResponose = await response1.Content.ReadFromJsonAsync<OrganizationResponose>();
+                    organizationGuid = organizationResponose!.organizationId;
                 }
+
+                ClientRequest clientRequest = new ClientRequest(FirstName, LastName, MiddleName, PhoneNumber, Email, Address, City, organizationResponose == null ? null : organizationResponose.organizationId);
+                using var response2 = await client.PostAsJsonAsync<ClientRequest>("https://localhost:1488/Client", clientRequest);
+                ClientResponse? clientResponse = await response2.Content.ReadFromJsonAsync<ClientResponse>();
+                clientGuid = clientResponse!.clientId;
+
+                OrderRequest orderRequest = new OrderRequest(DateTime.Now, false, clientResponse!.clientId, LoginData.CurrentWarehouse!.WarehouseId);
+                using var response3 = await client.PostAsJsonAsync<OrderRequest>("https://localhost:1488/Order", orderRequest);
+                OrderResponse? orderResponse = await response3.Content.ReadFromJsonAsync<OrderResponse>();
+                orderGuid = orderResponse!.orderId;
+
+                List<OrderedPartRequest> orderedPartRequests = new List<OrderedPartRequest>();
+                
+                foreach(var item in CartData.AutoParts)
+                {
+                    orderedPartRequests.Add(new OrderedPartRequest(item.stockAmount, orderResponse!.orderId, item.autoPartId, LoginData.CurrentWarehouse.WarehouseId, null));
+                }
+
+                using var response4 = await client.PostAsJsonAsync("https://localhost:1488/OrderedPart", orderedPartRequests);
+                List<OrderedPartResponse>? orderedPartResponses = await response4.Content.ReadFromJsonAsync<List<OrderedPartResponse>>();
             }
             catch (Exception ex)
             {
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                isActiveCatch = true;
+            }
+            finally
+            {
+                if (CartData.AutoParts != null)
+                {
+                    if (!isActiveCatch)
+                    {   
+                        foreach(var item in CartData.AutoParts!)
+                        {
+                            var autoPartChange = WebData.AutoParts!.FirstOrDefault(a => a.AutoPartId == item.autoPartId);
+                            if(autoPartChange != null)
+                                await client.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/AutoPart/{autoPartChange.AutoPartId}", new AutoPartRequest(item.autoPartName,
+                                    item.partNumber, item.price, autoPartChange.StockAmount - item.stockAmount, item.manufacturerId, item.warehouseId));
+                        }
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ успешно создан", "OK");
+                        WebData.GetAutoPartsCollection(await client.GetFromJsonAsync<List<AutoPartResponse>>("https://localhost:1488/AutoPart/"));
+                        await Shell.Current.Navigation.PopAsync();
+                    }
+
+                    else
+                    {
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Ошибка при создании заказа", "OK");
+                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Order/{orderGuid}");
+                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Client/{clientGuid}");
+                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Organization/{organizationGuid}");
+                    }
+                }        
             }
         }
     }

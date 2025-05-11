@@ -27,14 +27,19 @@ namespace CarService.Application.Services
             return await _orderRepository.Create(order);
         }
 
-        public async Task<Guid> UpdateOrder(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId)
+        public async Task<Guid> UpdateOrder(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId, Guid warehouseContratorId)
         {
-            return await _orderRepository.Update(orderId, orderDate, orderStatus, clientId);
+            return await _orderRepository.Update(orderId, orderDate, orderStatus, clientId, warehouseContratorId);
         }
 
         public async Task<Guid> DeleteOrder(Guid id)
         {
             return await _orderRepository.Delete(id);
+        }
+
+        public async Task<List<Order>> GetOrdersFromCurrentWarehouse(Guid warehouseId)
+        {
+            return await _orderRepository.GetByWarehouseId(warehouseId);
         }
     }
 }

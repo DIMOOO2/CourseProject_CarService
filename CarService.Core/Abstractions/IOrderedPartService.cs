@@ -4,7 +4,7 @@ namespace CarService.Core.Abstractions
 {
     public interface IOrderedPartService
     {
-        Task<Guid> CreateOrderedParts(OrderedPart orderedPart);
+        Task<List<Guid>> CreateOrderedParts(List<OrderedPart> orderedParts);
         Task<Guid> DeleteOrderedPart(Guid id);
         Task<List<OrderedPart>> GetAllOrderedParts();
         Task<OrderedPart> GetByIdOrderedPart(Guid id);

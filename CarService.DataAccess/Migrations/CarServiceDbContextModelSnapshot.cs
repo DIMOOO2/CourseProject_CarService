@@ -160,9 +160,15 @@ namespace CarService.DataAccess.Migrations
                     b.Property<bool>("OrderStatus")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("WarehouseContractorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("OrderId");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("WarehouseContractorId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -300,7 +306,15 @@ namespace CarService.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "WarehouseContractor")
+                        .WithOne()
+                        .HasForeignKey("CarService.DataAccess.Entities.OrderEntity", "WarehouseContractorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Client");
+
+                    b.Navigation("WarehouseContractor");
                 });
 
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderPartEntity", b =>
@@ -318,7 +332,7 @@ namespace CarService.DataAccess.Migrations
                     b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "DepartureWarehouse")
                         .WithOne()
                         .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "DepartureWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CarService.DataAccess.Entities.OrderEntity", "Order")

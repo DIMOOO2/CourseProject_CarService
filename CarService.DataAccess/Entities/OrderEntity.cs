@@ -13,6 +13,8 @@ namespace CarService.DataAccess.Entities
         public bool OrderStatus { get; set; }
         public Guid ClientId { get; set; }
         public ClientEntity? Client { get; set; } = null!;
+        public Guid WarehouseContractorId {  get; set; }
+        public WarehouseEntity? WarehouseContractor { get; set; }
         public List<OrderPartEntity> OrderParts { get; set; } = [];
     }
 }

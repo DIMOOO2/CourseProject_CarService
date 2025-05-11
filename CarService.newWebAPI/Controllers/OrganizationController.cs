@@ -69,7 +69,7 @@ namespace CarService.newWebAPI.Controllers
 
             await _organizationService.CreateOrganization(organization);
 
-            return Ok(organization.OrganizationId);
+            return Ok(new OrganizationResponose(organization.OrganizationId, organization.TitleOrganization, organization.TIN, organization.Address, organization.City));
         }
 
         [HttpPut("{id:guid}")]

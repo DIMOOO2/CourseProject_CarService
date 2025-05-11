@@ -21,6 +21,9 @@ namespace CarService.DataAccess.Configurations
 
             builder.HasMany(c => c.OrderParts)
                 .WithOne(op => op.Order);
+
+            builder.HasOne(o => o.WarehouseContractor)
+                .WithOne();
         }
     }
 }

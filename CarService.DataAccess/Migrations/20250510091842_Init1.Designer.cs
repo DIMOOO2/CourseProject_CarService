@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.DataAccess.Migrations
 {
     [DbContext(typeof(CarServiceDbContext))]
-    [Migration("20250508091734_Initial1")]
-    partial class Initial1
+    [Migration("20250510091842_Init1")]
+    partial class Init1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,9 +163,15 @@ namespace CarService.DataAccess.Migrations
                     b.Property<bool>("OrderStatus")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("WarehouseContractorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("OrderId");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("WarehouseContractorId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -303,7 +309,15 @@ namespace CarService.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "WarehouseContractor")
+                        .WithOne()
+                        .HasForeignKey("CarService.DataAccess.Entities.OrderEntity", "WarehouseContractorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Client");
+
+                    b.Navigation("WarehouseContractor");
                 });
 
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderPartEntity", b =>
@@ -321,7 +335,7 @@ namespace CarService.DataAccess.Migrations
                     b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "DepartureWarehouse")
                         .WithOne()
                         .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "DepartureWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CarService.DataAccess.Entities.OrderEntity", "Order")

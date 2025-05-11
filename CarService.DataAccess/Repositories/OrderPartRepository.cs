@@ -44,22 +44,29 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
-        public async Task<Guid> Create(OrderedPart orderedPart)
+        public async Task<List<Guid>> Create(List<OrderedPart> orderedParts)
         {
-            OrderPartEntity orderPartEntity = new OrderPartEntity()
-            {
-                OrderedPartId = orderedPart.OrderedPartId,
-                Amount = orderedPart.Amount,
-                OrderId = orderedPart.OrderId,
-                AutoPartId = orderedPart.AutoPartId,
-                DepartureWarehouseId = orderedPart.DepartureWarehouseId,
-                ArrivalWarehouseId = orderedPart.ArrivalWarehouseId
-            };
+            List<OrderPartEntity> orderedPartsInOrder = new List<OrderPartEntity>();
 
-            await _context.OrderParts.AddAsync(orderPartEntity);
+            foreach (var orderedPart in orderedParts)
+            {
+                OrderPartEntity orderPartEntity = new OrderPartEntity()
+                {
+                    OrderedPartId = orderedPart.OrderedPartId,
+                    Amount = orderedPart.Amount,
+                    OrderId = orderedPart.OrderId,
+                    AutoPartId = orderedPart.AutoPartId,
+                    DepartureWarehouseId = orderedPart.DepartureWarehouseId,
+                    ArrivalWarehouseId = orderedPart.ArrivalWarehouseId
+                };
+
+                orderedPartsInOrder.Add(orderPartEntity);
+            }
+
+            await _context.OrderParts.AddRangeAsync(orderedPartsInOrder);
             await _context.SaveChangesAsync();
 
-            return orderPartEntity.OrderedPartId;
+            return orderedPartsInOrder.Select(op => op.OrderedPartId).ToList();
         }
 
         public async Task<Guid> Update(Guid orderedPartId, uint amount,

@@ -19,7 +19,7 @@ namespace CarService.Client
                 window.Title = $"Автозапчасти.Логистика";
             }
 
-            return window;
+            return window!;
         }
     }
 }

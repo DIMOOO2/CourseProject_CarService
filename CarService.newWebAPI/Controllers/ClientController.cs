@@ -34,7 +34,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<List<ClientResponse>>> GetByIdClient(Guid id)
+        public async Task<ActionResult<ClientResponse>> GetByIdClient(Guid id)
         {
             var client = await _clientService.GetByIdClient(id);
 
@@ -54,7 +54,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateClient([FromBody] ClientRequest request)
+        public async Task<ActionResult<ClientResponse>> CreateClient([FromBody] ClientRequest request)
         {
             var (client, error) = Client.Create
                 (
@@ -74,7 +74,7 @@ namespace CarService.newWebAPI.Controllers
 
             await _clientService.CreateClient(client);
 
-            return Ok(client.ClientId);
+            return Ok(client);
         }
 
         [HttpPut("{id:guid}")]

@@ -29,7 +29,7 @@ public partial class MainPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void UpdateRequest()
+    private void UpdateRequest()
     {
         //ObservableCollection<Order>? collectionOrders = WebData.Orders;
         //if (collectionOrders!.Count != 0)

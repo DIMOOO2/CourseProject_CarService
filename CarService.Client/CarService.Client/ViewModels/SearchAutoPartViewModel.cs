@@ -1,7 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CarService.Client.Others.DataServises;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Net.Http.Json;
+using CarService.Core.Models;
 
 
 namespace CarService.Client.ViewModels
@@ -17,7 +18,7 @@ namespace CarService.Client.ViewModels
         bool isVisibleNotFoundView;
 
         [ObservableProperty]
-        ObservableCollection<Models.Entities.AutoPart>? autoParts;
+        ObservableCollection<AutoPart>? autoParts;
 
         public SearchAutoPartViewModel() 
         {
@@ -29,7 +30,7 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                ObservableCollection<Models.Entities.AutoPart>? collectionAutoPart = await client.GetFromJsonAsync<ObservableCollection<Models.Entities.AutoPart>>("https://localhost:7196/autoparts");
+                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
                 if (collectionAutoPart!.Count != 0)
                 {
                     AutoParts = collectionAutoPart;
@@ -42,9 +43,9 @@ namespace CarService.Client.ViewModels
                     IsVisibleNotFoundView = true;
                 }
             }
-            catch (HttpRequestException)
+            catch (Exception ex)
             {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
                 IsVisibleItems = false;
                 IsVisibleNotFoundView = true;
             }

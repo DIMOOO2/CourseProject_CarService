@@ -8,12 +8,13 @@ namespace CarService.Core.Models
 {
     public class Order
     {
-        private Order(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId)
+        private Order(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId, Guid warehouseContractorId)
         {
             OrderId = orderId;
             OrderDate = orderDate;
             OrderStatus = orderStatus;
             ClientId = clientId;
+            WarehouseContractorId = warehouseContractorId;
         }
 
         public Order()
@@ -24,17 +25,18 @@ namespace CarService.Core.Models
         public DateTime OrderDate { get; }
         public bool OrderStatus { get; }
         public Guid ClientId { get; }
+        public Guid WarehouseContractorId { get; }
 
-        public static (Order Order, string error) Create(Guid orderId, DateTime orderDate, bool orderStatus, Guid client)
+        public static (Order Order, string error) Create(Guid orderId, DateTime orderDate, bool orderStatus, Guid client, Guid warehouseContractorId)
         {
             string error = string.Empty;
 
-            if (client == Guid.Empty)
+            if (client == Guid.Empty || warehouseContractorId == Guid.Empty)
             {
                 error = "Error order is not created";
             }
 
-            Order order = new Order(orderId, orderDate, orderStatus, client!);
+            Order order = new Order(orderId, orderDate, orderStatus, client!, warehouseContractorId);
 
             return (order, error);
         }

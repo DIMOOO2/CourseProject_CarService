@@ -44,7 +44,7 @@ namespace CarService.Core.Models
 
             if (string.IsNullOrEmpty(autoPartName) || 
                 partNumber.ToString().Length != COUNT_SYMBOLS_PART_NUMBER ||
-                price <= 0 || stockAmount == 0
+                price <= 0
                 || manufacturer == Guid.Empty)
             {
                 error = "Error auto part is not created";

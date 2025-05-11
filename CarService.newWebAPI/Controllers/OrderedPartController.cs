@@ -3,6 +3,7 @@ using CarService.Core.Models;
 using CarService.ApplicationService.Contracts.Requests;
 using CarService.ApplicationService.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CarService.newWebAPI.Controllers
 {
@@ -51,30 +52,36 @@ namespace CarService.newWebAPI.Controllers
                 return Ok(response);
             }
 
-            else return NotFound(orderedPart);         
+            else return NotFound(orderedPart);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateOrderedPart([FromBody] OrderedPartRequest request)
+        public async Task<ActionResult<List<OrderedPartResponse>>> CreateOrderedPart([FromBody] List<OrderedPartRequest> request)
         {
-            var (orderedPart, error) = OrderedPart.Create
+            List<OrderedPart> orderedParts = new List<OrderedPart>();
+            foreach (var item in request)
+            {
+                var (orderedPart, error) = OrderedPart.Create
                 (
                     Guid.NewGuid(),
-                    request.amount,
-                    request.orderId,
-                    request.autoPartId,
-                    request.departureWarehouseId,
-                    request.arrivalWarehouseId
+                    item.amount,
+                    item.orderId,
+                    item.autoPartId,
+                    item.departureWarehouseId,
+                    item.arrivalWarehouseId
                 );
 
-            if (!string.IsNullOrEmpty(error))
-            {
-                return BadRequest(error);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    return BadRequest(error);
+                }
+                else orderedParts.Add(orderedPart);
+
             }
 
-            await _orderedPartService.CreateOrderedParts(orderedPart);
+            await _orderedPartService.CreateOrderedParts(orderedParts);
 
-            return Ok(orderedPart.OrderedPartId);
+            return Ok(orderedParts);
         }
 
         [HttpPut("{id:guid}")]

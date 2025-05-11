@@ -1,4 +1,6 @@
-﻿using CarService.Client.Others.DataServises;
+﻿using CarService.ApplicationService.Contracts.Requests;
+using CarService.ApplicationService.Contracts.Responses;
+using CarService.Client.Others.DataServises;
 using CarService.Client.Others.Models;
 using CarService.Core.Models;
 using CommunityToolkit.Maui.Alerts;
@@ -12,10 +14,10 @@ namespace CarService.Client.ViewModels
     public partial class AutoPartForClientViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<AutoPart> autoPartsWithCurrentWarehouse;
+        private ObservableCollection<AutoPart> autoPartsWithCurrentWarehouse = null!;
 
         [ObservableProperty]
-        private ObservableCollection<CartAutoPart> autoPartsWithClient;
+        private ObservableCollection<CartAutoPart> autoPartsWithClient = null!;
 
         [ObservableProperty]
         private bool isCollectionEmpty;
@@ -27,17 +29,17 @@ namespace CarService.Client.ViewModels
         private bool isEnabledItem;
 
         [ObservableProperty]
-        private AutoPart selectItem;       
+        private AutoPart selectItem = null!;       
         
         [ObservableProperty]
-        private CartAutoPart selectItemClient;
+        private CartAutoPart selectItemClient = null!;
 
         private HttpClient httpClient = new HttpClient();
 
         public AutoPartForClientViewModel()
         {
             IsCollectionEmpty = false;
-            //AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
+            AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
             AutoPartsWithClient = new ObservableCollection<CartAutoPart>();
             UpdateCollectionLocal().GetAwaiter();
         }
@@ -54,9 +56,9 @@ namespace CarService.Client.ViewModels
                 }
                 else AutoPartsWithCurrentWarehouse = autoparts!;
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", "Не удалось подключиться к серверу, проверьте подключение к интернету или попробуйте позже", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"Ошибка при подключению к серверу.\nСодержание: {ex.Message}", "ОК");
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.Navigation.PopAsync();
             }
         }
@@ -119,19 +121,26 @@ namespace CarService.Client.ViewModels
         {
             if (AutoPartsWithClient.Count == 0)
             {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
                 return;
             }
             else
             {
-                ObservableCollection<AutoPart> newCart = new ObservableCollection<AutoPart>();
+                ObservableCollection<AutoPartResponse> newCart = new ObservableCollection<AutoPartResponse>();
 
-                //foreach (var item in AutoPartsWithClient)
-                //{
-                //    newCart.Add(item.AutoPart);
-                //}
+                foreach (var item in AutoPartsWithClient)
+                {
+                    newCart.Add(new AutoPartResponse(
+                        item.AutoPart.AutoPartId,
+                        item.AutoPart.AutoPartName,
+                        item.AutoPart.PartNumber,
+                        item.AutoPart.Price,
+                        item.DesiredCount,
+                        item.AutoPart.ManufacturerId,
+                        item.AutoPart.WarehouseId));
+                }
 
-                //CartData.SetCart(newCart);
+                CartData.SetCart(newCart);
 
                 await Shell.Current.Navigation.PopAsync();
             }

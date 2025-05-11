@@ -2,7 +2,6 @@
 using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,10 +14,10 @@ namespace CarService.Client.ViewModels
     public partial class AutorizationViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string login;
+        private string login = null!;
 
         [ObservableProperty]
-        private string password;
+        private string password = null!;
 
         HttpClient _httpClient = new HttpClient();
 
@@ -44,7 +43,7 @@ namespace CarService.Client.ViewModels
                     LoginData.SetWarehouse(Warehouse.Create(corporateAccount.warehouseId, warehouse!.Title, warehouse.Address, warehouse.City).Warehouse);
                     WebData.GetAutoPartsCollection(
                         await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{corporateAccount.warehouseId}"));
-                    //WebData.GetOrdersCollection(await _httpClient.GetFromJsonAsync<ObservableCollection<Order>>("https://localhost:7196/api/orders"));
+                    WebData.GetOrdersCollection(await _httpClient.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{corporateAccount.warehouseId}"));
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Успешный ход", $"Добро пожаловать на склад {warehouse?.Title}", "ОК");
                     App.Current!.MainPage = new AppShell();
                 }

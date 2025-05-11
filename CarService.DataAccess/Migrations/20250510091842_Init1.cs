@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarService.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial1 : Migration
+    public partial class Init1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -132,7 +132,8 @@ namespace CarService.DataAccess.Migrations
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderStatus = table.Column<bool>(type: "bit", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WarehouseContractorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,6 +143,12 @@ namespace CarService.DataAccess.Migrations
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "ClientId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Warehouses_WarehouseContractorId",
+                        column: x => x.WarehouseContractorId,
+                        principalTable: "Warehouses",
+                        principalColumn: "WarehouseId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -181,7 +188,7 @@ namespace CarService.DataAccess.Migrations
                         column: x => x.DepartureWarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "WarehouseId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -233,6 +240,12 @@ namespace CarService.DataAccess.Migrations
                 name: "IX_Orders_ClientId",
                 table: "Orders",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_WarehouseContractorId",
+                table: "Orders",
+                column: "WarehouseContractorId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -254,10 +267,10 @@ namespace CarService.DataAccess.Migrations
                 name: "Manufacturers");
 
             migrationBuilder.DropTable(
-                name: "Warehouses");
+                name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Warehouses");
 
             migrationBuilder.DropTable(
                 name: "Organizations");
