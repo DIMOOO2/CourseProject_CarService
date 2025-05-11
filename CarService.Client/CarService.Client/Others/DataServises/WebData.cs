@@ -1,7 +1,6 @@
 ﻿using CarService.ApplicationService.Contracts.Responses;
 using CarService.Core.Models;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 
 namespace CarService.Client.Others.DataServises
@@ -10,6 +9,8 @@ namespace CarService.Client.Others.DataServises
     {
         public static ObservableCollection<AutoPart>? AutoParts { get; set; }
         public static ObservableCollection<Order>? Orders { get; set; }
+        public static ObservableCollection<Manufacturer>? Manufacturers { get; set; }
+        public static ObservableCollection<Core.Models.Client>? Clients { get; set; }
 
 
         public static void GetAutoPartsCollection(List<AutoPartResponse>? autoParts)
@@ -22,7 +23,6 @@ namespace CarService.Client.Others.DataServises
             }
 
             AutoParts = currentAutoParts;
-            Debug.WriteLine(AutoParts?.Count);
         }
 
         public static void GetOrdersCollection(List<OrderResponse>? orders)
@@ -35,7 +35,29 @@ namespace CarService.Client.Others.DataServises
             }
 
             Orders = currentOrders;
-            Debug.WriteLine(Orders?.Count);
+        }
+
+        public static void GetClientCollection(List<ClientResponse> clients)
+        {
+            ObservableCollection<Core.Models.Client> currentClients = new ObservableCollection<Core.Models.Client>();
+            foreach (var client in clients!)
+            {
+                currentClients.Add(Core.Models.Client.Create(client.clientId, client.firstName, client.lastName, client.middleName,
+                    client.phoneNumber, client.email, client.address, client.city, client.organizationId).Client);
+            }
+
+            Clients = currentClients;
+        }
+
+        public static void GetCollectionManufacturer(List<ManufacturerResponse> manufacturers)
+        {
+            ObservableCollection<Manufacturer> currentManufacturers = new ObservableCollection<Manufacturer>();
+            foreach (var manufacturer in manufacturers!)
+            {
+                currentManufacturers.Add(Manufacturer.Create(manufacturer.manufacturerId, manufacturer.manufacturerName, manufacturer.contactInfo).Manufacturer);
+            }
+
+            Manufacturers = currentManufacturers;
         }
     }
 }

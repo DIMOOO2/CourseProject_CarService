@@ -1,11 +1,10 @@
 ﻿using CarService.Client.Others.DataServises;
+using CarService.Client.Others.Models;
 using CarService.Client.Pages;
-using CarService.Models.Entities;
-using CommunityToolkit.Mvvm;
+using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Net.Http.Json;
 
 
 namespace CarService.Client.ViewModels;
@@ -21,7 +20,7 @@ public partial class MainPageViewModel : ObservableObject
     bool isVisibleUpdate;
 
     [ObservableProperty]
-    ObservableCollection<Order>? ordersCollection;
+    ObservableCollection<OrderInfo>? ordersCollection;
 
     public MainPageViewModel()
     {
@@ -31,18 +30,25 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     private void UpdateRequest()
     {
-        //ObservableCollection<Order>? collectionOrders = WebData.Orders;
-        //if (collectionOrders!.Count != 0)
-        //{
-        //    OrdersCollection = collectionOrders;
-        //    IsVisibleItems = true;
-        //    IsVisibleUpdate = false;
-        //}
-        //else
-        //{
-        //    IsVisibleItems = false;
-        //    IsVisibleUpdate = true;
-        //}
+        ObservableCollection<Order>? collectionOrders = WebData.Orders;
+        if (collectionOrders!.Count != 0)
+        {
+            ObservableCollection<OrderInfo> current = new ObservableCollection<OrderInfo>();
+
+            foreach(var item in collectionOrders)
+            {
+                current.Add(new OrderInfo(item.OrderId, item.OrderDate, item.OrderStatus));
+            }
+
+            OrdersCollection = current;
+            IsVisibleItems = true;
+            IsVisibleUpdate = false;
+        }
+        else
+        {
+            IsVisibleItems = false;
+            IsVisibleUpdate = true;
+        }
     }
 
 

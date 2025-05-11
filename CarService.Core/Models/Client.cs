@@ -34,6 +34,14 @@ namespace CarService.Core.Models
         public string City { get; } = string.Empty;
         public Guid? OrganizationId { get; }
 
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName} {MiddleName}";
+            }
+        }
+
         public static (Client Client, string error) Create(Guid clientId, string firstName, 
             string lastName, string? middleName,
             string phoneNumber, string email, string address, string city, Guid? organization)

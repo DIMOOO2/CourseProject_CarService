@@ -41,9 +41,42 @@ namespace CarService.Client.ViewModels
                     CorporateAccountResponse? corporateAccount = await response.Content.ReadFromJsonAsync<CorporateAccountResponse>();
                     WarehouseRequest? warehouse = await _httpClient.GetFromJsonAsync<WarehouseRequest>($"https://localhost:1488/Warehouse/{corporateAccount!.warehouseId}");
                     LoginData.SetWarehouse(Warehouse.Create(corporateAccount.warehouseId, warehouse!.Title, warehouse.Address, warehouse.City).Warehouse);
-                    WebData.GetAutoPartsCollection(
-                        await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{corporateAccount.warehouseId}"));
-                    WebData.GetOrdersCollection(await _httpClient.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{corporateAccount.warehouseId}"));
+
+                    var autoPartResponses = await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{corporateAccount.warehouseId}");
+
+                    WebData.GetAutoPartsCollection(autoPartResponses);
+
+                    List<ManufacturerResponse> manufacturerResponses = new List<ManufacturerResponse>();
+
+                    if(autoPartResponses != null)
+                    {
+                        foreach(var item in autoPartResponses)
+                        {
+                            ManufacturerResponse? manufacturer = await _httpClient.GetFromJsonAsync<ManufacturerResponse>($"https://localhost:1488/Manufacturer/{item.manufacturerId}");
+                            if(manufacturer != null)
+                                manufacturerResponses.Add(manufacturer);
+                        }
+                    }
+
+                    WebData.GetCollectionManufacturer(manufacturerResponses);
+
+                    List<OrderResponse>? orderResponses = await _httpClient.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{corporateAccount.warehouseId}");
+                    WebData.GetOrdersCollection(orderResponses);
+
+                    List<ClientResponse> clientResponses = new List<ClientResponse>();
+
+                    if(orderResponses != null)
+                    {
+                        foreach (var item in orderResponses!)
+                        {
+                            ClientResponse? clientResponse = await _httpClient.GetFromJsonAsync<ClientResponse>($"https://localhost:1488/Client/{item.clientId}");
+                            if(clientResponse != null)
+                                clientResponses.Add(clientResponse!);
+                        }
+                    }
+
+                    WebData.GetClientCollection(clientResponses);
+
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Успешный ход", $"Добро пожаловать на склад {warehouse?.Title}", "ОК");
                     App.Current!.MainPage = new AppShell();
                 }

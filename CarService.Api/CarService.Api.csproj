@@ -22,8 +22,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CarService.Models\CarService.Models.csproj" />
-  </ItemGroup>
-
 </Project>

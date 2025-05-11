@@ -5,7 +5,7 @@
              Title=""
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
              x:DataType="vm:MainPageViewModel"
-             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models"
+             xmlns:model="clr-namespace:CarService.Client.Others.Models"
              >
     <!--Источник иконок: Uniconlabs</a>-->
     <ContentPage.Resources>
@@ -56,7 +56,7 @@
                     IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" 
                     SelectionMode="None" HorizontalOptions="Fill" Margin="5">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Order">
+                    <DataTemplate x:DataType="model:OrderInfo">
                         <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
                             <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
                                 <Label Text="{Binding ArticulNumber}"/>

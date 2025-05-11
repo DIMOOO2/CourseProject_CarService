@@ -2,7 +2,9 @@ using CarService.Application.Services;
 using CarService.Core.Abstractions;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace CarService.newWebAPI
 {
@@ -11,7 +13,6 @@ namespace CarService.newWebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -52,6 +53,8 @@ namespace CarService.newWebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            
 
             app.UseHttpsRedirection();
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Maui.Graphics;
 
 namespace CarService.Core.Models
 {
@@ -26,6 +22,7 @@ namespace CarService.Core.Models
         public bool OrderStatus { get; }
         public Guid ClientId { get; }
         public Guid WarehouseContractorId { get; }
+
 
         public static (Order Order, string error) Create(Guid orderId, DateTime orderDate, bool orderStatus, Guid client, Guid warehouseContractorId)
         {

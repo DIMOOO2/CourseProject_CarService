@@ -82,10 +82,14 @@ namespace CarService.newWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateAutoPart([FromBody] AutoPartRequest request)
         {
+            Guid guid = Guid.NewGuid();
+            byte[] data = guid.ToByteArray();
+            
+
             var (autopart, error) = AutoPart.Create(
-                Guid.NewGuid(),
+                guid,
                 request.autoPartName,
-                request.partNumber,
+                Convert.ToInt64(Math.Abs(BitConverter.ToInt32(data, 0))),
                 request.price,
                 request.stockAmount,
                 request.manufacturerId,

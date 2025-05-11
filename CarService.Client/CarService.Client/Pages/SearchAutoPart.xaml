@@ -6,7 +6,8 @@
              Title=""
              xmlns:vm="clr-namespace:CarService.Client.ViewModels"
              x:DataType="vm:SearchAutoPartViewModel"
-             xmlns:model="clr-namespace:CarService.Models.Entities;assembly=CarService.Models">
+             xmlns:model="clr-namespace:CarService.Client.Others.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -23,21 +24,26 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout Orientation="Horizontal" Spacing="10">
+            <StackLayout Orientation="Horizontal" Spacing="20">
                 <Label Text="Поиск запчастей" FontSize="30" FontAttributes="Bold" Margin="10,0,0,0" VerticalOptions="Center"/>
-                <ur:AutoCompleteTextField HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
-                                   Margin="0,0,10,0"/>
+
+                <SearchBar Placeholder="Введите название автозапчасти" FontSize="16" HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
+                                   Margin="0,0,10,0" Text="{Binding UserRequest}">
+                    <SearchBar.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchCommand}"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
 
             </StackLayout>
 
             <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding AutoParts}" 
               IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" Margin="10">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:AutoPart">
-                        <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding AutoPartName}"/>
-                                <Label Text="{Binding PartNumber}"/>
+                    <DataTemplate x:DataType="model:AutoPartInfo">
+                        <Frame BackgroundColor="Transparent" BorderColor="OrangeRed" Opacity="{Binding GetOpacity}">
+                            <StackLayout Orientation="Vertical" Spacing="5">
+                                <Label Text="{Binding GetAutoPartName}" FontSize="16"/>
+                                <Label Text="{Binding GetPartNumber}"/>
                                 <Label Text="{Binding GetPrice}"/>
                                 <Label Text="{Binding GetStockAmount}"/>
                                 <Label Text="{Binding GetNameManufacturer}"/>

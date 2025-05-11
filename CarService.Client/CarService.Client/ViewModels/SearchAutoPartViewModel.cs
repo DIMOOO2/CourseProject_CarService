@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using CarService.Core.Models;
+using CarService.Client.Others.Models;
 
 
 namespace CarService.Client.ViewModels
@@ -18,7 +19,11 @@ namespace CarService.Client.ViewModels
         bool isVisibleNotFoundView;
 
         [ObservableProperty]
-        ObservableCollection<AutoPart>? autoParts;
+        string userRequest;
+
+        [ObservableProperty]
+        ObservableCollection<AutoPartInfo>? autoParts;
+
 
         public SearchAutoPartViewModel() 
         {
@@ -30,22 +35,65 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
-                if (collectionAutoPart!.Count != 0)
-                {
-                    AutoParts = collectionAutoPart;
-                    IsVisibleItems = true;
-                    IsVisibleNotFoundView = false;
-                }
-                else
-                {
-                    IsVisibleItems = false;
-                    IsVisibleNotFoundView = true;
-                }
+                UpdateCollection();
             }
             catch (Exception ex)
             {
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                IsVisibleItems = false;
+                IsVisibleNotFoundView = true;
+            }
+        }
+
+        [RelayCommand]
+        private async void Search()
+        {
+            UpdateCollection();
+        }
+
+        private void UpdateCollection()
+        {
+            ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
+            if (collectionAutoPart!.Count != 0)
+            {
+                ObservableCollection<AutoPartInfo>? current = new ObservableCollection<AutoPartInfo>();
+
+                if(string.IsNullOrEmpty(UserRequest))
+                {
+                    foreach (var item in collectionAutoPart)
+                    {
+                        current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
+                            item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));
+                    }
+                }
+
+                else
+                {
+                    foreach (var item in collectionAutoPart)
+                    {
+                        if(item.AutoPartName.Contains(UserRequest))
+                        {
+                            current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
+                            item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));
+                        }               
+                    }
+                }
+                
+                if(current.Count == 0)
+                {
+                    IsVisibleItems = false;
+                    IsVisibleNotFoundView = true;
+                }
+                else
+                {
+                    IsVisibleItems = true;
+                    IsVisibleNotFoundView = false;
+                }
+
+                AutoParts = current;              
+            }
+            else
+            {
                 IsVisibleItems = false;
                 IsVisibleNotFoundView = true;
             }
