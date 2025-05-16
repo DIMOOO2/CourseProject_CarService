@@ -1,8 +1,7 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
-using System.Collections.ObjectModel;
 
-namespace CarService.Application.Services
+namespace CarService.ApplicationService.Services
 {
     public class AutoPartService : IAutoPartService
     {

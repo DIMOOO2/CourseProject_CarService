@@ -160,8 +160,7 @@ namespace CarService.DataAccess.Migrations
                     Amount = table.Column<long>(type: "bigint", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ArrivalWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,11 +177,6 @@ namespace CarService.DataAccess.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderParts_Warehouses_ArrivalWarehouseId",
-                        column: x => x.ArrivalWarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId");
                     table.ForeignKey(
                         name: "FK_OrderParts_Warehouses_DepartureWarehouseId",
                         column: x => x.DepartureWarehouseId,
@@ -211,13 +205,6 @@ namespace CarService.DataAccess.Migrations
                 table: "CorporateAccounts",
                 column: "WarehouseId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderParts_ArrivalWarehouseId",
-                table: "OrderParts",
-                column: "ArrivalWarehouseId",
-                unique: true,
-                filter: "[ArrivalWarehouseId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderParts_AutoPartId",

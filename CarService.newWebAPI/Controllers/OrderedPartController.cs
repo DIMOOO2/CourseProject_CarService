@@ -28,8 +28,7 @@ namespace CarService.newWebAPI.Controllers
                 op.Amount,
                 op.OrderId,
                 op.AutoPartId,
-                op.DepartureWarehouseId,
-                op.ArrivalWarehouseId));
+                op.DepartureWarehouseId));
 
             return Ok(response);
         }
@@ -46,8 +45,7 @@ namespace CarService.newWebAPI.Controllers
                 orderedPart.Amount,
                 orderedPart.OrderId,
                 orderedPart.AutoPartId,
-                orderedPart.DepartureWarehouseId,
-                orderedPart.ArrivalWarehouseId);
+                orderedPart.DepartureWarehouseId);
 
                 return Ok(response);
             }
@@ -67,8 +65,7 @@ namespace CarService.newWebAPI.Controllers
                     item.amount,
                     item.orderId,
                     item.autoPartId,
-                    item.departureWarehouseId,
-                    item.arrivalWarehouseId
+                    item.departureWarehouseId
                 );
 
                 if (!string.IsNullOrEmpty(error))
@@ -90,7 +87,7 @@ namespace CarService.newWebAPI.Controllers
             var orderedPartId = await _orderedPartService.UpdateOrderedParts
                 (
                     id, request.amount, request.orderId, request.autoPartId,
-                    request.departureWarehouseId, request.arrivalWarehouseId
+                    request.departureWarehouseId
                 );
 
             return Ok(orderedPartId);

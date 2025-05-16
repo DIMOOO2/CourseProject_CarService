@@ -1,7 +1,7 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
 
-namespace CarService.Application.Services
+namespace CarService.ApplicationService.Services
 {
     public class OrganizationService : IOrganizationService
     {

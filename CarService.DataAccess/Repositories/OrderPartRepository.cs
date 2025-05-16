@@ -23,7 +23,7 @@ namespace CarService.DataAccess.Repositories
 
             var orderedParts = orderedPartEntities
                 .Select(op => OrderedPart.Create(op.OrderedPartId, op.Amount, op.OrderId, op.AutoPartId,
-                op.DepartureWarehouseId, op.ArrivalWarehouseId).OrderedPart)
+                op.DepartureWarehouseId).OrderedPart)
                 .ToList();
 
             return orderedParts;
@@ -37,7 +37,7 @@ namespace CarService.DataAccess.Repositories
             {
                 var orderedPart = OrderedPart.Create(orderedpartEntity.OrderedPartId, orderedpartEntity.Amount,
                     orderedpartEntity.OrderId, orderedpartEntity.AutoPartId,
-                    orderedpartEntity.DepartureWarehouseId, orderedpartEntity.ArrivalWarehouseId).OrderedPart;
+                    orderedpartEntity.DepartureWarehouseId).OrderedPart;
 
                 return orderedPart;
             }
@@ -56,8 +56,7 @@ namespace CarService.DataAccess.Repositories
                     Amount = orderedPart.Amount,
                     OrderId = orderedPart.OrderId,
                     AutoPartId = orderedPart.AutoPartId,
-                    DepartureWarehouseId = orderedPart.DepartureWarehouseId,
-                    ArrivalWarehouseId = orderedPart.ArrivalWarehouseId
+                    DepartureWarehouseId = orderedPart.DepartureWarehouseId
                 };
 
                 orderedPartsInOrder.Add(orderPartEntity);
@@ -71,7 +70,7 @@ namespace CarService.DataAccess.Repositories
 
         public async Task<Guid> Update(Guid orderedPartId, uint amount,
             Guid orderId, Guid autoPartId,
-            Guid departureWarehouseId, Guid? arrivalWarehouseId)
+            Guid departureWarehouseId)
         {
             await _context.OrderParts
                 .Where(op => op.OrderedPartId == orderedPartId)
@@ -80,7 +79,6 @@ namespace CarService.DataAccess.Repositories
                 .SetProperty(op => op.OrderId, orderId)
                 .SetProperty(op => op.AutoPartId, autoPartId)
                 .SetProperty(op => op.DepartureWarehouseId, departureWarehouseId)
-                .SetProperty(op => op.ArrivalWarehouseId, arrivalWarehouseId)
                 );
 
             return orderedPartId;

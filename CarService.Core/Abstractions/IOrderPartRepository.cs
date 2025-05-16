@@ -9,6 +9,6 @@ namespace CarService.Core.Abstractions
         Task<List<OrderedPart>> Get();
         Task<OrderedPart> GetById(Guid id);
         Task<Guid> Update(Guid orderedPartId, uint amount, Guid orderId,
-            Guid autoPartId, Guid departureWarehouseId, Guid? arrivalWarehouseId);
+            Guid autoPartId, Guid departureWarehouseId);
     }
 }

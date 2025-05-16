@@ -16,7 +16,5 @@ namespace CarService.DataAccess.Entities
         public AutoPartEntity? AutoPart { get; set; } = null!;
         public Guid DepartureWarehouseId { get; set; }
         public WarehouseEntity? DepartureWarehouse { get; set; } = null!;
-        public Guid? ArrivalWarehouseId { get; set; }
-        public WarehouseEntity? ArrivalWarehouse { get; set; } = null!;
     }
 }

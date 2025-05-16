@@ -182,9 +182,6 @@ namespace CarService.DataAccess.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("ArrivalWarehouseId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("AutoPartId")
                         .HasColumnType("uniqueidentifier");
 
@@ -195,10 +192,6 @@ namespace CarService.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OrderedPartId");
-
-                    b.HasIndex("ArrivalWarehouseId")
-                        .IsUnique()
-                        .HasFilter("[ArrivalWarehouseId] IS NOT NULL");
 
                     b.HasIndex("AutoPartId")
                         .IsUnique();
@@ -319,10 +312,6 @@ namespace CarService.DataAccess.Migrations
 
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderPartEntity", b =>
                 {
-                    b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "ArrivalWarehouse")
-                        .WithOne()
-                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "ArrivalWarehouseId");
-
                     b.HasOne("CarService.DataAccess.Entities.AutoPartEntity", "AutoPart")
                         .WithOne()
                         .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "AutoPartId")
@@ -340,8 +329,6 @@ namespace CarService.DataAccess.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ArrivalWarehouse");
 
                     b.Navigation("AutoPart");
 

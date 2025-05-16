@@ -10,14 +10,13 @@ namespace CarService.Core.Models
     public class OrderedPart
     {
         public OrderedPart(Guid orderedPartId, uint amount, Guid orderId, Guid autoPartId,
-            Guid departureWarehouseId, Guid? arrivalWarehouseId)
+            Guid departureWarehouseId)
         {
             OrderedPartId = orderedPartId;
             Amount = amount;
             OrderId = orderId;
             AutoPartId = autoPartId;
             DepartureWarehouseId = departureWarehouseId;
-            ArrivalWarehouseId = arrivalWarehouseId;
         }
 
         public OrderedPart()
@@ -29,11 +28,10 @@ namespace CarService.Core.Models
         public Guid OrderId { get; }
         public Guid AutoPartId { get; }
         public Guid DepartureWarehouseId { get; }
-        public Guid? ArrivalWarehouseId { get; }
 
         public static (OrderedPart OrderedPart, string error) Create(Guid orderedPartId, uint amount,
             Guid order, Guid autoPart,
-            Guid departureWarehouse, Guid? arrivalWarehouse)
+            Guid departureWarehouse)
         {
             string error = string.Empty;
 
@@ -45,7 +43,7 @@ namespace CarService.Core.Models
                 error = "Error warehouse is not created";
             }
 
-            OrderedPart orderedPart = new OrderedPart(orderedPartId, amount, order!, autoPart!, departureWarehouse!, arrivalWarehouse);
+            OrderedPart orderedPart = new OrderedPart(orderedPartId, amount, order!, autoPart!, departureWarehouse!);
 
             return (orderedPart, error);
         }

@@ -119,7 +119,7 @@ namespace CarService.Client.ViewModels
                 
                 foreach(var item in CartData.AutoParts)
                 {
-                    orderedPartRequests.Add(new OrderedPartRequest(item.stockAmount, orderResponse!.orderId, item.autoPartId, LoginData.CurrentWarehouse.WarehouseId, null));
+                    orderedPartRequests.Add(new OrderedPartRequest(item.stockAmount, orderResponse!.orderId, item.autoPartId, LoginData.CurrentWarehouse.WarehouseId));
                 }
 
                 using var response4 = await client.PostAsJsonAsync("https://localhost:1488/OrderedPart", orderedPartRequests);

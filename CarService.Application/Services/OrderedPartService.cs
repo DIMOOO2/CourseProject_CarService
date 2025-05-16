@@ -1,7 +1,7 @@
 ﻿using CarService.Core.Abstractions;
 using CarService.Core.Models;
 
-namespace CarService.Application.Services
+namespace CarService.ApplicationService.Services
 {
     public class OrderedPartService : IOrderedPartService
     {
@@ -28,10 +28,10 @@ namespace CarService.Application.Services
         }
 
         public async Task<Guid> UpdateOrderedParts(Guid orderedPartId, uint amount, Guid orderId,
-            Guid autoPartId, Guid departureWarehouseId, Guid? arrivalWarehouseId)
+            Guid autoPartId, Guid departureWarehouseId)
         {
             return await _orderPartRepository.Update(orderedPartId, amount, orderId, autoPartId,
-                departureWarehouseId, arrivalWarehouseId);
+                departureWarehouseId);
         }
 
         public async Task<Guid> DeleteOrderedPart(Guid id)

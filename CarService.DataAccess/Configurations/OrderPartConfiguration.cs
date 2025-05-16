@@ -21,9 +21,6 @@ namespace CarService.DataAccess.Configurations
             builder.HasOne(op => op.DepartureWarehouse)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(op => op.ArrivalWarehouse)
-                .WithOne();
         }
     }
 }

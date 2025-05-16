@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace CarService.ApplicationService.Contracts.Requests
+﻿namespace CarService.ApplicationService.Contracts.Requests
 {
     public record OrderRequest
     (
