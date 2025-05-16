@@ -83,4 +83,9 @@
 	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\CarService.Application\CarService.ApplicationService.csproj" />
+	  <ProjectReference Include="..\CarService.Core\CarService.Core.csproj" />
+	</ItemGroup>
+
 </Project>
