@@ -23,6 +23,7 @@ namespace CarService.DataAccess.Contexts
             modelBuilder.ApplyConfiguration<OrderPartEntity>(new OrderPartConfiguration());
             modelBuilder.ApplyConfiguration<OrganizationEntity>(new OrganizationConfiguration());
             modelBuilder.ApplyConfiguration<WarehouseEntity>(new WarehouseConfiguration());             
+            modelBuilder.ApplyConfiguration<DeliveryReportEntity>(new DeliveryReportConfiguration());             
         }
 
         public DbSet<WarehouseEntity> Warehouses { get; set; }
@@ -33,5 +34,6 @@ namespace CarService.DataAccess.Contexts
         public DbSet<AutoPartEntity> AutoParts { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<OrderPartEntity> OrderParts { get; set; }
+        public DbSet<DeliveryReportEntity> DeliveryReports { get; set; }
     }
 }

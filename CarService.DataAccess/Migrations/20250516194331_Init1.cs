@@ -126,6 +126,26 @@ namespace CarService.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeliveryReports",
+                columns: table => new
+                {
+                    ReportId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WarehouseCreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReportFile = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryReports", x => x.ReportId);
+                    table.ForeignKey(
+                        name: "FK_DeliveryReports_Warehouses_WarehouseCreatorId",
+                        column: x => x.WarehouseCreatorId,
+                        principalTable: "Warehouses",
+                        principalColumn: "WarehouseId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -207,6 +227,11 @@ namespace CarService.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_DeliveryReports_WarehouseCreatorId",
+                table: "DeliveryReports",
+                column: "WarehouseCreatorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderParts_AutoPartId",
                 table: "OrderParts",
                 column: "AutoPartId",
@@ -240,6 +265,9 @@ namespace CarService.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CorporateAccounts");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryReports");
 
             migrationBuilder.DropTable(
                 name: "OrderParts");

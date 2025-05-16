@@ -45,6 +45,9 @@ namespace CarService.newWebAPI
 
             builder.Services.AddScoped<IOrganizationService, OrganizationService>();
             builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            
+            builder.Services.AddScoped<IDeliveryReportService, DeliveryReportService>();
+            builder.Services.AddScoped<IDeliveryReportRepository, DeliveryReportRepository>();
 
             var app = builder.Build();
 

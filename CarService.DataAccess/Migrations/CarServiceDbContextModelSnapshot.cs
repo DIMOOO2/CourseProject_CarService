@@ -126,6 +126,29 @@ namespace CarService.DataAccess.Migrations
                     b.ToTable("CorporateAccounts");
                 });
 
+            modelBuilder.Entity("CarService.DataAccess.Entities.DeliveryReportEntity", b =>
+                {
+                    b.Property<Guid>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("ReportFile")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<Guid>("WarehouseCreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ReportId");
+
+                    b.HasIndex("WarehouseCreatorId");
+
+                    b.ToTable("DeliveryReports");
+                });
+
             modelBuilder.Entity("CarService.DataAccess.Entities.ManufacturerEntity", b =>
                 {
                     b.Property<Guid>("ManufacturerId")
@@ -289,6 +312,17 @@ namespace CarService.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("CarService.DataAccess.Entities.DeliveryReportEntity", b =>
+                {
+                    b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "WarehouseCreator")
+                        .WithMany()
+                        .HasForeignKey("WarehouseCreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WarehouseCreator");
                 });
 
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderEntity", b =>
