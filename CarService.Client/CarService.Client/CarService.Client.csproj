@@ -68,6 +68,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+		<PackageReference Include="QuestPDF" Version="2025.5.0" />
 		<PackageReference Include="UraniumUI.Material" Version="2.11.0" />
 	</ItemGroup>
 
@@ -115,6 +116,10 @@
 	  <Compile Update="Pages\ArrivalPage.xaml.cs">
 	    <DependentUpon>ArrivalPage.xaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Others\PdfWorkers\Template\" />
 	</ItemGroup>
 
 </Project>
