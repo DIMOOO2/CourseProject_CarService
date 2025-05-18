@@ -4,8 +4,10 @@
              x:Class="CarService.Client.Pages.NewArrivalPage"
              Title=""
              xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
-             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui">
+             xmlns:model="clr-namespace:CarService.Client.Others.Models"
+             xmlns:vm="clr-namespace:CarService.Client.ViewModels"
+             x:DataType="vm:NewArrivalViewModel">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="ButtonStyle">
@@ -25,7 +27,7 @@
     </ContentPage.Resources>
     
     <ScrollView>
-        <Grid>
+        <Grid Padding="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
@@ -33,36 +35,73 @@
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
-            <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Orientation="Horizontal" Spacing="10" Grid.ColumnSpan="3" HorizontalOptions="Center">
                 <Label Text="Новая поставка" FontSize="30" FontAttributes="Bold" 
     Margin="10,0,0,0" VerticalOptions="Center"/>
             </StackLayout>
 
-            <StackLayout Grid.Row="1" Margin="10">
-                <input:FormView Spacing="10">
-                    <uran:TextField Title="Название запчасти" Text="{Binding FirstName}"
-                        FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
-                        <validation:RequiredValidation Message="Это обязательное поле ввода"/>
-                    </uran:TextField> 
-                    
-                    <uran:TextField Title="Цена в рублях" Text="{Binding FirstName}"
-                        FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
-                        <validation:RequiredValidation Message="Это обязательное поле ввода"/>
-                        <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_DECIMAL}" Message="Поле должно содержать только десятичное число"/>
-                    </uran:TextField> 
-                    
-                    <uran:TextField Title="Количество" Text="{Binding FirstName}"
-                        FontSize="18" TitleFontSize="16" AccentColor="OrangeRed">
-                        <validation:RequiredValidation Message="Это обязательное поле ввода"/>
-                        <validation:DigitsOnlyValidation Message="Поле должно содержать только цифры больше 0"/>
-                    </uran:TextField>
+            <CollectionView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" 
+                            ItemsSource="{Binding AllAutoParts}" 
+                            SelectedItem="{Binding SelectedAutoPartFromAll}"
+                            SelectionMode="Single"
+                            >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:AutoPartInfo">
+                        <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
+                            <StackLayout Orientation="Vertical" Spacing="5">
+                                <Label Text="{Binding GetAutoPartName}" FontSize="16"/>
+                                <Label Text="{Binding GetPartNumber}"/>
+                                <Label Text="{Binding GetPrice}"/>
+                                <Label Text="{Binding GetNameManufacturer}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
 
-                    <uran:DropdownField AccentColor="OrangeRed" Title="Производитель" FontSize="18" TitleFontSize="16"/>
-                </input:FormView>
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" 
+                         Grid.Column="1" 
+                         VerticalOptions="Center" Spacing="10">
+                <Button Text=">" Style="{StaticResource ButtonStyle}" FontSize="20" Command="{Binding AddArrivalCollectionCommand}"/>
+                <Button Text="-" Style="{StaticResource ButtonStyle}" FontSize="20" Command="{Binding RemoveArrivalCollectionCommand}"/>
             </StackLayout>
+            
+            <CollectionView Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" 
+                           ItemsSource="{Binding AutoPartsFromArrival}" 
+                            SelectedItem="{Binding SelectedAutoPartFromArrival}"
+                            SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ArrivalAutoPart">
+                        <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
+                            <StackLayout Orientation="Vertical" Spacing="5">
+                                <Label Text="{Binding AutoPart.GetAutoPartName}" FontSize="16"/>
+                                <Label Text="{Binding AutoPart.GetPrice}"/>
+                                <Label Text="{Binding AutoPart.GetNameManufacturer}"/>
+                                <HorizontalStackLayout HorizontalOptions="End" Spacing="20" VerticalOptions="Center">
+                                    <Button Text="-" Style="{StaticResource ButtonStyle}" Command="{Binding DiffArrivalAutoPartCountCommand}"/>
+                                    <Label Text="{Binding DesiredCount}" FontSize="20" VerticalOptions="Center"/>
+                                    <Button Text="+" Style="{StaticResource ButtonStyle}" Command="{Binding AddArrivalAutoPartCountCommand}"/>
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
 
-            <StackLayout Margin="10" Grid.Row="3">
-                <Button Text="Сохранить" Style="{x:StaticResource ButtonStyle}"/>
+            <StackLayout Grid.Row="3" Grid.ColumnSpan="3" VerticalOptions="End">
+                <Button Text="Сохранить" Style="{x:StaticResource ButtonStyle}" Command="{Binding SaveArrivalCommand}"/>
             </StackLayout>
         </Grid>
     </ScrollView>

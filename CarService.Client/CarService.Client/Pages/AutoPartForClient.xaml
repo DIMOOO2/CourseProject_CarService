@@ -95,7 +95,7 @@ Grid.Row="3">
             </StackLayout>
             
 
-            <CollectionView x:Name="TestCollection1" Grid.Row="4" Margin="20" ItemsSource="{Binding AutoPartsWithClient}" SelectionMode="Single" SelectedItem="{Binding SelectItemClient}">
+            <CollectionView Grid.Row="4" Margin="20" ItemsSource="{Binding AutoPartsWithClient}" SelectionMode="Single" SelectedItem="{Binding SelectItemClient}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="modelCart:CartAutoPart">
                         <Frame BackgroundColor="Transparent" VerticalOptions="Center">

@@ -1,5 +1,4 @@
-﻿using CarService.ApplicationService.Contracts.Requests;
-using CarService.ApplicationService.Contracts.Responses;
+﻿using CarService.ApplicationService.Contracts.Responses;
 using CarService.Client.Others.DataServises;
 using CarService.Client.Others.Models;
 using CarService.Core.Models;
@@ -48,7 +47,7 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                ObservableCollection<AutoPart>? autoparts = WebData.AutoParts;
+                ObservableCollection<AutoPart>? autoparts = [.. WebData.AutoParts!.Where(a => a.WarehouseId == LoginData.CurrentWarehouse!.WarehouseId)];
 
                 if(autoparts?.Count == 0)
                 {

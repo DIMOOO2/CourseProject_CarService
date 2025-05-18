@@ -42,7 +42,7 @@ namespace CarService.Client.ViewModels
                     WarehouseRequest? warehouse = await _httpClient.GetFromJsonAsync<WarehouseRequest>($"https://localhost:1488/Warehouse/{corporateAccount!.warehouseId}");
                     LoginData.SetWarehouse(Warehouse.Create(corporateAccount.warehouseId, warehouse!.Title, warehouse.Address, warehouse.City).Warehouse);
 
-                    var autoPartResponses = await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{corporateAccount.warehouseId}");
+                    var autoPartResponses = await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart");
 
                     WebData.GetAutoPartsCollection(autoPartResponses);
 

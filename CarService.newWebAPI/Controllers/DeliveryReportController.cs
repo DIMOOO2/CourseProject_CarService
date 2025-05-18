@@ -73,14 +73,11 @@ namespace CarService.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateReport([FromBody] DeliveryReportRequest request)
+        public async Task<ActionResult<DeliveryReportResponse>> CreateReport([FromBody] DeliveryReportRequest request)
         {
-            Guid guid = Guid.NewGuid();
-
-
             var (report, error) = DeliveryReport.Create(
-                guid,
-                DateTime.Now,
+                request.id,
+                request.createDate,
                 request.warehouseCreatorId,
                 request.fileReport
                 );
@@ -90,7 +87,7 @@ namespace CarService.WebAPI.Controllers
 
             await _service.CreateReport(report);
 
-            return Ok(report.ReportId);
+            return Ok(report);
         }
 
         [HttpPut("{id:guid}")]

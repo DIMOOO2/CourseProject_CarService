@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace CarService.Core.Models
+﻿namespace CarService.Core.Models
 {
     public class DeliveryReport
     {
