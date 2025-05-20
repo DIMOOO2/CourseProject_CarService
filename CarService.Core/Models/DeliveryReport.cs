@@ -1,4 +1,6 @@
-﻿namespace CarService.Core.Models
+﻿using System;
+
+namespace CarService.Core.Models
 {
     public class DeliveryReport
     {
@@ -19,9 +21,9 @@
 
         public static (DeliveryReport report, string error) Create(Guid reportId, DateTime createDate, Guid warehouseCreatorId, byte[] reportFile)
         {
-            string error = string.Empty; 
-            
-            if(reportId == Guid.Empty || createDate == DateTime.MinValue || warehouseCreatorId == Guid.Empty ||
+            string error = string.Empty;
+
+            if (reportId == Guid.Empty || createDate == DateTime.MinValue || warehouseCreatorId == Guid.Empty ||
                 reportFile == null)
                 error = "Error auto part is not created";
 
@@ -29,5 +31,16 @@
 
             return (deliveryReport, error);
         }
+
+        public long GetReportArticul
+        {
+            get
+            {
+                byte[] data = ReportId.ToByteArray();
+                return Convert.ToInt64(Math.Abs(BitConverter.ToInt32(data, 0)));
+            }
+        }
+
+        public string GetDate => $"{CreateDate:D}";
     }
 }

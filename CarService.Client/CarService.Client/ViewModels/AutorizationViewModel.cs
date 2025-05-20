@@ -77,6 +77,8 @@ namespace CarService.Client.ViewModels
 
                     WebData.GetClientCollection(clientResponses);
 
+                    WebData.GetColllectionReport(await _httpClient.GetFromJsonAsync<List<DeliveryReportResponse>>("https://localhost:1488/DeliveryReport"));
+
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Успешный ход", $"Добро пожаловать на склад {warehouse?.Title}", "ОК");
                     App.Current!.MainPage = new AppShell();
                 }

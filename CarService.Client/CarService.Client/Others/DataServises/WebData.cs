@@ -11,6 +11,7 @@ namespace CarService.Client.Others.DataServises
         public static ObservableCollection<Order>? Orders { get; set; }
         public static ObservableCollection<Manufacturer>? Manufacturers { get; set; }
         public static ObservableCollection<Core.Models.Client>? Clients { get; set; }
+        public static ObservableCollection<DeliveryReport>? Reports { get; set; }
 
 
         public static void GetAutoPartsCollection(List<AutoPartResponse>? autoParts)
@@ -58,6 +59,17 @@ namespace CarService.Client.Others.DataServises
             }
 
             Manufacturers = currentManufacturers;
+        }
+
+        public static void GetColllectionReport(List<DeliveryReportResponse>? deliveryReportResponses)
+        {
+            ObservableCollection<DeliveryReport> deliveryReports = new ObservableCollection<DeliveryReport>();
+            foreach(var report in deliveryReportResponses!)
+            {
+                deliveryReports.Add(DeliveryReport.Create(report.reportId, report.createDate, report.warehouseCreatorId, report.fileReport).report);
+            }
+
+            Reports = deliveryReports;
         }
     }
 }

@@ -8,12 +8,18 @@ using QuestPDF.Drawing;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using CarService.Client.Others.PdfWorkers.DataSourse;
+using System.Net.Http.Json;
+using CarService.ApplicationService.Contracts.Requests;
+using QuestPDF.Previewer;
+using CarService.ApplicationService.Contracts.Responses;
 
 
 namespace CarService.Client.ViewModels
 {
     public partial class NewArrivalViewModel : ObservableObject
     {
+        private HttpClient _httpClient = new HttpClient();
+
         [ObservableProperty]
         private ObservableCollection<AutoPartInfo> allAutoParts;
 
@@ -83,9 +89,24 @@ namespace CarService.Client.ViewModels
                 byte[] data = guid.ToByteArray();
 
                 long numberReport = Convert.ToInt64(Math.Abs(BitConverter.ToInt32(data, 0)));
-                var document = new ReportDocument(numberReport, DateTime.Now, AutoPartsFromArrival, LoginData.CurrentWarehouse!);
 
-                document.GeneratePdfAndShow();
+                DateTime dateTime = DateTime.Now;
+                var document = new ReportDocument(numberReport, dateTime, AutoPartsFromArrival, LoginData.CurrentWarehouse!);
+
+                var documentByte = document.GeneratePdf();
+
+                using var response = await _httpClient.PostAsJsonAsync<DeliveryReportRequest>("https://localhost:1488/DeliveryReport", new DeliveryReportRequest(guid, dateTime, LoginData.CurrentWarehouse!.WarehouseId, documentByte));
+
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                    DeliveryReportResponse? reportResponse = await response.Content.ReadFromJsonAsync<DeliveryReportResponse>();
+                    WebData.GetColllectionReport(await _httpClient.GetFromJsonAsync<List<DeliveryReportResponse>>("https://localhost:1488/DeliveryReport"));
+                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Отчет создан. Номер отчета {reportResponse!.reportId}", "ОК");
+
+
+                    await Shell.Current.Navigation.PopAsync();
+                }
             }
             catch (Exception ex)
             {

@@ -14,19 +14,22 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["CarService.newWebAPI/CarService.newWebAPI.csproj", "CarService.newWebAPI/"]
-RUN dotnet restore "./CarService.newWebAPI/CarService.newWebAPI.csproj"
+COPY ["CarService.newWebAPI/CarService.WebAPI.csproj", "CarService.newWebAPI/"]
+COPY ["CarService.Application/CarService.ApplicationService.csproj", "CarService.Application/"]
+COPY ["CarService.Core/CarService.Core.csproj", "CarService.Core/"]
+COPY ["CarService.DataAccess/CarService.DataAccess.csproj", "CarService.DataAccess/"]
+RUN dotnet restore "./CarService.newWebAPI/CarService.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/CarService.newWebAPI"
-RUN dotnet build "./CarService.newWebAPI.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+RUN dotnet build "./CarService.WebAPI.csproj" -c %BUILD_CONFIGURATION% -o /app/build
 
 # Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./CarService.newWebAPI.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./CarService.WebAPI.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
 
 # Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CarService.newWebAPI.dll"]
+ENTRYPOINT ["dotnet", "CarService.WebAPI.dll"]
