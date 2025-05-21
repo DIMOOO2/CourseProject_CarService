@@ -47,9 +47,10 @@
                         <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
                             <StackLayout Orientation="Vertical" Spacing="5">
                                 <Label Text="{Binding DeliveryReport.GetReportArticul}" FontSize="16"/>
-                                <Label Text="{Binding DeliveryReport.GetDate}"/> 
-                                
+                                <Label Text="{Binding DeliveryReport.GetDate}"/>
+                                <Button Style="{StaticResource ButtonStyle}" Text="Open" Command="{Binding OpenReportCommand}"/>
                             </StackLayout> 
+                            
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -65,7 +66,6 @@ FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
             </StackLayout>-->
 
             <VerticalStackLayout  Grid.Row="2">
-                <Button Style="{StaticResource ButtonStyle}" Text="Open" Command="{Binding OpenReportCommand}"/>
                 <Button Text="Новое поступление" Style="{StaticResource ButtonStyle}" Margin="10" FontSize="20"
         Command="{Binding PushNewArrivalCommand}"/>
             </VerticalStackLayout>

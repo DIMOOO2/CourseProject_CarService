@@ -2,6 +2,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+
+
+
 namespace CarService.Client.Others.Models
 {
     public partial class ReportModel : ObservableObject
@@ -9,5 +12,11 @@ namespace CarService.Client.Others.Models
         public ReportModel() { }
 
         public DeliveryReport DeliveryReport { get; set; }
+
+        [RelayCommand]
+        private void OpenReport()
+        {
+
+        }
     }
 }

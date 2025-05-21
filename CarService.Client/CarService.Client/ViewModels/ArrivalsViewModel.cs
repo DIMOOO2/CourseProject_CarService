@@ -42,18 +42,5 @@ namespace CarService.Client.ViewModels
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
-
-        [RelayCommand]
-        public async void OpenReport()
-        {
-            try
-            {
-                File.WriteAllBytes("C:\\Users\\imppa\\Desktop\\Новая папка", SelectedReport.DeliveryReport.ReportFile);
-            }
-            catch (Exception ex)
-            {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
-            }
-        }
     }
 }
