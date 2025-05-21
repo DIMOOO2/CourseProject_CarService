@@ -8,7 +8,7 @@
     Title="CarService.Administrator">
 
     <ShellContent
-        Title="Главная"
+        Title="Автозапчасти"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
