@@ -68,17 +68,16 @@
 	  <None Remove="Resources\Images\Images_Flyout\main_page_logo.png" />
 	  <None Remove="Resources\Images\Images_Flyout\order_page_logo.png" />
 	  <None Remove="Resources\Images\Images_Page\background_autorization.png" />
+	  <None Remove="Resources\Raw\temp.pdf" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="iTextSharp" Version="5.5.13.4" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-		<PackageReference Include="PDFsharp-MigraDoc-gdi" Version="6.2.0" />
 		<PackageReference Include="QuestPDF" Version="2024.7.3" />
 		<PackageReference Include="UraniumUI.Material" Version="2.11.0" />
 	</ItemGroup>
@@ -104,6 +103,9 @@
 	  <MauiXaml Update="Pages\ArrivalPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\ReportViewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\SearchAutoPart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -127,6 +129,14 @@
 	  <Compile Update="Pages\ArrivalPage.xaml.cs">
 	    <DependentUpon>ArrivalPage.xaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="C:\Users\imppa\.nuget\packages\cete.dynamicpdf.viewer.net\3.20.0\build\net5.0\..\..\build\natives\DPDFViewerNative_x64.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Others\Reports\temp.pdf" />
 	</ItemGroup>
 
 </Project>
