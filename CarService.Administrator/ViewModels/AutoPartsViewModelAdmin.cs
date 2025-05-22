@@ -1,6 +1,8 @@
 ﻿using CarService.Administrator.Others.Data;
 using CarService.Administrator.Pages;
 using CarService.Core.Models;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -31,10 +33,18 @@ namespace CarService.Administrator.ViewModels
         }
 
         [RelayCommand]
-        private void UpdateItem()
+        private async void UpdateItem()
         {
-            AdminLocalData.SetAutoPart(SelectedAutoPart);
-            Shell.Current.GoToAsync(nameof(UpdateAutoPartPage));
+            if (SelectedAutoPart != null)
+            {
+                AdminLocalData.SetAutoPart(SelectedAutoPart);
+                await Shell.Current.GoToAsync(nameof(UpdateAutoPartPage));
+            }
+            else
+            {
+                await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();
+                return;
+            }
         }
 
         [RelayCommand]

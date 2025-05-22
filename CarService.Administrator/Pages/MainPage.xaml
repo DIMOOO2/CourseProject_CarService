@@ -38,7 +38,7 @@
                 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:AutoPart">
-                        <Frame>
+                        <Frame BorderColor="OrangeRed">
                             <StackLayout>
                                 <StackLayout Orientation="Vertical" x:DataType="model:AutoPart">
                                     <Label Text="{Binding AutoPartName}"/>
