@@ -9,6 +9,7 @@ namespace CarService.Administrator.ViewModels
     public partial class CreateAutoPartViewModel : ObservableObject
     {
         private HttpClient httpClient = new HttpClient();
+
         [ObservableProperty]
         private string name;
 

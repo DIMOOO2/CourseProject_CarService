@@ -1,7 +1,6 @@
 ﻿using CarService.Client.Pages;
 using CarService.Client.ViewModels;
 using CommunityToolkit.Maui;
-using Maui.PDFView;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
 
@@ -19,7 +18,6 @@ namespace CarService.Client
                 .UseUraniumUI()
                 .UseUraniumUIMaterial()
                 .UseMauiCommunityToolkit()
-                .UseMauiPdfView()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

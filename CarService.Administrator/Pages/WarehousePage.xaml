@@ -2,5 +2,67 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarService.Administrator.Pages.WarehousePage"
-             >
+             xmlns:model="clr-namespace:CarService.Core.Models;assembly=CarService.Core"
+             xmlns:vm="clr-namespace:CarService.Administrator.ViewModels"
+             x:DataType="vm:WarehousesViewModel">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="Background" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="White"/>
+
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Warehouses}"
+                    SelectedItem="{Binding SelectedWarehouse}"
+                    SelectionMode="Single"
+                    Margin="5">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Warehouse">
+                        <Frame BorderColor="OrangeRed">
+                            <StackLayout>
+                                <StackLayout Orientation="Vertical" x:DataType="model:Warehouse">
+                                    <Label Text="{Binding Title}"/>
+                                    <Label Text="{Binding City}"/>
+                                    <Label Text="{Binding Address}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10" Grid.Row="1" Margin="10" VerticalOptions="End">
+                <Button Style="{StaticResource ButtonStyle}" Text="Новый склад" 
+                WidthRequest="200" HorizontalOptions="End"/>
+                <Button Style="{StaticResource ButtonStyle}" Text="Обновить склад" 
+                WidthRequest="200" HorizontalOptions="End" />
+                <Button Style="{StaticResource ButtonStyle}" Text="Удалить склад" 
+                WidthRequest="200" HorizontalOptions="End" Command="{Binding RemoveItemCommand}"/>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

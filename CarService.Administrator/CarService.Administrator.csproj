@@ -55,6 +55,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Resources\Images\Новая папка\**" />
+	  <Compile Remove="Resources\Images\Новая папка\**" />
+	  <EmbeddedResource Remove="Resources\Images\Новая папка\**" />
+	  <MauiCss Remove="Resources\Images\Новая папка\**" />
+	  <MauiImage Remove="Resources\Images\Новая папка\**" />
+	  <MauiXaml Remove="Resources\Images\Новая папка\**" />
+	  <None Remove="Resources\Images\Новая папка\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3" />
@@ -87,12 +97,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
+	  <ProjectReference Include="..\CarService.Application\CarService.ApplicationService.csproj" />
+	  <ProjectReference Include="..\CarService.Core\CarService.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CarService.Application\CarService.ApplicationService.csproj" />
-	  <ProjectReference Include="..\CarService.Core\CarService.Core.csproj" />
+	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 
 </Project>
