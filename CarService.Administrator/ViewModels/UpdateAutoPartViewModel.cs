@@ -31,8 +31,14 @@ namespace CarService.Administrator.ViewModels
             Name = AdminLocalData.CurrentAutoPart.AutoPartName;
             Price = AdminLocalData.CurrentAutoPart.Price;
             Amount = AdminLocalData.CurrentAutoPart.StockAmount;
-            ManufacturerName = AdminLocalData.CurrentManufacturer.ManufacturerName;
-            ManufacturerEmail = AdminLocalData.CurrentManufacturer.ContactInfo;
+            //ManufacturerName = AdminLocalData.CurrentManufacturer?.ManufacturerName;
+           //ManufacturerEmail = AdminLocalData.CurrentManufacturer?.ContactInfo;
+        }
+
+        [RelayCommand]
+        private void Update()
+        {
+            //логика обновления с помощью PUT-запроса
         }
     }
 }

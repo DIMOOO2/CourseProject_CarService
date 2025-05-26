@@ -9,7 +9,7 @@ namespace CarService.Administrator.Others.Data
         public static void SetAutoPart(AutoPart temp)
         {
             CurrentAutoPart = temp;
-            CurrentManufacturer = WebData.Manufacturers!.FirstOrDefault(m => m.ManufacturerId == temp.ManufacturerId)!;
+            //CurrentManufacturer = WebData.Manufacturers!.FirstOrDefault(m => m.ManufacturerId == temp.ManufacturerId)!;
         }
     }
 }

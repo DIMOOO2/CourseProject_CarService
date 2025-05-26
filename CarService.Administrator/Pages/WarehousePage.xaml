@@ -57,7 +57,7 @@
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10" Grid.Row="1" Margin="10" VerticalOptions="End">
                 <Button Style="{StaticResource ButtonStyle}" Text="Новый склад" 
-                WidthRequest="200" HorizontalOptions="End"/>
+                WidthRequest="200" HorizontalOptions="End" Command="{Binding CreateWarehouseCommand}"/>
                 <Button Style="{StaticResource ButtonStyle}" Text="Обновить склад" 
                 WidthRequest="200" HorizontalOptions="End" />
                 <Button Style="{StaticResource ButtonStyle}" Text="Удалить склад" 

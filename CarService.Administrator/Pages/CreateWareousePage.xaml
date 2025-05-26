@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarService.Administrator.Pages.CreateWareousePage"
+             Title="Регистрация нового склада"
+             xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:vm="clr-namespace:CarService.Administrator.ViewModels"
+             x:DataType="vm:CreateWarehouseViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="Background" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView Padding="10">
+        <Grid>
+            <input:FormView SubmitCommand="{Binding CreateCommand}">
+                <VerticalStackLayout Spacing="20">
+                    <uran:TextField Title="Название" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+                        FontSize="20" Text="{Binding Title}">
+                        <validation:RequiredValidation Message="Обязательное поле для ввода"/>
+                    </uran:TextField>
+                    <uran:TextField Title="Адрес" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+        FontSize="20" Text="{Binding Address}">
+                        <validation:RequiredValidation Message="Обязательное поле для ввода"/>
+                    </uran:TextField>
+                    <uran:TextField Title="Город" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+        FontSize="20" Text="{Binding City}">
+                        <validation:RequiredValidation Message="Обязательное поле для ввода"/>
+                    </uran:TextField>
+                    <uran:TextField Title="Логин" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+        FontSize="20" Text="{Binding Login}">
+                        <validation:RequiredValidation Message="Обязательное поле для ввода"/>
+                    </uran:TextField>
+                    <uran:TextField Title="Пароль" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+        FontSize="20" Text="{Binding Password}" IsPassword="True">
+                        <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                        <uran:TextField.Attachments>
+                            <uran:TextFieldPasswordShowHideAttachment/>
+                        </uran:TextField.Attachments>
+                    </uran:TextField>
+
+                    <Button Text="Создать и сохранить" Style="{StaticResource ButtonStyle}" 
+Command="{Binding CreateCommand}" input:FormView.IsSubmitButton="True" VerticalOptions="End"/>
+                </VerticalStackLayout>
+            </input:FormView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

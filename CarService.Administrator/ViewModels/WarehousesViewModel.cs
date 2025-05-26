@@ -1,4 +1,5 @@
-﻿using CarService.Core.Models;
+﻿using CarService.Administrator.Pages;
+using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -32,6 +33,12 @@ namespace CarService.Administrator.ViewModels
             }
 
             else return;
+        }
+
+        [RelayCommand]
+        private async void CreateWarehouse()
+        {
+            await Shell.Current.GoToAsync(nameof(CreateWareousePage));
         }
     }
 }

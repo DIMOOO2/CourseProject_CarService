@@ -5,7 +5,9 @@
              Title="Обновление автозапчасти"
              xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
-             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui">
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:vm="clr-namespace:CarService.Administrator.ViewModels"
+             x:DataType="vm:UpdateAutoPartViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -31,30 +33,30 @@
                 <VerticalStackLayout>
                     <StackLayout Orientation="Vertical"  Margin="10" Spacing="10" VerticalOptions="Start">
                         <uran:TextField Title="Название" AccentColor="OrangeRed" 
-                                    FontSize="16" TitleFontSize="16">
+                                    FontSize="16" TitleFontSize="16" Text="{Binding Name}">
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
                         <uran:TextField Title="Цена" AccentColor="OrangeRed"
-                                    FontSize="16" TitleFontSize="16">
+                                    FontSize="16" TitleFontSize="16" Text="{Binding Price}">
                             <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_DECIMAL }" 
                                                     Message="Поле должно содержать цифру с плавающей точкой"/>
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
                         <uran:TextField Title="Количество" AccentColor="OrangeRed" 
-                                    FontSize="16" TitleFontSize="16">
+                                    FontSize="16" TitleFontSize="16" Text="{Binding Amount}">
                             <validation:DigitsOnlyValidation Message="В поле должны быть только цифры"/>
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
                         <uran:TextField Title="Наименование производителя" AccentColor="OrangeRed"
-                                    FontSize="16" TitleFontSize="16">
+                                    FontSize="16" TitleFontSize="16" Text="{Binding ManufacturerName}">
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
                         <uran:TextField Title="Контактная информация производителя (электронная почта)" AccentColor="OrangeRed" 
-                                    FontSize="16" TitleFontSize="16">
+                                    FontSize="16" TitleFontSize="16" BindingContext="{Binding ManufacturerEmail}">
                             <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"
                                                     Message="Электронная почта введен не корректно"/>
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
@@ -63,7 +65,7 @@
 
                     <VerticalStackLayout HorizontalOptions="Fill" Margin="10">
                         <Button  Text="Сохранить изменения" input:FormView.IsSubmitButton="True"
-         Style="{StaticResource ButtonStyle}" VerticalOptions="End"/>
+         Style="{StaticResource ButtonStyle}" VerticalOptions="End" Command="{Binding UpdateCommand}"/>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             </input:FormView>

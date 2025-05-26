@@ -1,7 +1,6 @@
 ﻿using CarService.DataAccess.Configurations;
 using CarService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace CarService.DataAccess.Contexts
 {
