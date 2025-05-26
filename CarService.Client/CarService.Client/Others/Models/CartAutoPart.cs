@@ -28,7 +28,7 @@ namespace CarService.Client.Others.Models
         [RelayCommand]
         private void DiffDisiredCount()
         {
-            if (DesiredCount > 0)
+            if (DesiredCount > 1)
                 DesiredCount--;
         }
     }

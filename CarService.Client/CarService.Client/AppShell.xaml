@@ -10,7 +10,7 @@
     Shell.FlyoutBehavior="Locked"
     >
     <ShellContent
-        Title="Клиентские заказы"
+        Title="Заказы клиентов"
         Icon="main_page_logo.png"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage"/>
@@ -22,7 +22,7 @@
         Route="SearchAutoPart" />
 
     <ShellContent
-        Title="Заказать запчасти"
+        Title="Поставки на склад"
         Icon="order_page_logo.png"
         ContentTemplate="{DataTemplate local:OrderPage}"
         Route="OrderPage" />

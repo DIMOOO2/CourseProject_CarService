@@ -21,17 +21,14 @@ namespace CarService.Client.ViewModels
         [ObservableProperty]
         private bool isCollectionEmpty;
 
-        [ObservableProperty]
-        private Visibility visibilityItem;
-
-        [ObservableProperty]
-        private bool isEnabledItem;
 
         [ObservableProperty]
         private AutoPart selectItem = null!;       
         
         [ObservableProperty]
         private CartAutoPart selectItemClient = null!;
+
+        public AutoPart AutoPart { get; set; }
 
         private HttpClient httpClient = new HttpClient();
 
@@ -83,8 +80,8 @@ namespace CarService.Client.ViewModels
                 if (currentAutoPart == null)
                 {
                     AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1 });
-                    IsEnabledItem = false;
-                    VisibilityItem = Visibility.Hidden;
+                    SelectItem.isEnabledItem = false;
+                    SelectItem.visibilityItem = false;
                 }
                 else
                 {

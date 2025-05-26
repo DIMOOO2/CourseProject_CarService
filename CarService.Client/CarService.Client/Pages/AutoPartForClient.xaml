@@ -63,9 +63,9 @@ Grid.Row="0">
                             ItemsSource="{Binding AutoPartsWithCurrentWarehouse}" Margin="20"
                             SelectedItem="{Binding SelectItem}" SelectionMode="Single">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="Transparent" VerticalOptions="Center" IsEnabled="{Binding IsEnabledItem}" IsVisible="{Binding VisibilityItem}">
-                            <Grid VerticalOptions="Center" x:DataType="model:AutoPart">
+                    <DataTemplate x:DataType="model:AutoPart">
+                        <Frame BackgroundColor="Transparent" VerticalOptions="Center" IsEnabled="{Binding isEnabledItem}" IsVisible="{Binding visibilityItem}">
+                            <Grid VerticalOptions="Center">
                                 <HorizontalStackLayout Spacing="20">
                                     <Label Text="{Binding AutoPartName}" FontSize="18" VerticalOptions="Center"/>
                                     <Label Text="{Binding PartNumber}" FontSize="18" VerticalOptions="Center"/>

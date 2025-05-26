@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.Core.Models
+﻿namespace CarService.Core.Models
 {
     public class AutoPart
     {
@@ -36,6 +30,10 @@ namespace CarService.Core.Models
             get => $"{Price}₽";
         }
         public string GetStockAmount { get => $"{StockAmount} шт."; }
+
+        public bool visibilityItem { get; set; } = true;
+
+        public bool isEnabledItem { get; set; } = true;
 
         public static (AutoPart AutoPart, string error) Create(Guid autoPartId, string autoPartName, long partNumber,
             decimal price, uint stockAmount, Guid manufacturer, Guid? warehouse)

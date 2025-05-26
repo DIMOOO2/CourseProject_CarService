@@ -1,10 +1,11 @@
-using CarService.ApplicationService.Services;
+﻿using CarService.ApplicationService.Services;
 using CarService.Core.Abstractions;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using CarService.WebAPI;
 
 namespace CarService.newWebAPI
 {
@@ -55,9 +56,7 @@ namespace CarService.newWebAPI
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
-
-            
+            }      
 
             app.UseHttpsRedirection();
 
