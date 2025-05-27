@@ -24,30 +24,44 @@ public partial class MainPageViewModel : ObservableObject
 
     public MainPageViewModel()
     {
-        UpdateRequest();
+        try
+        {
+            UpdateRequest();
+        }
+        catch (Exception ex)
+        {
+            Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+        }
     }
 
     [RelayCommand]
     private void UpdateRequest()
     {
-        ObservableCollection<Order>? collectionOrders = WebData.Orders;
-        if (collectionOrders!.Count != 0)
+        try
         {
-            ObservableCollection<OrderInfo> current = new ObservableCollection<OrderInfo>();
-
-            foreach(var item in collectionOrders)
+            ObservableCollection<Order>? collectionOrders = WebData.Orders;
+            if (collectionOrders!.Count != 0)
             {
-                current.Add(new OrderInfo(item.OrderId, item.OrderDate, item.OrderStatus));
-            }
+                ObservableCollection<OrderInfo> current = new ObservableCollection<OrderInfo>();
 
-            OrdersCollection = current;
-            IsVisibleItems = true;
-            IsVisibleUpdate = false;
+                foreach (var item in collectionOrders)
+                {
+                    current.Add(new OrderInfo(item.OrderId, item.OrderDate, item.OrderStatus));
+                }
+
+                OrdersCollection = current;
+                IsVisibleItems = true;
+                IsVisibleUpdate = false;
+            }
+            else
+            {
+                IsVisibleItems = false;
+                IsVisibleUpdate = true;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            IsVisibleItems = false;
-            IsVisibleUpdate = true;
+            Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
         }
     }
 

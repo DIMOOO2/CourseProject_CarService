@@ -19,14 +19,21 @@ namespace CarService.Client.ViewModels
 
         public ArrivalsViewModel()
         {
-            foreach(var item in WebData.Reports!)
+            try
             {
-                DeliveryReports = new ObservableCollection<ReportModel>();
-                DeliveryReports.Add(new ReportModel()
+                foreach (var item in WebData.Reports!)
                 {
-                    DeliveryReport = DeliveryReport.Create(item.ReportId, item.CreateDate,
-                    item.WarehouseCreatorId, item.ReportFile).report
-                });
+                    DeliveryReports = new ObservableCollection<ReportModel>();
+                    DeliveryReports.Add(new ReportModel()
+                    {
+                        DeliveryReport = DeliveryReport.Create(item.ReportId, item.CreateDate,
+                        item.WarehouseCreatorId, item.ReportFile).report
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 

@@ -16,29 +16,50 @@ namespace CarService.Administrator.ViewModels
 
         public WarehousesViewModel()
         {
-            Warehouses = new ObservableCollection<Warehouse>();
-            Warehouses.Add(Warehouse.Create(Guid.NewGuid(), "test","test","test").Warehouse);
+            try
+            {
+                Warehouses = new ObservableCollection<Warehouse>();
+                Warehouses.Add(Warehouse.Create(Guid.NewGuid(), "test","test","test").Warehouse);
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
         private async void RemoveItem()
         {
-            if (SelectedWarehouse != null)
+            try
             {
-                if (await Application.Current!.MainPage!.DisplayAlert("", "Вы действительно хотите удалить данный склад", "OK", "Отмена"))
+                if (SelectedWarehouse != null)
                 {
-                    Warehouses.Remove(SelectedWarehouse);
+                    if (await Application.Current!.MainPage!.DisplayAlert("", "Вы действительно хотите удалить данный склад", "OK", "Отмена"))
+                    {
+                        Warehouses.Remove(SelectedWarehouse);
+                    }
+                    else return;
                 }
+
                 else return;
             }
-
-            else return;
+            catch (Exception ex)
+            {
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
         private async void CreateWarehouse()
         {
-            await Shell.Current.GoToAsync(nameof(CreateWareousePage));
+            try
+            {
+                await Shell.Current.GoToAsync(nameof(CreateWareousePage));
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
     }
 }

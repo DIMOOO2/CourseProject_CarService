@@ -12,11 +12,5 @@ namespace CarService.Client.ViewModels
         public ReportViewViewModel()
         {
         }
-
-        [RelayCommand]
-        private void SaveDocument()
-        {
-            
-        }
     }
 }

@@ -28,17 +28,32 @@ namespace CarService.Administrator.ViewModels
 
         public UpdateAutoPartViewModel()
         {
-            Name = AdminLocalData.CurrentAutoPart.AutoPartName;
-            Price = AdminLocalData.CurrentAutoPart.Price;
-            Amount = AdminLocalData.CurrentAutoPart.StockAmount;
-            //ManufacturerName = AdminLocalData.CurrentManufacturer?.ManufacturerName;
-           //ManufacturerEmail = AdminLocalData.CurrentManufacturer?.ContactInfo;
+            try
+            {
+                Name = AdminLocalData.CurrentAutoPart.AutoPartName;
+                Price = AdminLocalData.CurrentAutoPart.Price;
+                Amount = AdminLocalData.CurrentAutoPart.StockAmount;
+                //ManufacturerName = AdminLocalData.CurrentManufacturer?.ManufacturerName;
+                //ManufacturerEmail = AdminLocalData.CurrentManufacturer?.ContactInfo;
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
+
         }
 
         [RelayCommand]
         private void Update()
         {
-            //логика обновления с помощью PUT-запроса
+            try
+            {
+               //логика обновления с помощью PUT-запроса
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
     }
 }

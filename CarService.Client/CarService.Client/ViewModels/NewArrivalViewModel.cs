@@ -39,44 +39,65 @@ namespace CarService.Client.ViewModels
 
         public NewArrivalViewModel()
         {
-            AutoPartsFromArrival = new ObservableCollection<ArrivalAutoPart>();
-            AllAutoParts = new ObservableCollection<AutoPartInfo>();
-            foreach (var autoPart in WebData.AutoParts!)
+            try
             {
-                AllAutoParts.Add(new AutoPartInfo(autoPart.AutoPartId, autoPart.AutoPartName,
-                    autoPart.PartNumber, autoPart.Price, autoPart.StockAmount, autoPart.ManufacturerId, autoPart.WarehouseId));
+                AutoPartsFromArrival = new ObservableCollection<ArrivalAutoPart>();
+                AllAutoParts = new ObservableCollection<AutoPartInfo>();
+                foreach (var autoPart in WebData.AutoParts!)
+                {
+                    AllAutoParts.Add(new AutoPartInfo(autoPart.AutoPartId, autoPart.AutoPartName,
+                        autoPart.PartNumber, autoPart.Price, autoPart.StockAmount, autoPart.ManufacturerId, autoPart.WarehouseId));
+                }
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 
         [RelayCommand]
         private void AddArrivalCollection()
         {
-            if (SelectedAutoPartFromAll != null)
+            try
             {
-                AutoPartsFromArrival.Add(new ArrivalAutoPart() { AutoPart = SelectedAutoPartFromAll });
-                AllAutoParts.Remove(SelectedAutoPartFromAll);
+                if (SelectedAutoPartFromAll != null)
+                {
+                    AutoPartsFromArrival.Add(new ArrivalAutoPart() { AutoPart = SelectedAutoPartFromAll });
+                    AllAutoParts.Remove(SelectedAutoPartFromAll);
+                }
+
+                else return;
             }
-                
-            else return;
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
         private void RemoveArrivalCollection() 
         {
-            if (SelectedAutoPartFromArrival != null)
+            try
             {
-                AutoPartsFromArrival.Remove(SelectedAutoPartFromArrival!);
-                AllAutoParts.Add(new AutoPartInfo(
-                    SelectedAutoPartFromArrival.AutoPart.AutoPartId,
-                    SelectedAutoPartFromArrival.AutoPart.AutoPartName,
-                    SelectedAutoPartFromArrival.AutoPart.PartNumber,
-                    SelectedAutoPartFromArrival.AutoPart.Price,
-                    SelectedAutoPartFromArrival.AutoPart.StockAmount,
-                    SelectedAutoPartFromArrival.AutoPart.ManufacturerId,
-                    SelectedAutoPartFromArrival.AutoPart.WarehouseId
-                    ));
+                if (SelectedAutoPartFromArrival != null)
+                {
+                    AutoPartsFromArrival.Remove(SelectedAutoPartFromArrival!);
+                    AllAutoParts.Add(new AutoPartInfo(
+                        SelectedAutoPartFromArrival.AutoPart.AutoPartId,
+                        SelectedAutoPartFromArrival.AutoPart.AutoPartName,
+                        SelectedAutoPartFromArrival.AutoPart.PartNumber,
+                        SelectedAutoPartFromArrival.AutoPart.Price,
+                        SelectedAutoPartFromArrival.AutoPart.StockAmount,
+                        SelectedAutoPartFromArrival.AutoPart.ManufacturerId,
+                        SelectedAutoPartFromArrival.AutoPart.WarehouseId
+                        ));
+                }
+                else return;
             }
-            else return;
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]

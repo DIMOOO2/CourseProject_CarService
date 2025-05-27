@@ -50,8 +50,15 @@ namespace CarService.Client.ViewModels
         #endregion
         public CreateOrderViewModel()
         {
-            IsNaturalPerson = true;
-            IsLegalEntity = false;
+            try
+            {
+                IsNaturalPerson = true;
+                IsLegalEntity = false;
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         private HttpClient client = new HttpClient();

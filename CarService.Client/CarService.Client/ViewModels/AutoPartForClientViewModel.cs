@@ -34,10 +34,17 @@ namespace CarService.Client.ViewModels
 
         public AutoPartForClientViewModel()
         {
-            IsCollectionEmpty = false;
-            AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
-            AutoPartsWithClient = new ObservableCollection<CartAutoPart>();
-            UpdateCollectionLocal().GetAwaiter();
+            try
+            {
+                IsCollectionEmpty = false;
+                AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
+                AutoPartsWithClient = new ObservableCollection<CartAutoPart>();
+                UpdateCollectionLocal().GetAwaiter();
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         private async Task UpdateCollectionLocal()
@@ -115,30 +122,37 @@ namespace CarService.Client.ViewModels
         [RelayCommand] 
         private async Task SaveCart()
         {
-            if (AutoPartsWithClient.Count == 0)
+            try
             {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
-                return;
-            }
-            else
-            {
-                ObservableCollection<AutoPartResponse> newCart = new ObservableCollection<AutoPartResponse>();
-
-                foreach (var item in AutoPartsWithClient)
+                if (AutoPartsWithClient.Count == 0)
                 {
-                    newCart.Add(new AutoPartResponse(
-                        item.AutoPart.AutoPartId,
-                        item.AutoPart.AutoPartName,
-                        item.AutoPart.PartNumber,
-                        item.AutoPart.Price,
-                        item.DesiredCount,
-                        item.AutoPart.ManufacturerId,
-                        item.AutoPart.WarehouseId));
+                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Для сохранения добавьте необходимые товары в корзину", "ОК");
+                    return;
                 }
+                else
+                {
+                    ObservableCollection<AutoPartResponse> newCart = new ObservableCollection<AutoPartResponse>();
 
-                CartData.SetCart(newCart);
+                    foreach (var item in AutoPartsWithClient)
+                    {
+                        newCart.Add(new AutoPartResponse(
+                            item.AutoPart.AutoPartId,
+                            item.AutoPart.AutoPartName,
+                            item.AutoPart.PartNumber,
+                            item.AutoPart.Price,
+                            item.DesiredCount,
+                            item.AutoPart.ManufacturerId,
+                            item.AutoPart.WarehouseId));
+                    }
 
-                await Shell.Current.Navigation.PopAsync();
+                    CartData.SetCart(newCart);
+
+                    await Shell.Current.Navigation.PopAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
     }

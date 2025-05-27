@@ -19,23 +19,44 @@ namespace CarService.Administrator.ViewModels
 
         public OrdersViewModel()
         {
-            Orders = new ObservableCollection<Order>();
-            Orders.Add(Order.Create(Guid.NewGuid(), DateTime.MaxValue, false, Guid.NewGuid(), Guid.NewGuid()).Order);
+            try
+            {
+                Orders = new ObservableCollection<Order>();
+                Orders.Add(Order.Create(Guid.NewGuid(), DateTime.MaxValue, false, Guid.NewGuid(), Guid.NewGuid()).Order);
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
         private void RemoveItem()
         {
-            if (SelectedOrder != null)
-                Orders.Remove(SelectedOrder);
+            try
+            {
+                if (SelectedOrder != null)
+                    Orders.Remove(SelectedOrder);
 
-            else return;
+                else return;
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
         private void ExecuteOrder()
         {
-            //Отправка запроса отправления обновленного заказа
+            try
+            {
+                //Отправка запроса отправления обновленного заказа
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
     }
 }

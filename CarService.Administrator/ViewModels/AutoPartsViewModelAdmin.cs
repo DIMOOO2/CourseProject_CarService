@@ -19,38 +19,67 @@ namespace CarService.Administrator.ViewModels
 
         public AutoPartsViewModelAdmin()
         {
-            AutoParts = new ObservableCollection<AutoPart>();
-            AutoParts.Add(AutoPart.Create(Guid.NewGuid(), "Test", 2, 18.00M, 7, Guid.NewGuid(), Guid.NewGuid()).AutoPart);
+            try
+            {
+                AutoParts = new ObservableCollection<AutoPart>();
+                AutoParts.Add(AutoPart.Create(Guid.NewGuid(), "Test", 2, 18.00M, 7, Guid.NewGuid(), Guid.NewGuid()).AutoPart);
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
+
         }
 
         [RelayCommand]
         private void RemoveItem()
         {
-            if (SelectedAutoPart != null)
-                AutoParts.Remove(SelectedAutoPart);
+            try
+            {
+                if (SelectedAutoPart != null)
+                    AutoParts.Remove(SelectedAutoPart);
 
-            else return;
+                else return;
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
         private async void UpdateItem()
         {
-            if (SelectedAutoPart != null)
+            try
             {
-                AdminLocalData.SetAutoPart(SelectedAutoPart);
-                await Shell.Current.GoToAsync(nameof(UpdateAutoPartPage));
+                if (SelectedAutoPart != null)
+                {
+                    AdminLocalData.SetAutoPart(SelectedAutoPart);
+                    await Shell.Current.GoToAsync(nameof(UpdateAutoPartPage));
+                }
+                else
+                {
+                    await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();
+                    return;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();
-                return;
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 
         [RelayCommand]
         private void CreateItem()
         {
-            Shell.Current.GoToAsync(nameof(CreateAutoPartPage));
+            try
+            {
+                Shell.Current.GoToAsync(nameof(CreateAutoPartPage));
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
     }
 }

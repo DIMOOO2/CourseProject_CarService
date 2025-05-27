@@ -27,7 +27,15 @@ namespace CarService.Administrator.ViewModels
         [RelayCommand]
         private void Create()
         {
-            //Логика создания склада и аккаунта с помощью Post-Запросов
+            try
+            {
+                //Логика создания склада и аккаунта с помощью Post-Запросов
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
+
         }
     }
 }

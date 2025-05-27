@@ -27,7 +27,14 @@ namespace CarService.Client.ViewModels
 
         public SearchAutoPartViewModel() 
         {
-            UpdateRequest();
+            try
+            {
+                UpdateRequest();
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         [RelayCommand]
@@ -48,54 +55,68 @@ namespace CarService.Client.ViewModels
         [RelayCommand]
         private async void Search()
         {
-            UpdateCollection();
+            try
+            {
+                UpdateCollection();
+            }
+            catch (Exception ex)
+            {
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
         }
 
         private void UpdateCollection()
         {
-            ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
-            if (collectionAutoPart!.Count != 0)
+            try
             {
-                ObservableCollection<AutoPartInfo>? current = new ObservableCollection<AutoPartInfo>();
-
-                if(string.IsNullOrEmpty(UserRequest))
+                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
+                if (collectionAutoPart!.Count != 0)
                 {
-                    foreach (var item in collectionAutoPart)
-                    {
-                        current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
-                            item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));
-                    }
-                }
+                    ObservableCollection<AutoPartInfo>? current = new ObservableCollection<AutoPartInfo>();
 
-                else
-                {
-                    foreach (var item in collectionAutoPart)
+                    if (string.IsNullOrEmpty(UserRequest))
                     {
-                        if(item.AutoPartName.Contains(UserRequest))
+                        foreach (var item in collectionAutoPart)
                         {
                             current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
-                            item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));
-                        }               
+                                item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));
+                        }
                     }
+
+                    else
+                    {
+                        foreach (var item in collectionAutoPart)
+                        {
+                            if (item.AutoPartName.Contains(UserRequest))
+                            {
+                                current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
+                                item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));
+                            }
+                        }
+                    }
+
+                    if (current.Count == 0)
+                    {
+                        IsVisibleItems = false;
+                        IsVisibleNotFoundView = true;
+                    }
+                    else
+                    {
+                        IsVisibleItems = true;
+                        IsVisibleNotFoundView = false;
+                    }
+
+                    AutoParts = current;
                 }
-                
-                if(current.Count == 0)
+                else
                 {
                     IsVisibleItems = false;
                     IsVisibleNotFoundView = true;
                 }
-                else
-                {
-                    IsVisibleItems = true;
-                    IsVisibleNotFoundView = false;
-                }
-
-                AutoParts = current;              
             }
-            else
+            catch (Exception ex)
             {
-                IsVisibleItems = false;
-                IsVisibleNotFoundView = true;
+                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
     }
