@@ -1,10 +1,7 @@
 ﻿using CarService.DataAccess.Configurations;
 using CarService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-<<<<<<< HEAD
-=======
 
->>>>>>> Доработка клиентского приложения
 
 namespace CarService.DataAccess.Contexts
 {
