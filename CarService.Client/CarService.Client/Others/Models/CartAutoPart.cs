@@ -10,9 +10,9 @@ namespace CarService.Client.Others.Models
         [ObservableProperty]
         private uint desiredCount;
 
-        public CartAutoPart()
+        public CartAutoPart(uint countWithFutureOrder = 1)
         {
-            DesiredCount = 1;
+            DesiredCount = countWithFutureOrder;
         }
 
         public AutoPart AutoPart { get; set; } = null!;

@@ -152,6 +152,7 @@ namespace CarService.Client.ViewModels
                         }
                         await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ успешно создан", "OK");
                         WebData.GetAutoPartsCollection(await client.GetFromJsonAsync<List<AutoPartResponse>>("https://localhost:1488/AutoPart/"));
+                        WebData.GetOrdersCollection(await client.GetFromJsonAsync<List<OrderResponse>>("https://localhost:1488/Order"));
                         await Shell.Current.Navigation.PopAsync();
                     }
 

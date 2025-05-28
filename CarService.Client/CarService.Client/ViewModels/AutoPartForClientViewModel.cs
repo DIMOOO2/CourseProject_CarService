@@ -39,6 +39,25 @@ namespace CarService.Client.ViewModels
                 IsCollectionEmpty = false;
                 AutoPartsWithCurrentWarehouse = new ObservableCollection<AutoPart>();
                 AutoPartsWithClient = new ObservableCollection<CartAutoPart>();
+                if(CartData.AutoParts! != null)
+                {
+                    foreach (var item in CartData.AutoParts)
+                    {
+                        AutoPartsWithClient.Add(new CartAutoPart(item.stockAmount)
+                        {
+                            AutoPart = AutoPart.Create
+                            (
+                                item.autoPartId,
+                                item.autoPartName,
+                                item.partNumber,
+                                item.price,
+                                item.stockAmount,
+                                item.manufacturerId,
+                                item.warehouseId
+                            ).AutoPart
+                        });
+                    }
+                }          
                 UpdateCollectionLocal().GetAwaiter();
             }
             catch (Exception ex)
@@ -53,11 +72,22 @@ namespace CarService.Client.ViewModels
             {
                 ObservableCollection<AutoPart>? autoparts = [.. WebData.AutoParts!.Where(a => a.WarehouseId == LoginData.CurrentWarehouse!.WarehouseId)];
 
-                if(autoparts?.Count == 0)
+                if (autoparts?.Count == 0)
                 {
                     IsCollectionEmpty = true;
                 }
-                else AutoPartsWithCurrentWarehouse = autoparts!;
+                else
+                {
+                    foreach(var autoPart in autoparts!)
+                    {
+                        if(autoPart.StockAmount > 0)
+                        {
+                            autoPart.visibilityItem = true;
+                            autoPart.isEnabledItem = true;
+                        }
+                    }
+                    AutoPartsWithCurrentWarehouse = autoparts!;
+                }
             }
             catch (HttpRequestException ex)
             {

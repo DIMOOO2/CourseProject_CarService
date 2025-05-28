@@ -100,14 +100,16 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        private Guid guid = Guid.NewGuid();
+        
         [RelayCommand]
         private async Task SaveArrival()
         {
             try
             {
                 QuestPDF.Settings.License = LicenseType.Community;
-                Guid guid = Guid.NewGuid();
                 byte[] data = guid.ToByteArray();
+
 
                 long numberReport = Convert.ToInt64(Math.Abs(BitConverter.ToInt32(data, 0)));
 
@@ -125,6 +127,19 @@ namespace CarService.Client.ViewModels
                     WebData.GetColllectionReport(await _httpClient.GetFromJsonAsync<List<DeliveryReportResponse>>("https://localhost:1488/DeliveryReport"));
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Отчет создан. Номер отчета {reportResponse!.reportId}", "ОК");
 
+                    foreach(var item in AutoPartsFromArrival)
+                    {
+                        await _httpClient.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/DeliveryReport/{item.AutoPart.AutoPartId}",
+                            new AutoPartRequest
+                            (
+                                item.AutoPart.AutoPartName,
+                                item.AutoPart.PartNumber,
+                                item.AutoPart.Price,
+                                item.AutoPart.StockAmount,
+                                item.AutoPart.ManufacturerId,
+                                item.AutoPart.WarehouseId
+                            ));
+                    }
 
                     await Shell.Current.Navigation.PopAsync();
                 }
@@ -132,6 +147,7 @@ namespace CarService.Client.ViewModels
             catch (Exception ex)
             {
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", ex.Message, "ОК");
+                await _httpClient.DeleteFromJsonAsync<DeliveryReportRequest>($"https://localhost:1488/DeliveryReport/{guid}");
             }
         }
     }

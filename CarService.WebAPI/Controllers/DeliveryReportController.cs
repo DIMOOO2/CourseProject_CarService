@@ -102,7 +102,7 @@ namespace CarService.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<AutoPartRequest>> DeleteReport(Guid id)
+        public async Task<ActionResult<DeliveryReportRequest>> DeleteReport(Guid id)
         {
             return Ok(await _service.DeleteReport(id));
         }

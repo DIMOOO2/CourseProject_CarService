@@ -118,7 +118,6 @@ Grid.Row="3">
             <StackLayout  Grid.Row="5" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Spacing="20" Margin="10">
                 <Button Text="Сохранить" Grid.Row="5" Style="{StaticResource ButtonStyle}" Command="{Binding SaveCartCommand}"/>
                 <Button Text="Удалить из корзины"  Style="{StaticResource ButtonStyle}" Command="{Binding RemoveInCartCommand}" VerticalOptions="Center"/>
-                <Label Text="Общая стоимость: " FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
             </StackLayout>
         </Grid>
     </ScrollView>
