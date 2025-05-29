@@ -2,7 +2,6 @@
 {
     public class AutoPart
     {
-        const int COUNT_SYMBOLS_PART_NUMBER = 6;
         private AutoPart(Guid autoPartId, string autoPartName, long partNumber, 
             decimal price, uint stockAmount, Guid manufacturerId, Guid? warehouseId)
         {
@@ -35,13 +34,15 @@
 
         public bool isEnabledItem { get; set; } = true;
 
+        public string GetPartNumber => $"Артикул - {PartNumber}";
+
         public static (AutoPart AutoPart, string error) Create(Guid autoPartId, string autoPartName, long partNumber,
             decimal price, uint stockAmount, Guid manufacturer, Guid? warehouse)
         {
             string error = string.Empty;
 
-            if (string.IsNullOrEmpty(autoPartName) || 
-                partNumber.ToString().Length != COUNT_SYMBOLS_PART_NUMBER ||
+            if (string.IsNullOrEmpty(autoPartName) 
+                ||
                 price <= 0
                 || manufacturer == Guid.Empty)
             {

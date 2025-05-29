@@ -48,7 +48,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateManufacturer([FromBody] ManufacturerRequest request)
+        public async Task<ActionResult<ManufacturerResponse>> CreateManufacturer([FromBody] ManufacturerRequest request)
         {
             var (manufacturer, error) = Manufacturer.Create
                 (
@@ -64,7 +64,7 @@ namespace CarService.newWebAPI.Controllers
 
             await _manufacturerService.CreateManufacturer(manufacturer);
 
-            return Ok(manufacturer.ManufacturerId);
+            return Ok(new ManufacturerResponse(manufacturer.ManufacturerId, manufacturer.ManufacturerName, manufacturer.ContactInfo));
         }
 
         [HttpPut("{id:guid}")]
@@ -78,7 +78,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<ManufacturerRequest>> DeleteWarehouse(Guid id)
+        public async Task<ActionResult<ManufacturerResponse>> DeleteWarehouse(Guid id)
         {
             return Ok(await _manufacturerService.DeleteManufacturer(id));
         }

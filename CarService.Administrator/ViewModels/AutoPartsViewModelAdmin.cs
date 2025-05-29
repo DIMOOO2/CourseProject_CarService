@@ -1,11 +1,13 @@
 ﻿using CarService.Administrator.Others.Data;
 using CarService.Administrator.Pages;
+using CarService.ApplicationService.Contracts.Responses;
 using CarService.Core.Models;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
 {
@@ -17,12 +19,14 @@ namespace CarService.Administrator.ViewModels
         [ObservableProperty]
         private AutoPart selectedAutoPart;
 
+        private HttpClient httpClient = new HttpClient();
+
         public AutoPartsViewModelAdmin()
         {
             try
             {
                 AutoParts = new ObservableCollection<AutoPart>();
-                AutoParts.Add(AutoPart.Create(Guid.NewGuid(), "Test", 2, 18.00M, 7, Guid.NewGuid(), Guid.NewGuid()).AutoPart);
+                UpdateCollection();       
             }
             catch (Exception ex)
             {
@@ -55,6 +59,7 @@ namespace CarService.Administrator.ViewModels
                 if (SelectedAutoPart != null)
                 {
                     AdminLocalData.SetAutoPart(SelectedAutoPart);
+                    
                     await Shell.Current.GoToAsync(nameof(UpdateAutoPartPage));
                 }
                 else
@@ -79,6 +84,21 @@ namespace CarService.Administrator.ViewModels
             catch (Exception ex)
             {
                 Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
+        }
+
+        [RelayCommand]
+        private async void UpdateCollection()
+        {
+            try
+            {
+                WebData.GetAutoPartsCollection(await httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{Guid.Empty}"));
+                WebData.GetCollectionManufacturer(await httpClient.GetFromJsonAsync<List<ManufacturerResponse>>("https://localhost:1488/Manufacturer"));
+                AutoParts = WebData.AutoParts!;
+            }
+            catch (Exception ex)
+            {
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
     }

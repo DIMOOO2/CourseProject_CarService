@@ -55,12 +55,13 @@
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
-                        <uran:TextField Title="Контактная информация производителя (электронная почта)" AccentColor="OrangeRed" 
-                                    FontSize="16" TitleFontSize="16" BindingContext="{Binding ManufacturerEmail}">
-                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"
-                                                    Message="Электронная почта введен не корректно"/>
+                        <uran:TextField Title="Электронная почта производителя" Text="{Binding ManufacturerEmail}"
+       FontSize="16" TitleFontSize="16" AccentColor="OrangeRed">
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" 
+                   Message="Неправильно введена электронная почта" />
                         </uran:TextField>
+
                     </StackLayout>
 
                     <VerticalStackLayout HorizontalOptions="Fill" Margin="10">

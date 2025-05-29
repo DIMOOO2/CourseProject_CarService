@@ -29,6 +29,8 @@ namespace CarService.Administrator.ViewModels
         {
         }
 
+        private ManufacturerResponse? tempManufacturer;
+
 
         [RelayCommand]
         private async void CreateAutoPart()
@@ -40,9 +42,9 @@ namespace CarService.Administrator.ViewModels
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    ManufacturerResponse? manufacturerResponse = await response.Content.ReadFromJsonAsync<ManufacturerResponse>();
+                    tempManufacturer = await response.Content.ReadFromJsonAsync<ManufacturerResponse>();
 
-                    var autoPartRequest = new AutoPartRequest(Name, 0, Price, Amount, manufacturerResponse!.manufacturerId, Guid.NewGuid()/*Создать запись на главный склад и передовать сюда ID склада*/);
+                    var autoPartRequest = new AutoPartRequest(Name, 0, Price, Amount, tempManufacturer!.manufacturerId, Guid.Empty);
 
                     using var responseAutoPart = await httpClient.PostAsJsonAsync<AutoPartRequest>("https://localhost:1488/Manufacturer", autoPartRequest);
 
@@ -56,9 +58,11 @@ namespace CarService.Administrator.ViewModels
                     else
                     {
                         await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Запчасть зарегистрировать не удалось. Код ошибки {responseAutoPart.StatusCode}", "ОК");
-                        await httpClient.DeleteFromJsonAsync<ManufacturerRequest>($"https://localhost:1488/Manufacturer/{manufacturerResponse.manufacturerId}");
+                        await httpClient.DeleteFromJsonAsync<ManufacturerRequest>($"https://localhost:1488/Manufacturer/{tempManufacturer!.manufacturerId}");
                     }
                 }
+                else
+                    throw new Exception("Ошибка при создании склада");
             }
             catch (Exception ex)
             {

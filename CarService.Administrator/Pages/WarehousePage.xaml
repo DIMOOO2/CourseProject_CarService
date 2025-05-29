@@ -39,7 +39,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Warehouse">
-                        <Frame BorderColor="OrangeRed">
+                        <Frame BorderColor="OrangeRed" BackgroundColor="Transparent">
                             <StackLayout>
                                 <StackLayout Orientation="Vertical" x:DataType="model:Warehouse">
                                     <Label Text="{Binding Title}"/>

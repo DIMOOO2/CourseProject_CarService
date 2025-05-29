@@ -5,12 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CarService.Administrator.Pages"
     Shell.FlyoutBehavior="Locked"
-    Title="CarService.Administrator">
+    Title="CarService.Administrator"
+    Shell.TitleColor="OrangeRed">
 
     <ShellContent
         Title="Автозапчасти"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" 
+        />
 
     <ShellContent 
         Title="Заказы"

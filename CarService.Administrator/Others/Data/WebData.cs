@@ -49,7 +49,7 @@ namespace CarService.Administrator.Others.Data
             Clients = currentClients;
         }
 
-        public static void GetCollectionManufacturer(List<ManufacturerResponse> manufacturers)
+        public static void GetCollectionManufacturer(List<ManufacturerResponse>? manufacturers)
         {
             ObservableCollection<Manufacturer> currentManufacturers = new ObservableCollection<Manufacturer>();
             foreach (var manufacturer in manufacturers!)

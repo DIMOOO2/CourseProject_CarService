@@ -22,27 +22,34 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ScrollView>
 
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            
-            <CollectionView Grid.Row="0" ItemsSource="{Binding AutoParts}"
+
+            <StackLayout>
+                <Button Text="Обновить" Style="{StaticResource ButtonStyle}" 
+                        WidthRequest="100" Margin="10" HorizontalOptions="EndAndExpand"
+                        Command="{Binding UpdateCollectionCommand}"/>
+            </StackLayout>
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding AutoParts}"
                             SelectedItem="{Binding SelectedAutoPart}"
                             SelectionMode="Single"
-                            Margin="5">
-                
+                            Margin="10">
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:AutoPart">
-                        <Frame BorderColor="OrangeRed">
+                        <Frame BorderColor="OrangeRed" BackgroundColor="Transparent">
                             <StackLayout>
                                 <StackLayout Orientation="Vertical" x:DataType="model:AutoPart">
                                     <Label Text="{Binding AutoPartName}"/>
-                                    <Label Text="{Binding PartNumber}"/>
+                                    <Label Text="{Binding GetPartNumber}"/>
                                     <Label Text="{Binding GetStockAmount}"/>
                                     <Label Text="{Binding GetPrice}"/>
                                 </StackLayout>
@@ -55,15 +62,15 @@
                 </CollectionView.ItemsLayout>
             </CollectionView>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10" Grid.Row="1" Margin="10" VerticalOptions="End">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10" Grid.Row="2" Margin="10" VerticalOptions="End">
                 <Button Style="{StaticResource ButtonStyle}" Text="Новая запчасть" 
-                        WidthRequest="200" HorizontalOptions="End" Command="{Binding CreateItemCommand}"/> 
+                        WidthRequest="200" HorizontalOptions="End" Command="{Binding CreateItemCommand}"/>
                 <Button Style="{StaticResource ButtonStyle}" Text="Удалить запчасть" 
                         WidthRequest="200" HorizontalOptions="End" Command="{Binding RemoveItemCommand}"/>
                 <Button Style="{StaticResource ButtonStyle}" Text="Обновить запчасть" 
                         WidthRequest="200" HorizontalOptions="End" Command="{Binding UpdateItemCommand}"/>
             </StackLayout>
         </Grid>
-        
+
     </ScrollView>
 </ContentPage>

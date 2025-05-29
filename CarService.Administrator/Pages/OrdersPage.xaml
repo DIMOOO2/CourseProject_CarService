@@ -38,9 +38,9 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Order">
-                        <Frame BorderColor="OrangeRed">
+                        <Frame BorderColor="OrangeRed" BackgroundColor="Transparent">
                             <StackLayout>
-                                <StackLayout Orientation="Vertical" x:DataType="model:Order">
+                                <StackLayout Orientation="Vertical" x:DataType="model:Order" >
                                     <Label Text="{Binding ClientId}"/>
                                     <Label Text="{Binding OrderDate}"/>
                                     <Label Text="{Binding OrderId}"/>
