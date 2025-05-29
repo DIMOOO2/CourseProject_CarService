@@ -256,8 +256,7 @@ namespace CarService.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_WarehouseContractorId",
                 table: "Orders",
-                column: "WarehouseContractorId",
-                unique: true);
+                column: "WarehouseContractorId");
         }
 
         /// <inheritdoc />

@@ -56,7 +56,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpGet("fromWarehouse/{warehouesId:guid}")]
-        public async Task<ActionResult<ObservableCollection<OrderResponse>>> GetOrdersFromCurrentWarehouse(Guid warehouesId)
+        public async Task<ActionResult<List<OrderResponse>>> GetOrdersFromCurrentWarehouse(Guid warehouesId)
         {
             var orderFromWarehouse = await _orderService.GetOrdersFromCurrentWarehouse(warehouesId);
 
@@ -73,7 +73,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<OrderResponse>> CreateOrder([FromBody] OrderRequest request)
+        public async Task<ActionResult<OrderRequest>> CreateOrder([FromBody] OrderRequest request)
         {
             var (order, error) = Order.Create(
                     Guid.NewGuid(),

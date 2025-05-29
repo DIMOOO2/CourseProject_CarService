@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.DataAccess.Entities
+﻿namespace CarService.DataAccess.Entities
 {
     public class WarehouseEntity
     {
@@ -13,5 +7,6 @@ namespace CarService.DataAccess.Entities
         public string Address { get; set; } = string.Empty;
         public string City { get; set;  } = string.Empty;
         public List<AutoPartEntity> AutoParts { get; set; } = [];
+        public List<OrderEntity> Orders { get; set; }
     }
 }

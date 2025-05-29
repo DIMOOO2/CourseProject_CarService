@@ -30,7 +30,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
 
             <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="Center">
@@ -38,19 +38,28 @@
                 Margin="10,0,0,0" VerticalOptions="Center"/>
             </StackLayout>
 
-            <CollectionView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" 
+
+            <CollectionView Grid.Row="1" Grid.RowSpan="2"
                 ItemsSource="{Binding DeliveryReports}" 
                 SelectedItem="{Binding SelectedReport}"
-                SelectionMode="Single">
+                SelectionMode="Single"
+                VerticalScrollBarVisibility="Default"
+                            Margin="10">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ReportModel">
                         <Frame BackgroundColor="Transparent" BorderColor="OrangeRed">
-                            <StackLayout Orientation="Vertical" Spacing="5">
-                                <Label Text="{Binding DeliveryReport.GetReportArticul}" FontSize="16"/>
-                                <Label Text="{Binding DeliveryReport.GetDate}"/>
-                                <Button Style="{StaticResource ButtonStyle}" Text="Open" Command="{Binding OpenReportCommand}"/>
-                            </StackLayout> 
-                            
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                                    <VerticalStackLayout WidthRequest="200">
+                                        <Label Text="{Binding DeliveryReport.GetReportArticul}" FontSize="16"/>
+                                        <Label Text="{Binding DeliveryReport.GetDate}"/>
+                                    </VerticalStackLayout>
+
+                                    <StackLayout HorizontalOptions="EndAndExpand">
+                                        <Button Style="{StaticResource ButtonStyle}" Text="Открыть для просмотра" Command="{Binding OpenReportCommand}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -59,16 +68,18 @@
                 </CollectionView.ItemsLayout>
             </CollectionView>
 
-            <!--<StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" IsVisible="True" Spacing="20">
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Spacing="20" IsVisible="{Binding IsVisibleEmptyLogo}">
                 <Image Source="purchase_order.png" WidthRequest="200" HeightRequest="200"/>
                 <Label Text="Пока тут ничего нет. Примите новую поставку деталей на ваш склад." FontSize="Default"
 FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="10"/>
-            </StackLayout>-->
+            </StackLayout>
 
-            <VerticalStackLayout  Grid.Row="2">
-                <Button Text="Новое поступление" Style="{StaticResource ButtonStyle}" Margin="10" FontSize="20"
+            <HorizontalStackLayout Padding="10" Grid.Row="2" Margin="10" Spacing="5">
+                <Button Text="Новое поступление" Style="{StaticResource ButtonStyle}" FontSize="20"
         Command="{Binding PushNewArrivalCommand}"/>
-            </VerticalStackLayout>
+                <Button Text="Обновить" Style="{StaticResource ButtonStyle}"  FontSize="20"
+        Command="{Binding UpdateCollectionCommand}"/>
+            </HorizontalStackLayout>
             
         </Grid>
     </ScrollView>

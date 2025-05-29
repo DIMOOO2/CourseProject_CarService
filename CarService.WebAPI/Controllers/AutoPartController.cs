@@ -104,7 +104,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<Guid>> UpdateAutoPart(Guid id, [FromBody] AutoPartRequest request)
+        public async Task<ActionResult<AutoPartRequest>> UpdateAutoPart(Guid id, [FromBody] AutoPartRequest request)
         {
             var autopartId = await _autoPartService.UpdateAutoPart(id,
                 request.autoPartName,

@@ -89,7 +89,6 @@ namespace CarService.DataAccess.Repositories
                 .SetProperty(a => a.StockAmount, stockAmount)
                 .SetProperty(a => a.ManufacturerId, manufacturerId)
                 .SetProperty(a => a.WarehouseId, warehouseId));
-
             return autoPartId;
         }
 
@@ -98,7 +97,6 @@ namespace CarService.DataAccess.Repositories
             await _context.AutoParts
                 .Where(a => a.AutoPartId == id)
                 .ExecuteDeleteAsync();
-
             return id;
         }
     }

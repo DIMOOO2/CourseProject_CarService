@@ -32,12 +32,12 @@ namespace CarService.Core.Models
             return (deliveryReport, error);
         }
 
-        public long GetReportArticul
+        public string GetReportArticul
         {
             get
             {
                 byte[] data = ReportId.ToByteArray();
-                return Convert.ToInt64(Math.Abs(BitConverter.ToInt32(data, 0)));
+                return $"Отчет №{Convert.ToInt64(Math.Abs(BitConverter.ToInt32(data, 0)))}";
             }
         }
 

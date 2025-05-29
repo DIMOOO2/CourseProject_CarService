@@ -100,7 +100,7 @@ namespace CarService.Client.ViewModels
 
                 if (IsLegalEntity)
                 {
-                    if(TinOrganization.Length != 10)
+                    if (TinOrganization.Length != 10)
                     {
                         await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка создания", "ИНН Должен содержать 10 цифр", "ОК");
                         return;
@@ -119,12 +119,14 @@ namespace CarService.Client.ViewModels
 
                 OrderRequest orderRequest = new OrderRequest(DateTime.Now, false, clientResponse!.clientId, LoginData.CurrentWarehouse!.WarehouseId);
                 using var response3 = await client.PostAsJsonAsync<OrderRequest>("https://localhost:1488/Order", orderRequest);
+                if (response3.StatusCode != System.Net.HttpStatusCode.OK)
+                    throw new Exception("Ошибка при создании заказа");
                 OrderResponse? orderResponse = await response3.Content.ReadFromJsonAsync<OrderResponse>();
                 orderGuid = orderResponse!.orderId;
 
                 List<OrderedPartRequest> orderedPartRequests = new List<OrderedPartRequest>();
-                
-                foreach(var item in CartData.AutoParts)
+
+                foreach (var item in CartData.AutoParts)
                 {
                     orderedPartRequests.Add(new OrderedPartRequest(item.stockAmount, orderResponse!.orderId, item.autoPartId, LoginData.CurrentWarehouse.WarehouseId));
                 }
@@ -134,36 +136,33 @@ namespace CarService.Client.ViewModels
             }
             catch (Exception ex)
             {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
                 isActiveCatch = true;
             }
             finally
             {
-                if (CartData.AutoParts != null)
+                if (!isActiveCatch)
                 {
-                    if (!isActiveCatch)
-                    {   
-                        foreach(var item in CartData.AutoParts!)
-                        {
-                            var autoPartChange = WebData.AutoParts!.FirstOrDefault(a => a.AutoPartId == item.autoPartId);
-                            if(autoPartChange != null)
-                                await client.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/AutoPart/{autoPartChange.AutoPartId}", new AutoPartRequest(item.autoPartName,
-                                    item.partNumber, item.price, autoPartChange.StockAmount - item.stockAmount, item.manufacturerId, item.warehouseId));
-                        }
-                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ успешно создан", "OK");
-                        WebData.GetAutoPartsCollection(await client.GetFromJsonAsync<List<AutoPartResponse>>("https://localhost:1488/AutoPart/"));
-                        WebData.GetOrdersCollection(await client.GetFromJsonAsync<List<OrderResponse>>("https://localhost:1488/Order"));
-                        await Shell.Current.Navigation.PopAsync();
-                    }
 
-                    else
+                    foreach (var item in CartData.AutoParts!)
                     {
-                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Ошибка при создании заказа", "OK");
-                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Order/{orderGuid}");
-                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Client/{clientGuid}");
-                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Organization/{organizationGuid}");
+                        var autoPartChange = WebData.AutoParts!.FirstOrDefault(a => a.AutoPartId == item.autoPartId);
+                        if (autoPartChange != null)
+                            await client.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/AutoPart/{autoPartChange.AutoPartId}", new AutoPartRequest(item.autoPartName,
+                                item.partNumber, item.price, autoPartChange.StockAmount - item.stockAmount, item.manufacturerId, item.warehouseId));
                     }
-                }        
+                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ успешно создан", "OK");
+                    WebData.GetAutoPartsCollection(await client.GetFromJsonAsync<List<AutoPartResponse>>("https://localhost:1488/AutoPart/"));
+                    WebData.GetOrdersCollection(await client.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{LoginData.CurrentWarehouse!.WarehouseId}"));
+                    await Shell.Current.Navigation.PopAsync();
+                }
+                else
+                {
+                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Ошибка при создании заказа", "OK");
+                    await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Order/{orderGuid}");
+                    await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Client/{clientGuid}");
+                    if(organizationGuid != null)
+                        await client.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Organization/{organizationGuid}");
+                }
             }
         }
     }

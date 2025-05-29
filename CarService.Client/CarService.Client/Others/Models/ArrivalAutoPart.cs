@@ -17,6 +17,8 @@ namespace CarService.Client.Others.Models
 
         public AutoPartInfo AutoPart { get; set; } = null!;
 
+        public uint countWithArrival => DesiredCount;
+
 
         [RelayCommand]
         private void AddArrivalAutoPartCount()

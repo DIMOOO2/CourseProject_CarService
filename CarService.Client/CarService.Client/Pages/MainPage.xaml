@@ -24,7 +24,7 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -47,40 +47,45 @@
                 <Label Text="Заказы клиентов" FontSize="30" FontAttributes="Bold"/>
             </StackLayout>
 
-            <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
-                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Style="{StaticResource ButtonStyle}"
-            Command="{Binding PushCreateOrderPageCommand}"/>
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Spacing="10">
+                <Button Text="Добавить новый заказ" HorizontalOptions="Fill"
+                        FontSize="20" Style="{StaticResource ButtonStyle}"
+                        Command="{Binding PushCreateOrderPageCommand}"/>
+
+                <Button Text="Обновить" FontSize="20" Command="{Binding UpdateRequestCommand}" Style="{StaticResource ButtonStyle}"/>
+            </HorizontalStackLayout>
+
 
 
             <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding OrdersCollection}" 
                     IsVisible="{Binding IsVisibleItems}" Grid.ColumnSpan="5" VerticalOptions="Start" 
                     SelectionMode="None" HorizontalOptions="Fill" Margin="5">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:OrderInfo">
-                        <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
-                            <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
-                                <Label Text="{Binding ArticulNumber}"/>
-                                <Label Text="{Binding Client.FullName}"/>
-                                <Label Text="{Binding GetDate}"/>
-                                <Label Text="{Binding GetStatus}"/>
-                            </StackLayout>
-                            <!--<Frame.GestureRecognizers>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:OrderInfo">
+                            <Frame BackgroundColor="Transparent" BorderColor="{Binding ColorStatus}" VerticalOptions="Center">
+                                <StackLayout Orientation="Horizontal" Spacing="20" Padding="10">
+                                    <Label Text="{Binding ArticulNumber}"/>
+                                    <Label Text="{Binding Client.FullName}"/>
+                                    <Label Text="{Binding GetDate}"/>
+                                    <Label Text="{Binding GetStatus}"/>
+                                </StackLayout>
+                                <!--<Frame.GestureRecognizers>
                         <TapGestureRecognizer Command=""/> для просмотра необходимой информации
                     </Frame.GestureRecognizers>-->
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5"/>
-                </CollectionView.ItemsLayout>
-            </CollectionView>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
 
-            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Spacing="20" IsVisible="{Binding IsVisibleUpdate}">
-                <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
-                <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
+                <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" Spacing="20" IsVisible="{Binding IsVisibleUpdate}">
+                    <Image Source="icon_add_to_cart.png" WidthRequest="200" HeightRequest="200"/>
+                    <Label Text="Пока здесь нет заказа, добавьте заказы чтобы они здесь отобразились" FontSize="Default"
                FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                <Button Text="Обновить" Command="{Binding UpdateRequestCommand}" Style="{StaticResource ButtonStyle}"/>
-            </StackLayout>
+                    <Button Text="Обновить" Command="{Binding UpdateRequestCommand}" Style="{StaticResource ButtonStyle}"/>
+                </StackLayout>
         </Grid>
     </ScrollView>
 </ContentPage>

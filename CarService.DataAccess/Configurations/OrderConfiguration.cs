@@ -23,7 +23,7 @@ namespace CarService.DataAccess.Configurations
                 .WithOne(op => op.Order);
 
             builder.HasOne(o => o.WarehouseContractor)
-                .WithOne();
+                .WithMany(w => w.Orders);
         }
     }
 }

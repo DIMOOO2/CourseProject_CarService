@@ -12,6 +12,7 @@ using System.Net.Http.Json;
 using CarService.ApplicationService.Contracts.Requests;
 using QuestPDF.Previewer;
 using CarService.ApplicationService.Contracts.Responses;
+using CarService.Core.Models;
 
 
 namespace CarService.Client.ViewModels
@@ -125,23 +126,36 @@ namespace CarService.Client.ViewModels
 
                     DeliveryReportResponse? reportResponse = await response.Content.ReadFromJsonAsync<DeliveryReportResponse>();
                     WebData.GetColllectionReport(await _httpClient.GetFromJsonAsync<List<DeliveryReportResponse>>("https://localhost:1488/DeliveryReport"));
-                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Отчет создан. Номер отчета {reportResponse!.reportId}", "ОК");
+                    await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Отчет создан. Номер отчета {DeliveryReport.Create
+                        (
+                            reportResponse!.reportId,
+                            reportResponse.createDate,
+                            reportResponse.warehouseCreatorId,
+                            reportResponse.fileReport
+                        )
+                        .report.GetReportArticul}", "ОК");
 
                     foreach(var item in AutoPartsFromArrival)
                     {
-                        await _httpClient.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/DeliveryReport/{item.AutoPart.AutoPartId}",
+                        var responseUpdate = await _httpClient.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/AutoPart/{item.AutoPart.AutoPartId}",
                             new AutoPartRequest
                             (
                                 item.AutoPart.AutoPartName,
                                 item.AutoPart.PartNumber,
                                 item.AutoPart.Price,
-                                item.AutoPart.StockAmount,
+                                item.AutoPart.StockAmount + item.countWithArrival,
                                 item.AutoPart.ManufacturerId,
                                 item.AutoPart.WarehouseId
                             ));
                     }
+                    WebData.GetColllectionReport(await _httpClient.GetFromJsonAsync<List<DeliveryReportResponse>>($"https://localhost:1488/DeliveryReport/fromWarehouse/{LoginData.CurrentWarehouse.WarehouseId}"));
+
+                    var autoPartResponses = await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart");
+
+                    WebData.GetAutoPartsCollection(autoPartResponses);
 
                     await Shell.Current.Navigation.PopAsync();
+                    
                 }
             }
             catch (Exception ex)

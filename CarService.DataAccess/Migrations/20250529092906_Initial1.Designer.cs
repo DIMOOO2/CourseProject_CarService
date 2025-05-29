@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.DataAccess.Migrations
 {
     [DbContext(typeof(CarServiceDbContext))]
-    [Migration("20250525200805_Initial1")]
+    [Migration("20250529092906_Initial1")]
     partial class Initial1
     {
         /// <inheritdoc />
@@ -193,8 +193,7 @@ namespace CarService.DataAccess.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("WarehouseContractorId")
-                        .IsUnique();
+                    b.HasIndex("WarehouseContractorId");
 
                     b.ToTable("Orders");
                 });
@@ -337,8 +336,8 @@ namespace CarService.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "WarehouseContractor")
-                        .WithOne()
-                        .HasForeignKey("CarService.DataAccess.Entities.OrderEntity", "WarehouseContractorId")
+                        .WithMany("Orders")
+                        .HasForeignKey("WarehouseContractorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -397,6 +396,8 @@ namespace CarService.DataAccess.Migrations
             modelBuilder.Entity("CarService.DataAccess.Entities.WarehouseEntity", b =>
                 {
                     b.Navigation("AutoParts");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
