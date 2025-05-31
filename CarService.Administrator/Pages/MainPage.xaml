@@ -48,10 +48,10 @@
                         <Frame BorderColor="OrangeRed" BackgroundColor="Transparent">
                             <StackLayout>
                                 <StackLayout Orientation="Vertical" x:DataType="model:AutoPart">
-                                    <Label Text="{Binding AutoPartName}"/>
+                                    <Label Text="{Binding GetNameWithInfo}"/>
                                     <Label Text="{Binding GetPartNumber}"/>
-                                    <Label Text="{Binding GetStockAmount}"/>
-                                    <Label Text="{Binding GetPrice}"/>
+                                    <Label Text="{Binding GetStockAmountWithInfo}"/>
+                                    <Label Text="{Binding GetPriceWithInfo}"/>
                                 </StackLayout>
                             </StackLayout>
                         </Frame>

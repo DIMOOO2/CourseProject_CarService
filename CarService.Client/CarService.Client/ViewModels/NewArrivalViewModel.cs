@@ -44,7 +44,7 @@ namespace CarService.Client.ViewModels
             {
                 AutoPartsFromArrival = new ObservableCollection<ArrivalAutoPart>();
                 AllAutoParts = new ObservableCollection<AutoPartInfo>();
-                foreach (var autoPart in WebData.AutoParts!)
+                foreach (var autoPart in WebData.AllAutoParts!)
                 {
                     AllAutoParts.Add(new AutoPartInfo(autoPart.AutoPartId, autoPart.AutoPartName,
                         autoPart.PartNumber, autoPart.Price, autoPart.StockAmount, autoPart.ManufacturerId, autoPart.WarehouseId));

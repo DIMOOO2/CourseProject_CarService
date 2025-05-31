@@ -59,20 +59,23 @@ namespace CarService.Administrator.ViewModels
         {
             try
             {
-                using var responseManufacturer = await httpClient.PutAsJsonAsync<ManufacturerRequest>($"https://localhost:1488/Manufacturer/{AdminLocalData.CurrentManufacturer.ManufacturerId}", new ManufacturerRequest(ManufacturerName, ManufacturerEmail));   
+                using var responseManufacturer = await httpClient.PutAsJsonAsync<ManufacturerRequest>($"https://localhost:1488/Manufacturer/{AdminLocalData.CurrentManufacturer.ManufacturerId}", 
+                    new ManufacturerRequest(ManufacturerName, ManufacturerEmail));
 
-                if(responseManufacturer.StatusCode == System.Net.HttpStatusCode.OK)
+                if (responseManufacturer.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     using var responseAutoPart = await httpClient.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/AutoPart/{AdminLocalData.CurrentAutoPart.AutoPartId}", new AutoPartRequest
                     (
                         Name, AdminLocalData.CurrentAutoPart.PartNumber, Price, Amount, AdminLocalData.CurrentManufacturer.ManufacturerId, Guid.Empty
                     ));
-                    if(responseAutoPart.StatusCode == System.Net.HttpStatusCode.OK)
+                    if (responseAutoPart.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"Запчасть успешно обновлена", "ОК");
+                        await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", $"Запчасть успешно обновлена", "ОК");
                         await Shell.Current.Navigation.PopAsync();
                     }
                 }
+                else
+                    throw new Exception("Ошибка при обновлении склада");
             }
             catch (Exception ex)
             {

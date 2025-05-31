@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using CarService.Core.Models;
 using CarService.Client.Others.Models;
+using CommunityToolkit.Maui.Core.Extensions;
 
 
 namespace CarService.Client.ViewModels
@@ -69,7 +70,7 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
+                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AllAutoParts;
                 if (collectionAutoPart!.Count != 0)
                 {
                     ObservableCollection<AutoPartInfo>? current = new ObservableCollection<AutoPartInfo>();
@@ -106,7 +107,7 @@ namespace CarService.Client.ViewModels
                         IsVisibleNotFoundView = false;
                     }
 
-                    AutoParts = current;
+                    AutoParts = current.OrderBy(m => m.GetNameManufacturer).OrderByDescending(sa => sa.GetOpacity).ToObservableCollection();
                 }
                 else
                 {

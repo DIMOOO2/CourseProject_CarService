@@ -80,7 +80,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateAutoPart([FromBody] AutoPartRequest request)
+        public async Task<ActionResult<AutoPartRequest>> CreateAutoPart([FromBody] AutoPartRequest request)
         {
             Guid guid = Guid.NewGuid();
             byte[] data = guid.ToByteArray();
@@ -100,7 +100,16 @@ namespace CarService.newWebAPI.Controllers
 
             await _autoPartService.CreateAutopart(autopart);
 
-            return Ok(autopart.AutoPartId);
+            return Ok(new AutoPartResponse
+                (
+                    autopart.AutoPartId,
+                    autopart.AutoPartName,
+                    autopart.PartNumber,
+                    autopart.Price,
+                    autopart.StockAmount,
+                    autopart.ManufacturerId,
+                    autopart.WarehouseId
+                ));
         }
 
         [HttpPut("{id:guid}")]

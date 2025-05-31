@@ -14,10 +14,10 @@ namespace CarService.Administrator.ViewModels
         private string name;
 
         [ObservableProperty]
-        private decimal price;
+        private string price;
 
         [ObservableProperty]
-        private uint amount;
+        private string amount;
 
         [ObservableProperty]
         private string manufacturerName;
@@ -44,9 +44,9 @@ namespace CarService.Administrator.ViewModels
                 {
                     tempManufacturer = await response.Content.ReadFromJsonAsync<ManufacturerResponse>();
 
-                    var autoPartRequest = new AutoPartRequest(Name, 0, Price, Amount, tempManufacturer!.manufacturerId, Guid.Empty);
+                    var autoPartRequest = new AutoPartRequest(Name, 0, Convert.ToDecimal(Price), Convert.ToUInt32(Amount), tempManufacturer!.manufacturerId, Guid.Empty);
 
-                    using var responseAutoPart = await httpClient.PostAsJsonAsync<AutoPartRequest>("https://localhost:1488/Manufacturer", autoPartRequest);
+                    using var responseAutoPart = await httpClient.PostAsJsonAsync<AutoPartRequest>("https://localhost:1488/AutoPart", autoPartRequest);
 
                     if (responseAutoPart.StatusCode == System.Net.HttpStatusCode.OK)
                     {

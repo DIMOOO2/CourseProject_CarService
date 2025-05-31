@@ -45,8 +45,9 @@
                                 <Label Text="{Binding GetAutoPartName}" FontSize="16"/>
                                 <Label Text="{Binding GetPartNumber}"/>
                                 <Label Text="{Binding GetPrice}"/>
-                                <Label Text="{Binding GetStockAmount}"/>
                                 <Label Text="{Binding GetNameManufacturer}"/>
+                                <Label Text="{Binding StockAvailability}"/>
+                                <Label Text="{Binding GetStockAmount}"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>

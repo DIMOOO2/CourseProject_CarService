@@ -28,7 +28,15 @@
         {
             get => $"{Price}₽";
         }
+
+        public string GetPriceWithInfo
+        {
+            get => $"Стоимость {Price}₽";
+        }
         public string GetStockAmount { get => $"{StockAmount} шт."; }
+        public string GetStockAmountWithInfo { get => $"Количество {StockAmount} шт."; }
+
+        public string GetNameWithInfo { get =>  $"Наименование - {AutoPartName}"; }
 
         public bool visibilityItem { get; set; } = true;
 
