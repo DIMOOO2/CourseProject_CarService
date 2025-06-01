@@ -11,8 +11,18 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="ur:AutoCompleteTextField" x:Name="SerchTextStyle">
-                <Setter Property="AccentColor" Value="OrangeRed"/>
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="Background" Value="OrangeRed"/>
+                <Setter Property="TextColor" Value="White"/>
+
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="Background" Value="OrangeRed"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -24,16 +34,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout Orientation="Horizontal" Spacing="20">
+            <StackLayout Orientation="Horizontal" Spacing="10">
                 <Label Text="Поиск запчастей" FontSize="30" FontAttributes="Bold" Margin="10,0,0,0" VerticalOptions="Center"/>
 
                 <SearchBar Placeholder="Введите название автозапчасти" FontSize="16" HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
-                                   Margin="0,0,10,0" Text="{Binding UserRequest}">
+                                   Text="{Binding UserRequest}">
                     <SearchBar.Behaviors>
                         <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchCommand}"/>
                     </SearchBar.Behaviors>
                 </SearchBar>
-
+                <Button Style="{StaticResource ButtonStyle}" Text="Обновить" Command="{Binding GetCollectionCommand}" Margin="10"/>
             </StackLayout>
 
             <CollectionView x:Name="ClientCollection" Grid.Row="1" ItemsSource="{Binding AutoParts}" 
@@ -47,7 +57,6 @@
                                 <Label Text="{Binding GetPrice}"/>
                                 <Label Text="{Binding GetNameManufacturer}"/>
                                 <Label Text="{Binding StockAvailability}"/>
-                                <Label Text="{Binding GetStockAmount}"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>

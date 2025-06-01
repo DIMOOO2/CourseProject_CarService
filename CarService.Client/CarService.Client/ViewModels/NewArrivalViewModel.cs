@@ -3,14 +3,11 @@ using CarService.Client.Others.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.IO;
-using QuestPDF.Drawing;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using CarService.Client.Others.PdfWorkers.DataSourse;
 using System.Net.Http.Json;
 using CarService.ApplicationService.Contracts.Requests;
-using QuestPDF.Previewer;
 using CarService.ApplicationService.Contracts.Responses;
 using CarService.Core.Models;
 
@@ -44,7 +41,7 @@ namespace CarService.Client.ViewModels
             {
                 AutoPartsFromArrival = new ObservableCollection<ArrivalAutoPart>();
                 AllAutoParts = new ObservableCollection<AutoPartInfo>();
-                foreach (var autoPart in WebData.AllAutoParts!)
+                foreach (var autoPart in WebData.AutoParts!)
                 {
                     AllAutoParts.Add(new AutoPartInfo(autoPart.AutoPartId, autoPart.AutoPartName,
                         autoPart.PartNumber, autoPart.Price, autoPart.StockAmount, autoPart.ManufacturerId, autoPart.WarehouseId));

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarService.Administrator.Pages.CreateAutoPartPage"
-             Title="Создание новой запчасти"
+             Title="Регистрация запчасти"
              xmlns:uran="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
@@ -38,25 +38,24 @@
                         </uran:TextField>
 
                         <uran:TextField Title="Цена" AccentColor="OrangeRed"
-                                        FontSize="16" TitleFontSize="16" Text="{Binding Price}">
+                                        FontSize="16" TitleFontSize="16" Text="{Binding Price}" Keyboard="Numeric">
                             <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_DECIMAL }" 
                                                         Message="Поле должно содержать цифру с плавающей точкой"/>
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
-                        <uran:TextField Title="Количество" AccentColor="OrangeRed" 
-                                        FontSize="16" TitleFontSize="16" Text="{Binding Amount}">
-                            <validation:DigitsOnlyValidation Message="В поле должны быть только цифры"/>
-                            <validation:RequiredValidation Message="Это обязательное поле ввода"/>
-                        </uran:TextField>
+                        <uran:DropdownField ItemsSource="{Binding Warehouses}" SelectedItem="{Binding SelectedWarehouse, Mode=TwoWay}"
+                                            AccentColor="OrangeRed" FontSize="16" TitleFontSize="16" Title="Склад местонахождения">
+                            <validation:RequiredValidation Message="Это обязательное поле выбора"/>
+                        </uran:DropdownField>
 
                         <uran:TextField Title="Наименование производителя" AccentColor="OrangeRed"
-                                        FontSize="16" TitleFontSize="16" Text="{Binding ManufacturerName}">
+                                        FontSize="16" TitleFontSize="16" Text="{Binding ManufacturerName}" >
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         </uran:TextField>
 
                         <uran:TextField Title="Контактная информация производителя (электронная почта)" AccentColor="OrangeRed" 
-                                        FontSize="16" TitleFontSize="16" Text="{Binding ManufacturerEmail}">
+                                        FontSize="16" TitleFontSize="16" Text="{Binding ManufacturerEmail}" Keyboard="Email">
                             <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"
                                                         Message="Электронная почта введен не корректно"/>
                             <validation:RequiredValidation Message="Это обязательное поле ввода"/>

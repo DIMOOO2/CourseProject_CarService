@@ -5,13 +5,15 @@ using System.Collections.ObjectModel;
 using CarService.Core.Models;
 using CarService.Client.Others.Models;
 using CommunityToolkit.Maui.Core.Extensions;
+using CarService.ApplicationService.Contracts.Responses;
+using System.Net.Http.Json;
 
 
 namespace CarService.Client.ViewModels
 {
     public partial class SearchAutoPartViewModel : ObservableObject
     {
-        HttpClient client = new HttpClient();
+        HttpClient httpClient = new HttpClient();
 
         [ObservableProperty]
         bool isVisibleItems;
@@ -54,6 +56,14 @@ namespace CarService.Client.ViewModels
         }
 
         [RelayCommand]
+        private async void GetCollection()
+        {
+            WebData.GetAutoPartsCollection(await httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{LoginData.CurrentWarehouse!.WarehouseId}"));
+
+            UpdateCollection();
+        }
+
+        [RelayCommand]
         private async void Search()
         {
             try
@@ -70,7 +80,7 @@ namespace CarService.Client.ViewModels
         {
             try
             {
-                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AllAutoParts;
+                ObservableCollection<AutoPart>? collectionAutoPart = WebData.AutoParts;
                 if (collectionAutoPart!.Count != 0)
                 {
                     ObservableCollection<AutoPartInfo>? current = new ObservableCollection<AutoPartInfo>();
@@ -88,7 +98,7 @@ namespace CarService.Client.ViewModels
                     {
                         foreach (var item in collectionAutoPart)
                         {
-                            if (item.AutoPartName.Contains(UserRequest))
+                            if (item.AutoPartName.ToLower().Contains(UserRequest.ToLower()))
                             {
                                 current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
                                 item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));

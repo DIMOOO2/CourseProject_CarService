@@ -30,7 +30,7 @@ namespace CarService.Client.Others.Models
             get 
             {
                 return WebData.Manufacturers!.FirstOrDefault(m => m.ManufacturerId ==
-                WebData.AllAutoParts!.FirstOrDefault(a => a.ManufacturerId == ManufacturerId)!.ManufacturerId)!;
+                WebData.AutoParts!.FirstOrDefault(a => a.ManufacturerId == ManufacturerId)!.ManufacturerId)!;
             } 
         }
 
@@ -41,20 +41,19 @@ namespace CarService.Client.Others.Models
         {
             get => $"Цена: {Price}₽";
         }
-        public string GetStockAmount { get => GetOpacity > 1 ? $"Количество: {StockAmount} шт." : string.Empty; }
+        public string GetStockAmount { get => GetOpacity == 1 ? $"Количество: {StockAmount} шт." : string.Empty; }
         public string GetNameManufacturer { get => $"Производитель: {Manufacturer?.ManufacturerName}"; }
 
         public float GetOpacity
         {
             get
             {
-                if(WarehouseId == LoginData.CurrentWarehouse!.WarehouseId)
+                if(StockAmount != 0)
                     return 1f;
                 else return 0.5f;
             }
         }
 
-        public string StockAvailability { get { return GetOpacity < 1 ? "Не в наличии" : "В наличии"; } }
-
+        public string StockAvailability { get { return GetOpacity < 1 ? "Не в наличии" : $"В наличии. {GetStockAmount}"; } }
     }
 }

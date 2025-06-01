@@ -11,6 +11,7 @@ namespace CarService.Administrator.Others.Data
         public static ObservableCollection<Order>? Orders { get; set; }
         public static ObservableCollection<Manufacturer>? Manufacturers { get; set; }
         public static ObservableCollection<Core.Models.Client>? Clients { get; set; }
+        public static ObservableCollection<Warehouse>? Warehouses { get; set; }
 
 
         public static void GetAutoPartsCollection(List<AutoPartResponse>? autoParts)
@@ -37,7 +38,7 @@ namespace CarService.Administrator.Others.Data
             Orders = currentOrders;
         }
 
-        public static void GetClientCollection(List<ClientResponse> clients)
+        public static void GetClientCollection(List<ClientResponse>? clients)
         {
             ObservableCollection<Core.Models.Client> currentClients = new ObservableCollection<Core.Models.Client>();
             foreach (var client in clients!)
@@ -58,6 +59,16 @@ namespace CarService.Administrator.Others.Data
             }
 
             Manufacturers = currentManufacturers;
+        }
+        public static void GetCollectionWarehouses(List<WarehouseResponse>? warehouses)
+        {
+            ObservableCollection<Warehouse> currentWarehouses = new ObservableCollection<Warehouse>();
+            foreach (var warehouse in warehouses!)
+            {
+                currentWarehouses.Add(Warehouse.Create(warehouse.Id, warehouse.Title, warehouse.Address, warehouse.City).Warehouse);
+            }
+
+            Warehouses  = currentWarehouses!;
         }
     }
 }

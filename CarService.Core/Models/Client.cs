@@ -38,7 +38,7 @@ namespace CarService.Core.Models
         {
             get
             {
-                return $"{FirstName} {LastName} {MiddleName}";
+                return $"{LastName} {FirstName} {MiddleName}";
             }
         }
 

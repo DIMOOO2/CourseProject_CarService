@@ -1,7 +1,10 @@
-﻿using CarService.ApplicationService.Contracts.Requests;
+﻿using CarService.Administrator.Others.Data;
+using CarService.ApplicationService.Contracts.Requests;
 using CarService.ApplicationService.Contracts.Responses;
+using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
@@ -17,7 +20,10 @@ namespace CarService.Administrator.ViewModels
         private string price;
 
         [ObservableProperty]
-        private string amount;
+        private ObservableCollection<Warehouse> warehouses;
+
+        [ObservableProperty]
+        private Warehouse selectedWarehouse;
 
         [ObservableProperty]
         private string manufacturerName;
@@ -27,6 +33,12 @@ namespace CarService.Administrator.ViewModels
 
         public CreateAutoPartViewModel()
         {
+            Warehouses = new ObservableCollection<Warehouse>();
+
+            foreach (var item in WebData.Warehouses!)
+            {
+                Warehouses.Add(item);
+            }
         }
 
         private ManufacturerResponse? tempManufacturer;
@@ -44,7 +56,8 @@ namespace CarService.Administrator.ViewModels
                 {
                     tempManufacturer = await response.Content.ReadFromJsonAsync<ManufacturerResponse>();
 
-                    var autoPartRequest = new AutoPartRequest(Name, 0, Convert.ToDecimal(Price), Convert.ToUInt32(Amount), tempManufacturer!.manufacturerId, Guid.Empty);
+
+                    var autoPartRequest = new AutoPartRequest(Name, 0, Math.Round(Decimal.Parse(Price.Replace('.', ',')), 2), 0, tempManufacturer!.manufacturerId, SelectedWarehouse.WarehouseId);
 
                     using var responseAutoPart = await httpClient.PostAsJsonAsync<AutoPartRequest>("https://localhost:1488/AutoPart", autoPartRequest);
 
@@ -67,6 +80,7 @@ namespace CarService.Administrator.ViewModels
             catch (Exception ex)
             {
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", ex.Message, "ОК");
+                await httpClient.DeleteFromJsonAsync<ManufacturerRequest>($"https://localhost:1488/Manufacturer/{tempManufacturer!.manufacturerId}");
             }  
         }
     }

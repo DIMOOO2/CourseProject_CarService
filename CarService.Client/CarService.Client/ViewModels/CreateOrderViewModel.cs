@@ -83,6 +83,7 @@ namespace CarService.Client.ViewModels
         private Guid orderGuid;
         private ObservableCollection<AutoPart> autoPartList = WebData.AutoParts!;
         private List<AutoPartResponse> changedAutoPart = new List<AutoPartResponse>();
+        private OrderResponse? orderResponse;
 
 
         [RelayCommand]
@@ -121,7 +122,7 @@ namespace CarService.Client.ViewModels
                 using var response3 = await client.PostAsJsonAsync<OrderRequest>("https://localhost:1488/Order", orderRequest);
                 if (response3.StatusCode != System.Net.HttpStatusCode.OK)
                     throw new Exception("Ошибка при создании заказа");
-                OrderResponse? orderResponse = await response3.Content.ReadFromJsonAsync<OrderResponse>();
+                orderResponse = await response3.Content.ReadFromJsonAsync<OrderResponse>();
                 orderGuid = orderResponse!.orderId;
 
                 List<OrderedPartRequest> orderedPartRequests = new List<OrderedPartRequest>();
@@ -153,6 +154,22 @@ namespace CarService.Client.ViewModels
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ успешно создан", "OK");
                     WebData.GetAutoPartsCollection(await client.GetFromJsonAsync<List<AutoPartResponse>>("https://localhost:1488/AutoPart/"));
                     WebData.GetOrdersCollection(await client.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{LoginData.CurrentWarehouse!.WarehouseId}"));
+                    var responseNewClient = await client.GetFromJsonAsync<ClientResponse>($"https://localhost:1488/Client/{orderResponse.clientId}");
+                    if(responseNewClient != null)
+                    {
+                        WebData.Clients!.Add(Core.Models.Client.Create
+                            (
+                                responseNewClient.clientId,
+                                responseNewClient.firstName,
+                                responseNewClient.lastName,
+                                responseNewClient.middleName,
+                                responseNewClient.phoneNumber,
+                                responseNewClient.email,
+                                responseNewClient.address,
+                                responseNewClient.city,
+                                responseNewClient.organizationId
+                            ).Client);
+                    }
                     await Shell.Current.Navigation.PopAsync();
                 }
                 else

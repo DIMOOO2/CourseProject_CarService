@@ -33,5 +33,10 @@
 
             return (warehouse, error);
         }
+
+        public override string ToString()
+        {
+            return $"{Title}. Адрес: {City} {Address}";
+        }
     }
 }

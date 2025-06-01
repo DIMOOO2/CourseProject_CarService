@@ -78,7 +78,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<ManufacturerResponse>> DeleteWarehouse(Guid id)
+        public async Task<ActionResult<ManufacturerRequest>> DeleteWarehouse(Guid id)
         {
             return Ok(await _manufacturerService.DeleteManufacturer(id));
         }

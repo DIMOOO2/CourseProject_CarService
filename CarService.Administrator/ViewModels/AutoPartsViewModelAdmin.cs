@@ -94,6 +94,7 @@ namespace CarService.Administrator.ViewModels
             {
                 WebData.GetAutoPartsCollection(await httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{Guid.Empty}"));
                 WebData.GetCollectionManufacturer(await httpClient.GetFromJsonAsync<List<ManufacturerResponse>>("https://localhost:1488/Manufacturer"));
+                WebData.GetCollectionWarehouses(await httpClient.GetFromJsonAsync<List<WarehouseResponse>>("https://localhost:1488/Warehouse"));
                 AutoParts = WebData.AutoParts!;
             }
             catch (Exception ex)

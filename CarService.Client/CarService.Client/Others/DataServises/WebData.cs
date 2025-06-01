@@ -8,7 +8,6 @@ namespace CarService.Client.Others.DataServises
     public static class WebData
     {
         public static ObservableCollection<AutoPart>? AutoParts { get; set; }
-        public static ObservableCollection<AutoPart>? AllAutoParts { get; set; }
         public static ObservableCollection<Order>? Orders { get; set; }
         public static ObservableCollection<Manufacturer>? Manufacturers { get; set; }
         public static ObservableCollection<Core.Models.Client>? Clients { get; set; }
@@ -26,18 +25,6 @@ namespace CarService.Client.Others.DataServises
 
             AutoParts = currentAutoParts;
         }
-        
-        public static void GetAutoAllPartsCollection(List<AutoPartResponse>? autoParts)
-        {
-            ObservableCollection<AutoPart> currentAutoParts = new ObservableCollection<AutoPart>();
-            foreach(var item in autoParts!)
-            {
-                currentAutoParts.Add(AutoPart.Create(item.autoPartId, item.autoPartName, item.partNumber,
-                    item.price, item.stockAmount, item.manufacturerId, item.warehouseId).AutoPart);
-            }
-
-            AllAutoParts = currentAutoParts;
-        }
 
         public static void GetOrdersCollection(List<OrderResponse>? orders)
         {
@@ -51,7 +38,7 @@ namespace CarService.Client.Others.DataServises
             Orders = currentOrders;
         }
 
-        public static void GetClientCollection(List<ClientResponse> clients)
+        public static void GetClientCollection(List<ClientResponse>? clients)
         {
             ObservableCollection<Core.Models.Client> currentClients = new ObservableCollection<Core.Models.Client>();
             foreach (var client in clients!)
@@ -63,7 +50,7 @@ namespace CarService.Client.Others.DataServises
             Clients = currentClients;
         }
 
-        public static void GetCollectionManufacturer(List<ManufacturerResponse> manufacturers)
+        public static void GetCollectionManufacturer(List<ManufacturerResponse>? manufacturers)
         {
             ObservableCollection<Manufacturer> currentManufacturers = new ObservableCollection<Manufacturer>();
             foreach (var manufacturer in manufacturers!)

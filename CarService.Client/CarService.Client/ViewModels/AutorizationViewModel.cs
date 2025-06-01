@@ -45,21 +45,8 @@ namespace CarService.Client.ViewModels
                     var autoPartResponses = await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart/fromWarehouse/{LoginData.CurrentWarehouse!.WarehouseId}");
 
                     WebData.GetAutoPartsCollection(autoPartResponses);
-                    WebData.GetAutoAllPartsCollection(await _httpClient.GetFromJsonAsync<List<AutoPartResponse>>($"https://localhost:1488/AutoPart"));
 
-                    List<ManufacturerResponse> manufacturerResponses = new List<ManufacturerResponse>();
-
-                    if(autoPartResponses != null)
-                    {
-                        foreach(var item in autoPartResponses)
-                        {
-                            ManufacturerResponse? manufacturer = await _httpClient.GetFromJsonAsync<ManufacturerResponse>($"https://localhost:1488/Manufacturer/{item.manufacturerId}");
-                            if(manufacturer != null)
-                                manufacturerResponses.Add(manufacturer);
-                        }
-                    }
-
-                    WebData.GetCollectionManufacturer(manufacturerResponses);
+                    WebData.GetCollectionManufacturer(await _httpClient.GetFromJsonAsync<List<ManufacturerResponse>>($"https://localhost:1488/Manufacturer"));
 
                     List<OrderResponse>? orderResponses = await _httpClient.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{corporateAccount.warehouseId}");
                     WebData.GetOrdersCollection(orderResponses);
