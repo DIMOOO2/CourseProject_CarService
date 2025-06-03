@@ -78,8 +78,7 @@ namespace CarService.Client.ViewModels
             try
             {
                 if (SelectedAutoPartFromArrival != null)
-                {
-                    AutoPartsFromArrival.Remove(SelectedAutoPartFromArrival!);
+                {        
                     AllAutoParts.Add(new AutoPartInfo(
                         SelectedAutoPartFromArrival.AutoPart.AutoPartId,
                         SelectedAutoPartFromArrival.AutoPart.AutoPartName,
@@ -89,6 +88,7 @@ namespace CarService.Client.ViewModels
                         SelectedAutoPartFromArrival.AutoPart.ManufacturerId,
                         SelectedAutoPartFromArrival.AutoPart.WarehouseId
                         ));
+                    AutoPartsFromArrival.Remove(SelectedAutoPartFromArrival!);
                 }
                 else return;
             }

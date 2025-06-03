@@ -37,7 +37,9 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -69,13 +71,13 @@
             </CollectionView>
 
             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" 
-                         Grid.Column="1" 
+                         Grid.Column="2" 
                          VerticalOptions="Center" Spacing="10">
                 <Button Text=">" Style="{StaticResource ButtonStyle}" FontSize="20" Command="{Binding AddArrivalCollectionCommand}"/>
                 <Button Text="-" Style="{StaticResource ButtonStyle}" FontSize="20" Command="{Binding RemoveArrivalCollectionCommand}"/>
             </StackLayout>
             
-            <CollectionView Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" 
+            <CollectionView Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" 
                            ItemsSource="{Binding AutoPartsFromArrival}" 
                             SelectedItem="{Binding SelectedAutoPartFromArrival}"
                             SelectionMode="Single">
@@ -100,7 +102,7 @@
                 </CollectionView.ItemsLayout>
             </CollectionView>
 
-            <StackLayout Grid.Row="3" Grid.ColumnSpan="3" VerticalOptions="End">
+            <StackLayout Grid.Row="3" Grid.ColumnSpan="5" VerticalOptions="End">
                 <Button Text="Сохранить" Style="{x:StaticResource ButtonStyle}" Command="{Binding SaveArrivalCommand}"/>
             </StackLayout>
         </Grid>

@@ -108,10 +108,13 @@ namespace CarService.Client.ViewModels
 
                 if (AutoPartsWithClient.Count != 0)
                 {
-                    currentAutoPart = AutoPartsWithClient.FirstOrDefault(s =>
+                    var current = AutoPartsWithClient.FirstOrDefault(s =>
                     s.AutoPart.AutoPartName == SelectItem.AutoPartName &&
                     s.AutoPart.PartNumber == SelectItem.PartNumber &&
-                    s.AutoPart.AutoPartId == SelectItem.AutoPartId)!.AutoPart;
+                    s.AutoPart.AutoPartId == SelectItem.AutoPartId);
+
+                    if (current != null)
+                        currentAutoPart = current.AutoPart;
                 }
 
                 if (currentAutoPart == null)
