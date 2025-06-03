@@ -37,31 +37,39 @@ namespace CarService.Administrator.ViewModels
         }
 
         [RelayCommand]
-        private void RemoveItem()
+        private async void RemoveItem()
         {
             try
             {
                 if (SelectedOrder != null)
                     Orders.Remove(SelectedOrder);
 
-                else return;
+                else 
+                    await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show(); return;
             }
             catch (Exception ex)
             {
-                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 
         [RelayCommand]
-        private void ExecuteOrder()
+        private async void ExecuteOrder()
         {
             try
             {
-                //Отправка запроса отправления обновленного заказа
+                if(SelectedOrder != null)
+                {
+                   
+                    if (Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Подтверждение", "Желаете продолжить", "Да", "Отмена").Result)
+                    {
+                        Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"wedger", "ОК");
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 

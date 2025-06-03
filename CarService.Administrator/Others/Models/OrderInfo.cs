@@ -1,8 +1,6 @@
-﻿
-
-namespace CarService.Administrator.Others.Models
+﻿namespace CarService.Administrator.Others.Models
 {
-    public class OrderInfo
+    public partial class OrderInfo
     {
         public OrderInfo(Guid orderId, DateTime orderDate, bool orderStatus)
         {
@@ -57,6 +55,6 @@ namespace CarService.Administrator.Others.Models
             {
                 return OrderDate.ToLongDateString().ToString();
             }
-        }
+        } 
     }
 }
