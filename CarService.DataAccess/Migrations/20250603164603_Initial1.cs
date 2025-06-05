@@ -178,32 +178,47 @@ namespace CarService.DataAccess.Migrations
                 {
                     OrderedPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DepartureWarehouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderParts", x => x.OrderedPartId);
-                    table.ForeignKey(
-                        name: "FK_OrderParts_AutoParts_AutoPartId",
-                        column: x => x.AutoPartId,
-                        principalTable: "AutoParts",
-                        principalColumn: "AutoPartId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderParts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderParts_Warehouses_DepartureWarehouseId",
-                        column: x => x.DepartureWarehouseId,
-                        principalTable: "Warehouses",
-                        principalColumn: "WarehouseId",
-                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "AutoPartEntityOrderPartEntity",
+                columns: table => new
+                {
+                    AutoPartsAutoPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderPartEntityOrderedPartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AutoPartEntityOrderPartEntity", x => new { x.AutoPartsAutoPartId, x.OrderPartEntityOrderedPartId });
+                    table.ForeignKey(
+                        name: "FK_AutoPartEntityOrderPartEntity_AutoParts_AutoPartsAutoPartId",
+                        column: x => x.AutoPartsAutoPartId,
+                        principalTable: "AutoParts",
+                        principalColumn: "AutoPartId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AutoPartEntityOrderPartEntity_OrderParts_OrderPartEntityOrderedPartId",
+                        column: x => x.OrderPartEntityOrderedPartId,
+                        principalTable: "OrderParts",
+                        principalColumn: "OrderedPartId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AutoPartEntityOrderPartEntity_OrderPartEntityOrderedPartId",
+                table: "AutoPartEntityOrderPartEntity",
+                column: "OrderPartEntityOrderedPartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AutoParts_ManufacturerId",
@@ -232,16 +247,6 @@ namespace CarService.DataAccess.Migrations
                 column: "WarehouseCreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderParts_AutoPartId",
-                table: "OrderParts",
-                column: "AutoPartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderParts_DepartureWarehouseId",
-                table: "OrderParts",
-                column: "DepartureWarehouseId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderParts_OrderId",
                 table: "OrderParts",
                 column: "OrderId");
@@ -261,22 +266,25 @@ namespace CarService.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AutoPartEntityOrderPartEntity");
+
+            migrationBuilder.DropTable(
                 name: "CorporateAccounts");
 
             migrationBuilder.DropTable(
                 name: "DeliveryReports");
 
             migrationBuilder.DropTable(
-                name: "OrderParts");
-
-            migrationBuilder.DropTable(
                 name: "AutoParts");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "OrderParts");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Clients");

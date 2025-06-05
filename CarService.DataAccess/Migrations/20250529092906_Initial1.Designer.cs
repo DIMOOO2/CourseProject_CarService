@@ -12,11 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.DataAccess.Migrations
 {
     [DbContext(typeof(CarServiceDbContext))]
+<<<<<<< HEAD:CarService.DataAccess/Migrations/20250604155739_Initial1.Designer.cs
 <<<<<<< HEAD:CarService.DataAccess/Migrations/20250605070506_Initial1.Designer.cs
     [Migration("20250605070506_Initial1")]
 =======
     [Migration("20250604155739_Initial1")]
 >>>>>>> Доработка логики регистрации нового склада:CarService.DataAccess/Migrations/20250604155739_Initial1.Designer.cs
+=======
+    [Migration("20250529092906_Initial1")]
+>>>>>>> Доработка логики регистрации нового склада:CarService.DataAccess/Migrations/20250529092906_Initial1.Designer.cs
     partial class Initial1
     {
         /// <inheritdoc />
@@ -222,9 +226,11 @@ namespace CarService.DataAccess.Migrations
 
                     b.HasKey("OrderedPartId");
 
-                    b.HasIndex("AutoPartId");
+                    b.HasIndex("AutoPartId")
+                        .IsUnique();
 
-                    b.HasIndex("DepartureWarehouseId");
+                    b.HasIndex("DepartureWarehouseId")
+                        .IsUnique();
 
                     b.HasIndex("OrderId");
 
@@ -351,14 +357,14 @@ namespace CarService.DataAccess.Migrations
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderPartEntity", b =>
                 {
                     b.HasOne("CarService.DataAccess.Entities.AutoPartEntity", "AutoPart")
-                        .WithMany()
-                        .HasForeignKey("AutoPartId")
+                        .WithOne()
+                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "AutoPartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "DepartureWarehouse")
-                        .WithMany()
-                        .HasForeignKey("DepartureWarehouseId")
+                        .WithOne()
+                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "DepartureWarehouseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

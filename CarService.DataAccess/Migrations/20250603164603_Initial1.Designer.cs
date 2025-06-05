@@ -4,6 +4,7 @@ using CarService.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.DataAccess.Migrations
 {
     [DbContext(typeof(CarServiceDbContext))]
-    partial class CarServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250603164603_Initial1")]
+    partial class Initial1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace CarService.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AutoPartEntityOrderPartEntity", b =>
+                {
+                    b.Property<Guid>("AutoPartsAutoPartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderPartEntityOrderedPartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AutoPartsAutoPartId", "OrderPartEntityOrderedPartId");
+
+                    b.HasIndex("OrderPartEntityOrderedPartId");
+
+                    b.ToTable("AutoPartEntityOrderPartEntity");
+                });
 
             modelBuilder.Entity("CarService.DataAccess.Entities.AutoPartEntity", b =>
                 {
@@ -204,22 +222,10 @@ namespace CarService.DataAccess.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("AutoPartId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DepartureWarehouseId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OrderedPartId");
-
-                    b.HasIndex("AutoPartId")
-                        .IsUnique();
-
-                    b.HasIndex("DepartureWarehouseId")
-                        .IsUnique();
 
                     b.HasIndex("OrderId");
 
@@ -274,6 +280,21 @@ namespace CarService.DataAccess.Migrations
                     b.HasKey("WarehouseId");
 
                     b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("AutoPartEntityOrderPartEntity", b =>
+                {
+                    b.HasOne("CarService.DataAccess.Entities.AutoPartEntity", null)
+                        .WithMany()
+                        .HasForeignKey("AutoPartsAutoPartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarService.DataAccess.Entities.OrderPartEntity", null)
+                        .WithMany()
+                        .HasForeignKey("OrderPartEntityOrderedPartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarService.DataAccess.Entities.AutoPartEntity", b =>
@@ -345,27 +366,11 @@ namespace CarService.DataAccess.Migrations
 
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderPartEntity", b =>
                 {
-                    b.HasOne("CarService.DataAccess.Entities.AutoPartEntity", "AutoPart")
-                        .WithOne()
-                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "AutoPartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "DepartureWarehouse")
-                        .WithOne()
-                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "DepartureWarehouseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CarService.DataAccess.Entities.OrderEntity", "Order")
                         .WithMany("OrderParts")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AutoPart");
-
-                    b.Navigation("DepartureWarehouse");
 
                     b.Navigation("Order");
                 });

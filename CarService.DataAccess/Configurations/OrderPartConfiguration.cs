@@ -16,10 +16,10 @@ namespace CarService.DataAccess.Configurations
                 .WithMany(o => o.OrderParts);
 
             builder.HasOne(op => op.AutoPart)
-                .WithMany();
+                .WithOne();
 
             builder.HasOne(op => op.DepartureWarehouse)
-                .WithMany()
+                .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
