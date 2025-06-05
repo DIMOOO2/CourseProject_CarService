@@ -215,11 +215,9 @@ namespace CarService.DataAccess.Migrations
 
                     b.HasKey("OrderedPartId");
 
-                    b.HasIndex("AutoPartId")
-                        .IsUnique();
+                    b.HasIndex("AutoPartId");
 
-                    b.HasIndex("DepartureWarehouseId")
-                        .IsUnique();
+                    b.HasIndex("DepartureWarehouseId");
 
                     b.HasIndex("OrderId");
 
@@ -346,14 +344,14 @@ namespace CarService.DataAccess.Migrations
             modelBuilder.Entity("CarService.DataAccess.Entities.OrderPartEntity", b =>
                 {
                     b.HasOne("CarService.DataAccess.Entities.AutoPartEntity", "AutoPart")
-                        .WithOne()
-                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "AutoPartId")
+                        .WithMany()
+                        .HasForeignKey("AutoPartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CarService.DataAccess.Entities.WarehouseEntity", "DepartureWarehouse")
-                        .WithOne()
-                        .HasForeignKey("CarService.DataAccess.Entities.OrderPartEntity", "DepartureWarehouseId")
+                        .WithMany()
+                        .HasForeignKey("DepartureWarehouseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
