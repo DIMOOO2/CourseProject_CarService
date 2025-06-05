@@ -58,7 +58,20 @@ namespace CarService.Administrator.ViewModels
             }
             catch (Exception ex)
             {
-                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            }
+        }
+
+        [RelayCommand]
+        private async void UpdateWarehouse()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync(nameof(UpdateWarehousePage));
+            }
+            catch (Exception ex)
+            {
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
     }

@@ -59,7 +59,7 @@
                 <Button Style="{StaticResource ButtonStyle}" Text="Новый склад" 
                 WidthRequest="200" HorizontalOptions="End" Command="{Binding CreateWarehouseCommand}"/>
                 <Button Style="{StaticResource ButtonStyle}" Text="Обновить склад" 
-                WidthRequest="200" HorizontalOptions="End" />
+                WidthRequest="200" HorizontalOptions="End"  Command="{Binding UpdateWarehouseCommand}"/>
                 <Button Style="{StaticResource ButtonStyle}" Text="Удалить склад" 
                 WidthRequest="200" HorizontalOptions="End" Command="{Binding RemoveItemCommand}"/>
             </StackLayout>

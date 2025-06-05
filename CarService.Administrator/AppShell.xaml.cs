@@ -10,6 +10,7 @@ namespace CarService.Administrator
             Routing.RegisterRoute(nameof(CreateAutoPartPage), typeof(CreateAutoPartPage));
             Routing.RegisterRoute(nameof(UpdateAutoPartPage), typeof(UpdateAutoPartPage));
             Routing.RegisterRoute(nameof(CreateWareousePage), typeof(CreateWareousePage));
+            Routing.RegisterRoute(nameof(UpdateWarehousePage), typeof(UpdateWarehousePage));
         }
     }
 }
