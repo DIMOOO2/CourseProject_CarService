@@ -9,28 +9,55 @@ using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления страницы создания новой автозапчасти
+    /// </summary>
     public partial class CreateAutoPartViewModel : ObservableObject
     {
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         private HttpClient httpClient = new HttpClient();
 
+        /// <summary>
+        /// Название автозапчасти
+        /// </summary>
         [ObservableProperty]
         private string name;
 
+        /// <summary>
+        /// Цена автозачасти
+        /// </summary>
         [ObservableProperty]
         private string price;
 
+        /// <summary>
+        /// Коллекция зарегистрированных складов
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<Warehouse> warehouses;
 
+        /// <summary>
+        /// Выбранный склад
+        /// </summary>
         [ObservableProperty]
         private Warehouse selectedWarehouse;
 
+        /// <summary>
+        /// Название производителя
+        /// </summary>
         [ObservableProperty]
         private string manufacturerName;
 
+        /// <summary>
+        /// электронная почта производителя
+        /// </summary>
         [ObservableProperty]
         private string manufacturerEmail;
 
+        /// <summary>
+        /// Конструктор модели представления страницы создания автозачасти
+        /// </summary>
         public CreateAutoPartViewModel()
         {
             Warehouses = new ObservableCollection<Warehouse>();
@@ -40,12 +67,17 @@ namespace CarService.Administrator.ViewModels
                 Warehouses.Add(item);
             }
         }
-
+        /// <summary>
+        /// Поле хранящее данные по производителю
+        /// </summary>
         private ManufacturerResponse? tempManufacturer;
 
-
+        /// <summary>
+        /// Метод создание новой автозапчасти
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void CreateAutoPart()
+        private async Task CreateAutoPart()
         {
             try
             {

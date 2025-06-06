@@ -7,14 +7,28 @@ namespace CarService.Administrator.Others.Models
 {
     public partial class OrderModelAdmin : ObservableObject
     {
-        public OrderInfo OrderInfo { get; set; }
+        /// <summary>
+        /// Свойство содержащее информацию о заказе
+        /// </summary>
+        public OrderInfo OrderInfo { get; set; } 
 
-        private HttpClient httpClient = new HttpClient();
+        private HttpClient httpClient = new HttpClient(); //Новый HttpClient для отправки запроса о изменении статуса заказа
+
+        /// <summary>
+        /// Свойство для управлением возмодности выбора заказа в списке
+        /// </summary>
         public bool IsEnabledItem => !OrderInfo.OrderStatus;
+
+        /// <summary>
+        /// Модель заказа в списке всех заказов у администратора
+        /// </summary>
         public OrderModelAdmin()
         {
         }
 
+        /// <summary>
+        /// Выполнение заказа
+        /// </summary>
         [RelayCommand]
         private async void Execute()
         {

@@ -11,22 +11,36 @@ using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
 {
+    /// <summary>
+    /// Модель представления страницы автозапчастей в приложении админитсратора
+    /// </summary>
     public partial class AutoPartsViewModelAdmin : ObservableObject
     {
+        /// <summary>
+        /// Коллекция автозачастей
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<AutoPart> autoParts;
 
+        /// <summary>
+        /// Выбранная автозачасть
+        /// </summary>
         [ObservableProperty]
         private AutoPart selectedAutoPart;
 
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         private HttpClient httpClient = new HttpClient();
-
+        /// <summary>
+        /// Конструктор для инициализации модели представления
+        /// </summary>
         public AutoPartsViewModelAdmin()
         {
             try
             {
                 AutoParts = new ObservableCollection<AutoPart>();
-                UpdateCollection();       
+                UpdateCollection().GetAwaiter();       
             }
             catch (Exception ex)
             {
@@ -34,14 +48,18 @@ namespace CarService.Administrator.ViewModels
             }
 
         }
-
+        /// <summary>
+        /// Удаляет автозачасть из списка
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void RemoveItem()
+        private async Task RemoveItem()
         {
             try
             {
                 if (SelectedAutoPart != null)
                     AutoParts.Remove(SelectedAutoPart);
+                //Сделать Delete-запрос в логике
 
                 else
                 {
@@ -54,9 +72,12 @@ namespace CarService.Administrator.ViewModels
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
-
+        /// <summary>
+        /// Переходит на страницу обновления данных по автозачасти
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void UpdateItem()
+        private async Task UpdateItem()
         {
             try
             {
@@ -78,6 +99,9 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Переходит на страницу создания новой автозачасти
+        /// </summary>
         [RelayCommand]
         private void CreateItem()
         {
@@ -90,9 +114,12 @@ namespace CarService.Administrator.ViewModels
                 Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
-
+        /// <summary>
+        /// Метод обновления коллекции автозачастей, согласно данным сервера
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void UpdateCollection()
+        private async Task UpdateCollection()
         {
             try
             {

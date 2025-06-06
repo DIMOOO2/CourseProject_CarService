@@ -5,15 +5,36 @@ using System.Collections.ObjectModel;
 
 namespace CarService.Administrator.Others.Data
 {
+    /// <summary>
+    /// Класс данных, который используется для извлечения данных, загруженных из Web-сервера
+    /// </summary>
     public static class WebData
     {
+        /// <summary>
+        /// Список автозачастей
+        /// </summary>
         public static ObservableCollection<AutoPart>? AutoParts { get; set; }
+        /// <summary>
+        /// Список заказов
+        /// </summary>
         public static ObservableCollection<Order>? Orders { get; set; }
+        /// <summary>
+        /// Список производителей
+        /// </summary>
         public static ObservableCollection<Manufacturer>? Manufacturers { get; set; }
+        /// <summary>
+        /// Список клиентов
+        /// </summary>
         public static ObservableCollection<Core.Models.Client>? Clients { get; set; }
+        /// <summary>
+        /// Список складов
+        /// </summary>
         public static ObservableCollection<Warehouse>? Warehouses { get; set; }
 
-
+        /// <summary>
+        /// Метод инициализации новой коллекции автозачастей
+        /// </summary>
+        /// <param name="autoParts">новый список автозачастей</param>
         public static void GetAutoPartsCollection(List<AutoPartResponse>? autoParts)
         {
             ObservableCollection<AutoPart> currentAutoParts = new ObservableCollection<AutoPart>();
@@ -25,7 +46,10 @@ namespace CarService.Administrator.Others.Data
 
             AutoParts = currentAutoParts;
         }
-
+        /// <summary>
+        /// Метод инициализации новой коллекции заказов
+        /// </summary>
+        /// <param name="orders">новый список заказов</param>
         public static void GetOrdersCollection(List<OrderResponse>? orders)
         {
             ObservableCollection<Order> currentOrders = new ObservableCollection<Order>();
@@ -37,7 +61,10 @@ namespace CarService.Administrator.Others.Data
 
             Orders = currentOrders;
         }
-
+        /// <summary>
+        /// Метод инициализации новой коллекции клиентов
+        /// </summary>
+        /// <param name="clients">новый список клиентов</param>
         public static void GetClientCollection(List<ClientResponse>? clients)
         {
             ObservableCollection<Core.Models.Client> currentClients = new ObservableCollection<Core.Models.Client>();
@@ -49,7 +76,10 @@ namespace CarService.Administrator.Others.Data
 
             Clients = currentClients;
         }
-
+        /// <summary>
+        /// Метод инициализации новой коллекции производителей
+        /// </summary>
+        /// <param name="manufacturers">новый список производитилей</param>
         public static void GetCollectionManufacturer(List<ManufacturerResponse>? manufacturers)
         {
             ObservableCollection<Manufacturer> currentManufacturers = new ObservableCollection<Manufacturer>();
@@ -60,6 +90,10 @@ namespace CarService.Administrator.Others.Data
 
             Manufacturers = currentManufacturers;
         }
+        /// <summary>
+        /// Метод инициализации новой коллекции складов
+        /// </summary>
+        /// <param name="warehouses">новый список складов</param>
         public static void GetCollectionWarehouses(List<WarehouseResponse>? warehouses)
         {
             ObservableCollection<Warehouse> currentWarehouses = new ObservableCollection<Warehouse>();

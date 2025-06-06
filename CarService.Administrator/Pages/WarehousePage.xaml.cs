@@ -1,10 +1,15 @@
 using CarService.Administrator.ViewModels;
 
 namespace CarService.Administrator.Pages;
-
+/// <summary>
+/// Класс страницы складов
+/// </summary>
 public partial class WarehousePage : ContentPage
 {
-	public WarehousePage()
+    /// <summary>
+    /// Конструктор страницы складов
+    /// </summary>
+    public WarehousePage()
 	{
 		InitializeComponent();
 		BindingContext = new WarehousesViewModel();

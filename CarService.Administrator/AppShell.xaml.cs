@@ -2,8 +2,14 @@
 
 namespace CarService.Administrator
 {
+    /// <summary>
+    /// Класс оболочки приложения со всей навигацией по страницам
+    /// </summary>
     public partial class AppShell : Shell
     {
+        /// <summary>
+        /// Конструктор оболочки приложения со всей навигацией по страницам
+        /// </summary>
         public AppShell()
         {
             InitializeComponent();

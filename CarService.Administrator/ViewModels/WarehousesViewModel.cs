@@ -9,16 +9,31 @@ using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления страницы складов
+    /// </summary>
     public partial class WarehousesViewModel : ObservableObject
     {
+        /// <summary>
+        /// Список складов
+        /// </summary>
         [ObservableProperty]
         ObservableCollection<Warehouse> warehouses;
 
+        /// <summary>
+        /// Выбранный склад
+        /// </summary>
         [ObservableProperty]
         Warehouse selectedWarehouse;
 
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         private HttpClient httpClient = new HttpClient();
 
+        /// <summary>
+        /// Конструктор модели представления страницы складов
+        /// </summary>
         public WarehousesViewModel()
         {
             try
@@ -31,8 +46,12 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Удаление склада из базы данных
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void RemoveItem()
+        private async Task RemoveItem()
         {
             try
             {
@@ -43,6 +62,7 @@ namespace CarService.Administrator.ViewModels
                         Warehouses.Remove(SelectedWarehouse);
                     }
                     else return;
+                    //Доделать логику удаления из сервера
                 }
 
                 else return;
@@ -53,8 +73,12 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Переход на страницу создания склада
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void CreateWarehouse()
+        private async Task CreateWarehouse()
         {
             try
             {
@@ -66,8 +90,12 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Переход на страницу обновления складов 
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void UpdateWarehouse()
+        private async Task UpdateWarehouse()
         {
             try
             {
@@ -79,8 +107,12 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обновление коллекции с помощью запроса на сервер
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void UpdateCollection()
+        private async Task UpdateCollection()
         {
             Warehouses = new ObservableCollection<Warehouse>();
             WebData.GetCollectionWarehouses(await httpClient.GetFromJsonAsync<List<WarehouseResponse>>("https://localhost:1488/Warehouse"));

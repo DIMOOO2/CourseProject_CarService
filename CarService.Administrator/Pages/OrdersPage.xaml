@@ -38,7 +38,7 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BorderColor="OrangeRed" BackgroundColor="Transparent" x:DataType="model:OrderModelAdmin" IsEnabled="{Binding IsEnabledItem}">
+                        <Frame BorderColor="{Binding OrderInfo.ColorStatus}" BackgroundColor="Transparent" x:DataType="model:OrderModelAdmin" IsEnabled="{Binding IsEnabledItem}">
                             <StackLayout Orientation="Horizontal">
                                 <StackLayout Orientation="Vertical">
                                     <Label Text="{Binding OrderInfo.ArticulNumber}"/>

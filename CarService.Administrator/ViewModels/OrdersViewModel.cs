@@ -13,16 +13,28 @@ using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления страницы заказов
+    /// </summary>
     public partial class OrdersViewModel : ObservableObject
     {
+        /// <summary>
+        /// Список заказов
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<OrderModelAdmin> orders;
 
+        /// <summary>
+        /// Выбранный склад
+        /// </summary>
         [ObservableProperty]
         private OrderModelAdmin selectedOrder;
 
         private HttpClient httpClient = new HttpClient();
 
+        /// <summary>
+        ///  Конструктор модели представления страницы создания складов
+        /// </summary>
         public OrdersViewModel()
         {
             try
@@ -35,13 +47,18 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Метод удаления заказа
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void RemoveItem()
+        private async Task RemoveItem()
         {
             try
             {
                 if (SelectedOrder != null)
                     Orders.Remove(SelectedOrder);
+                //Логика удаления из БД
 
                 else 
                     await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show(); return;
@@ -52,8 +69,12 @@ namespace CarService.Administrator.ViewModels
             }
         }
 
+        /// <summary>
+        /// Метод обновления коллекции с запросом на сервер
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async void UpdateCollection()
+        private async Task UpdateCollection()
         {
             Orders = new ObservableCollection<OrderModelAdmin>();
             WebData.GetClientCollection(await httpClient.GetFromJsonAsync<List<ClientResponse>>("https://localhost:1488/Client"));

@@ -4,8 +4,15 @@ using CommunityToolkit.Maui;
 
 namespace CarService.Administrator
 {
+    /// <summary>
+    /// Класс инициализации ресурсов в приложении
+    /// </summary>
     public static class MauiProgram
     {
+        /// <summary>
+        /// Метод создания приложения
+        /// </summary>
+        /// <returns></returns>
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
