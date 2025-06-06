@@ -36,18 +36,22 @@ namespace CarService.Administrator.ViewModels
         }
 
         [RelayCommand]
-        private void RemoveItem()
+        private async void RemoveItem()
         {
             try
             {
                 if (SelectedAutoPart != null)
                     AutoParts.Remove(SelectedAutoPart);
 
-                else return;
+                else
+                {
+                    await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();
+                    return;
+                }
             }
             catch (Exception ex)
             {
-                Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
         }
 
@@ -64,7 +68,7 @@ namespace CarService.Administrator.ViewModels
                 }
                 else
                 {
-                    await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();
+                    await Toast.Make("Выберете элемент, который хотите обновить", ToastDuration.Short, 14).Show();
                     return;
                 }
             }

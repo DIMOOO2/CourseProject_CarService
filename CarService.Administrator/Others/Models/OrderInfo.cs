@@ -2,11 +2,12 @@
 {
     public partial class OrderInfo
     {
-        public OrderInfo(Guid orderId, DateTime orderDate, bool orderStatus)
+        public OrderInfo(Guid orderId, DateTime orderDate, bool orderStatus, Guid warehouseContractorId)
         {
             OrderId = orderId;
             OrderDate = orderDate;
             OrderStatus = orderStatus;
+            WarehouseContractorId = warehouseContractorId;
         }
 
         public Guid OrderId { get; }
@@ -36,7 +37,7 @@
             get
             {
                 byte[] data = OrderId.ToByteArray();
-                return Math.Abs(BitConverter.ToInt32(data, 0)).ToString();
+                return "Номер заказа: " + Math.Abs(BitConverter.ToInt32(data, 0)).ToString();
             }
         }
 

@@ -1,8 +1,11 @@
-﻿using CarService.Administrator.Pages;
+﻿using CarService.Administrator.Others.Data;
+using CarService.Administrator.Pages;
+using CarService.ApplicationService.Contracts.Responses;
 using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 
 namespace CarService.Administrator.ViewModels
 {
@@ -14,12 +17,13 @@ namespace CarService.Administrator.ViewModels
         [ObservableProperty]
         Warehouse selectedWarehouse;
 
+        private HttpClient httpClient = new HttpClient();
+
         public WarehousesViewModel()
         {
             try
             {
-                Warehouses = new ObservableCollection<Warehouse>();
-                Warehouses.Add(Warehouse.Create(Guid.NewGuid(), "test","test","test").Warehouse);
+                UpdateCollection();
             }
             catch (Exception ex)
             {
@@ -73,6 +77,14 @@ namespace CarService.Administrator.ViewModels
             {
                 await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
             }
+        }
+
+        [RelayCommand]
+        private async void UpdateCollection()
+        {
+            Warehouses = new ObservableCollection<Warehouse>();
+            WebData.GetCollectionWarehouses(await httpClient.GetFromJsonAsync<List<WarehouseResponse>>("https://localhost:1488/Warehouse"));
+            Warehouses = WebData.Warehouses!;
         }
     }
 }

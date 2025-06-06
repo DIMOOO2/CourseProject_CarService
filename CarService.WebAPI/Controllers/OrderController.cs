@@ -94,7 +94,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<Guid>> UpdateOrder(Guid id, [FromBody] OrderRequest request)
+        public async Task<ActionResult<OrderResponse>> UpdateOrder(Guid id, [FromBody] OrderRequest request)
         {
             var orderId = await _orderService.UpdateOrder(id,
                 request.orderDate,
@@ -102,7 +102,9 @@ namespace CarService.newWebAPI.Controllers
                 request.clientId,
                 request.warehouseContractorId);
 
-            return Ok(orderId); 
+
+
+            return Ok(new OrderResponse(id, request.orderDate, request.orderStatus, request.clientId, request.warehouseContractorId)); 
         }
 
         [HttpDelete("{id:guid}")]

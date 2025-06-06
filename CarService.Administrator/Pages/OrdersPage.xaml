@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarService.Administrator.Pages.OrdersPage"
-             xmlns:model="clr-namespace:CarService.Core.Models;assembly=CarService.Core"
+             xmlns:model="clr-namespace:CarService.Administrator.Others.Models"
              xmlns:vm="clr-namespace:CarService.Administrator.ViewModels"
              x:DataType="vm:OrdersViewModel">
     <ContentPage.Resources>
@@ -37,15 +37,16 @@
                         Margin="5">
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Order">
-                        <Frame BorderColor="OrangeRed" BackgroundColor="Transparent">
-                            <StackLayout>
-                                <StackLayout Orientation="Vertical" x:DataType="model:Order" >
-                                    <Label Text="{Binding ClientId}"/>
-                                    <Label Text="{Binding OrderDate}"/>
-                                    <Label Text="{Binding OrderId}"/>
-                                    <Label Text="{Binding OrderStatus}"/>
+                    <DataTemplate>
+                        <Frame BorderColor="OrangeRed" BackgroundColor="Transparent" x:DataType="model:OrderModelAdmin" IsEnabled="{Binding IsEnabledItem}">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding OrderInfo.ArticulNumber}"/>
+                                    <Label Text="{Binding OrderInfo.Client.FullName}"/>
+                                    <Label Text="{Binding OrderInfo.GetDate}"/>
+                                    <Label Text="{Binding OrderInfo.GetStatus}"/>
                                 </StackLayout>
+                                <Button Text="Выполнить заказ" Command="{Binding ExecuteCommand}" Style="{StaticResource ButtonStyle}" HorizontalOptions="EndAndExpand"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
@@ -56,10 +57,10 @@
             </CollectionView>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10" Grid.Row="1" Margin="10" VerticalOptions="End">
-                <!--<Button Style="{StaticResource ButtonStyle}" Text="Новый заказ" 
-                    WidthRequest="200" HorizontalOptions="End" Command="{Binding CreateItemCommand}"/>-->
                 <Button Style="{StaticResource ButtonStyle}" Text="Удалить заказ" 
                     WidthRequest="200" HorizontalOptions="End" Command="{Binding RemoveItemCommand}"/>
+                <Button Style="{StaticResource ButtonStyle}" Text="Обновить" 
+                    WidthRequest="200" HorizontalOptions="End" Command="{Binding UpdateCollectionCommand}"/>
             </StackLayout>
         </Grid>
 

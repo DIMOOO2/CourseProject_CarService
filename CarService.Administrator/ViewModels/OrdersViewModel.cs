@@ -16,19 +16,18 @@ namespace CarService.Administrator.ViewModels
     public partial class OrdersViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<OrderInfo> orders;
+        private ObservableCollection<OrderModelAdmin> orders;
 
         [ObservableProperty]
-        private OrderInfo selectedOrder;
+        private OrderModelAdmin selectedOrder;
 
         private HttpClient httpClient = new HttpClient();
 
         public OrdersViewModel()
         {
             try
-            {
-                Orders = new ObservableCollection<OrderInfo>();
-                
+            {                             
+                UpdateCollection();
             }
             catch (Exception ex)
             {
@@ -54,34 +53,15 @@ namespace CarService.Administrator.ViewModels
         }
 
         [RelayCommand]
-        private async void ExecuteOrder()
-        {
-            try
-            {
-                if(SelectedOrder != null)
-                {
-                   
-                    if (Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Подтверждение", "Желаете продолжить", "Да", "Отмена").Result)
-                    {
-                        Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"wedger", "ОК");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
-            }
-        }
-
-        [RelayCommand]
         private async void UpdateCollection()
         {
+            Orders = new ObservableCollection<OrderModelAdmin>();
             WebData.GetClientCollection(await httpClient.GetFromJsonAsync<List<ClientResponse>>("https://localhost:1488/Client"));
             WebData.GetOrdersCollection(await httpClient.GetFromJsonAsync<List<OrderResponse>>("https://localhost:1488/Order"));
 
             foreach (var item in WebData.Orders!)
             {
-                Orders.Add(new OrderInfo(item.OrderId, item.OrderDate, item.OrderStatus));
+                Orders.Add(new OrderModelAdmin() { OrderInfo = new OrderInfo(item.OrderId, item.OrderDate, item.OrderStatus, item.WarehouseContractorId) });
             }
         }
     }
