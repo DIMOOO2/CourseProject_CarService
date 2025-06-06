@@ -58,9 +58,14 @@ namespace CarService.Administrator.ViewModels
             try
             {
                 if (SelectedAutoPart != null)
-                    AutoParts.Remove(SelectedAutoPart);
-                //Сделать Delete-запрос в логике
-
+                {
+                    if(await Application.Current!.MainPage!.DisplayAlert("", "Вы действительно хотите удалить данную запчасть", "OK", "Отмена"))
+                    {
+                        await httpClient.DeleteFromJsonAsync<AutoPartResponse>($"https://localhost:1488/Order/{SelectedAutoPart.AutoPartId}");
+                        AutoParts.Remove(SelectedAutoPart);
+                    }
+                }
+                    
                 else
                 {
                     await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show();

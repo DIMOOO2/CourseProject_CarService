@@ -57,9 +57,11 @@ namespace CarService.Administrator.ViewModels
             try
             {
                 if (SelectedOrder != null)
+                {
+                    await httpClient.DeleteFromJsonAsync<OrderResponse>($"https://localhost:1488/Order/{SelectedOrder.OrderInfo.OrderId}");
                     Orders.Remove(SelectedOrder);
-                //Логика удаления из БД
-
+                }
+                    
                 else 
                     await Toast.Make("Выберете элемент, который хотите удалить", ToastDuration.Short, 14).Show(); return;
             }

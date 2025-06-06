@@ -80,7 +80,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<WarehouseRequest>> DeleteWarehouse(Guid id)
+        public async Task<ActionResult<WarehouseResponse>> DeleteWarehouse(Guid id)
         {
             return Ok(await _warehouseService.DeleteWarehouse(id));
         }

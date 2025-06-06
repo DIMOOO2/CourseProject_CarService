@@ -59,10 +59,10 @@ namespace CarService.Administrator.ViewModels
                 {
                     if (await Application.Current!.MainPage!.DisplayAlert("", "Вы действительно хотите удалить данный склад", "OK", "Отмена"))
                     {
+                        await httpClient.DeleteFromJsonAsync<WarehouseResponse>($"https://localhost:1488/Order/{SelectedWarehouse.WarehouseId}");
                         Warehouses.Remove(SelectedWarehouse);
                     }
                     else return;
-                    //Доделать логику удаления из сервера
                 }
 
                 else return;
