@@ -7,7 +7,7 @@
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:vm="clr-namespace:CarService.Administrator.ViewModels"
-             x:DataType="vm:CreateWarehouseViewModel">
+             x:DataType="vm:UpdateWarehouseViewModel">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="ButtonStyle">
@@ -26,7 +26,7 @@
     </ContentPage.Resources>
     <ScrollView Padding="10">
         <Grid>
-            <input:FormView SubmitCommand="{Binding CreateCommand}">
+            <input:FormView SubmitCommand="{Binding UpdateCommand}">
                 <VerticalStackLayout Spacing="20">
                     <uran:TextField Title="Название" AccentColor="OrangeRed" BorderColor="OrangeRed" 
                         FontSize="20" Text="{Binding Title}">
@@ -40,11 +40,11 @@
         FontSize="20" Text="{Binding City}">
                         <validation:RequiredValidation Message="Обязательное поле для ввода"/>
                     </uran:TextField>
-                    <uran:TextField Title="Логин" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+                    <uran:TextField Title="Новый логин" AccentColor="OrangeRed" BorderColor="OrangeRed" 
         FontSize="20" Text="{Binding Login}">
                         <validation:RequiredValidation Message="Обязательное поле для ввода"/>
                     </uran:TextField>
-                    <uran:TextField Title="Пароль" AccentColor="OrangeRed" BorderColor="OrangeRed" 
+                    <uran:TextField Title="Новый пароль" AccentColor="OrangeRed" BorderColor="OrangeRed" 
         FontSize="20" Text="{Binding Password}" IsPassword="True">
                         <validation:RequiredValidation Message="Это обязательное поле ввода"/>
                         <uran:TextField.Attachments>
@@ -53,7 +53,7 @@
                     </uran:TextField>
 
                     <Button Text="Обновить" Style="{StaticResource ButtonStyle}" 
-Command="{Binding CreateCommand}" input:FormView.IsSubmitButton="True" VerticalOptions="End"/>
+Command="{Binding UpdateCommand}" input:FormView.IsSubmitButton="True" VerticalOptions="End"/>
                 </VerticalStackLayout>
             </input:FormView>
         </Grid>

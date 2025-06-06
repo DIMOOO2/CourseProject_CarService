@@ -50,7 +50,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateWarehouse([FromBody] WarehouseRequest request)
+        public async Task<ActionResult<WarehouseResponse>> CreateWarehouse([FromBody] WarehouseRequest request)
         {
             var (warehouse, error) = Warehouse.Create(
                 Guid.NewGuid(),
@@ -65,7 +65,7 @@ namespace CarService.newWebAPI.Controllers
 
             await _warehouseService.CreateWarehouse(warehouse);
 
-            return Ok(warehouse.WarehouseId);
+            return Ok(new WarehouseResponse(warehouse.WarehouseId, warehouse.Title, warehouse.Address, warehouse.City));
         }
 
         [HttpPut("{id:guid}")]
@@ -80,7 +80,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<WarehouseResponse>> DeleteWarehouse(Guid id)
+        public async Task<ActionResult<Guid>> DeleteWarehouse(Guid id)
         {
             return Ok(await _warehouseService.DeleteWarehouse(id));
         }

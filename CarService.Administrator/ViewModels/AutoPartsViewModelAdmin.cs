@@ -61,7 +61,7 @@ namespace CarService.Administrator.ViewModels
                 {
                     if(await Application.Current!.MainPage!.DisplayAlert("", "Вы действительно хотите удалить данную запчасть", "OK", "Отмена"))
                     {
-                        await httpClient.DeleteFromJsonAsync<AutoPartResponse>($"https://localhost:1488/Order/{SelectedAutoPart.AutoPartId}");
+                        await httpClient.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Order/{SelectedAutoPart.AutoPartId}");
                         AutoParts.Remove(SelectedAutoPart);
                     }
                 }

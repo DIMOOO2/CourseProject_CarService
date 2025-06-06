@@ -61,7 +61,10 @@
                 <Button Style="{StaticResource ButtonStyle}" Text="Обновить склад" 
                 WidthRequest="200" HorizontalOptions="End"  Command="{Binding UpdateWarehouseCommand}"/>
                 <Button Style="{StaticResource ButtonStyle}" Text="Удалить склад" 
-                WidthRequest="200" HorizontalOptions="End" Command="{Binding RemoveItemCommand}"/>
+                WidthRequest="200" HorizontalOptions="End" Command="{Binding RemoveItemCommand}"/> 
+                <Button Style="{StaticResource ButtonStyle}" Text="Обновить данные" 
+                WidthRequest="200" HorizontalOptions="StartAndExpand" Command="{Binding UpdateCollectionCommand}"/>
+                
             </StackLayout>
         </Grid>
     </ScrollView>

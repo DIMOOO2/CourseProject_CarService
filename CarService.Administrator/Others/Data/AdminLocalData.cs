@@ -8,13 +8,18 @@ namespace CarService.Administrator.Others.Data
     public static class AdminLocalData
     {
         /// <summary>
-        /// Свойство текущей автозачасти, у которой можно получить данные
+        /// Свойство текущей автозачасти, у которой необходимо получить данные
         /// </summary>
         public static AutoPart CurrentAutoPart { get; set; } = null!;
         /// <summary>
         /// Свойство производителя у текущей автозапчасти
         /// </summary>
         public static Manufacturer CurrentManufacturer { get; set; } = null!;
+
+        /// <summary>
+        /// Свойство склада, у которого необходимо получить данные
+        /// </summary>
+        public static Warehouse CurrentWarehouse { get; set; } = null!;
 
         /// <summary>
         /// Выбор новой текущей автозапчасти
@@ -31,7 +36,7 @@ namespace CarService.Administrator.Others.Data
         /// <param name="temp">Новый склад</param>
         public static void SetWarehouse(Warehouse temp)
         {
-            //TODO: нужно для логики обновления склада
+            CurrentWarehouse = temp;
         }
     }
 }

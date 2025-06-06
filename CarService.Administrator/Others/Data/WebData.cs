@@ -32,6 +32,11 @@ namespace CarService.Administrator.Others.Data
         public static ObservableCollection<Warehouse>? Warehouses { get; set; }
 
         /// <summary>
+        /// Список учетных записей складов
+        /// </summary>
+        public static ObservableCollection<CorporateAccount> CorporateAccounts { get; set; }
+
+        /// <summary>
         /// Метод инициализации новой коллекции автозачастей
         /// </summary>
         /// <param name="autoParts">новый список автозачастей</param>
@@ -104,6 +109,20 @@ namespace CarService.Administrator.Others.Data
 
             Warehouses  = currentWarehouses!;
         }
+
+        /// <summary>
+        /// Метод инициализации новой коллекции учетных записей складов
+        /// </summary>
+        /// <param name="corporateAccounts"></param>
+        public static void GetCollectionAccounts(List<CorporateAccountResponse>? corporateAccounts)
+        {
+            ObservableCollection<CorporateAccount> currentAccounts = new ObservableCollection<CorporateAccount>();
+            foreach (var account in corporateAccounts!)
+            {
+                currentAccounts.Add(CorporateAccount.Create(account.accountId, account.logIn, account.password, account.warehouseId).CorporateAccount);
+            }
+
+            CorporateAccounts = currentAccounts!;
+        }
     }
 }
-

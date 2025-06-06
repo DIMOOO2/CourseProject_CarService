@@ -38,7 +38,7 @@ namespace CarService.Administrator.ViewModels
         {
             try
             {
-                UpdateCollection();
+                UpdateCollection().GetAwaiter();
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace CarService.Administrator.ViewModels
                 {
                     if (await Application.Current!.MainPage!.DisplayAlert("", "Вы действительно хотите удалить данный склад", "OK", "Отмена"))
                     {
-                        await httpClient.DeleteFromJsonAsync<WarehouseResponse>($"https://localhost:1488/Order/{SelectedWarehouse.WarehouseId}");
+                        await httpClient.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Order/{SelectedWarehouse.WarehouseId}");
                         Warehouses.Remove(SelectedWarehouse);
                     }
                     else return;
@@ -99,6 +99,7 @@ namespace CarService.Administrator.ViewModels
         {
             try
             {
+                AdminLocalData.SetWarehouse(SelectedWarehouse);
                 await Shell.Current.GoToAsync(nameof(UpdateWarehousePage));
             }
             catch (Exception ex)
@@ -116,6 +117,7 @@ namespace CarService.Administrator.ViewModels
         {
             Warehouses = new ObservableCollection<Warehouse>();
             WebData.GetCollectionWarehouses(await httpClient.GetFromJsonAsync<List<WarehouseResponse>>("https://localhost:1488/Warehouse"));
+            WebData.GetCollectionAccounts(await httpClient.GetFromJsonAsync<List<CorporateAccountResponse>>("https://localhost:1488/CorporateAccount"));
             Warehouses = WebData.Warehouses!;
         }
     }

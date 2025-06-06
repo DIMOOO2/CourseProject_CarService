@@ -1,3 +1,5 @@
+using CarService.Administrator.ViewModels;
+
 namespace CarService.Administrator.Pages;
 
 /// <summary>
@@ -11,5 +13,6 @@ public partial class UpdateWarehousePage : ContentPage
     public UpdateWarehousePage()
 	{
 		InitializeComponent();
+        BindingContext = new UpdateWarehouseViewModel();
 	}
 }

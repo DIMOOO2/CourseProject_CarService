@@ -108,7 +108,7 @@ namespace CarService.newWebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<OrderResponse>> DeleteOrder(Guid id)
+        public async Task<ActionResult<Guid>> DeleteOrder(Guid id)
         {
             return Ok(await _orderService.DeleteOrder(id));
         }

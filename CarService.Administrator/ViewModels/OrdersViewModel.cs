@@ -58,7 +58,7 @@ namespace CarService.Administrator.ViewModels
             {
                 if (SelectedOrder != null)
                 {
-                    await httpClient.DeleteFromJsonAsync<OrderResponse>($"https://localhost:1488/Order/{SelectedOrder.OrderInfo.OrderId}");
+                    await httpClient.DeleteFromJsonAsync<Guid>($"https://localhost:1488/Order/{SelectedOrder.OrderInfo.OrderId}");
                     Orders.Remove(SelectedOrder);
                 }
                     
