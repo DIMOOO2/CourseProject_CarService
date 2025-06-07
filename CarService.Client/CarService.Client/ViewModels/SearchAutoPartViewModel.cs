@@ -98,7 +98,7 @@ namespace CarService.Client.ViewModels
                     {
                         foreach (var item in collectionAutoPart)
                         {
-                            if (item.AutoPartName.ToLower().Contains(UserRequest.ToLower()))
+                            if (item.AutoPartName.ToLower().StartsWith(UserRequest.ToLower()))
                             {
                                 current.Add(new AutoPartInfo(item.AutoPartId, item.AutoPartName, item.PartNumber,
                                 item.Price, item.StockAmount, item.ManufacturerId, item.WarehouseId));

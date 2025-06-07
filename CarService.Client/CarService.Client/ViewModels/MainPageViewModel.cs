@@ -1,10 +1,13 @@
-﻿using CarService.Client.Others.DataServises;
+﻿using CarService.ApplicationService.Contracts.Requests;
+using CarService.ApplicationService.Contracts.Responses;
+using CarService.Client.Others.DataServises;
 using CarService.Client.Others.Models;
 using CarService.Client.Pages;
 using CarService.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 
 
 namespace CarService.Client.ViewModels;
@@ -22,6 +25,8 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty]
     ObservableCollection<OrderInfo>? ordersCollection;
 
+    private HttpClient _httpClient = new HttpClient();
+
     public MainPageViewModel()
     {
         try
@@ -35,10 +40,11 @@ public partial class MainPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void UpdateRequest()
+    private async Task UpdateRequest()
     {
         try
         {
+            WebData.GetOrdersCollection(await _httpClient.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{LoginData.CurrentWarehouse!.WarehouseId}"));
             ObservableCollection<Order>? collectionOrders = WebData.Orders;
             if (collectionOrders!.Count != 0)
             {
@@ -61,7 +67,7 @@ public partial class MainPageViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
+            await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Ошибка", $"{ex.Message}", "ОК");
         }
     }
 
