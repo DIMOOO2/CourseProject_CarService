@@ -6,15 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarService.DataAccess.Repositories
 {
+    /// <summary>
+    /// Репозиторий запчасти в заказе
+    /// </summary>
     public class OrderPartRepository : IOrderPartRepository
     {
         private readonly CarServiceDbContext _context;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
         public OrderPartRepository(CarServiceDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Получение всех запчастей в заказе
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<OrderedPart>> Get()
         {
             var orderedPartEntities = await _context.OrderParts
@@ -29,6 +40,11 @@ namespace CarService.DataAccess.Repositories
             return orderedParts;
         }
 
+        /// <summary>
+        /// Получение запчасти в заказе по ID 
+        /// </summary>
+        /// <param name="id">ID запчасти</param>
+        /// <returns></returns>
         public async Task<OrderedPart> GetById(Guid id)
         {
             var orderedpartEntity = await _context.OrderParts.FirstOrDefaultAsync(op => op.OrderedPartId == id);
@@ -44,6 +60,11 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
+        /// <summary>
+        /// Создание запчастей в заказе
+        /// </summary>
+        /// <param name="orderedParts">Новая запчасть</param>
+        /// <returns></returns>
         public async Task<List<Guid>> Create(List<OrderedPart> orderedParts)
         {
             List<OrderPartEntity> orderedPartsInOrder = new List<OrderPartEntity>();
@@ -68,6 +89,15 @@ namespace CarService.DataAccess.Repositories
             return orderedPartsInOrder.Select(op => op.OrderedPartId).ToList();
         }
 
+        /// <summary>
+        /// Обновление запчасти в заказе
+        /// </summary>
+        /// <param name="orderedPartId">ID запчасти в заказе</param>
+        /// <param name="amount">Количество</param>
+        /// <param name="orderId">ID заказа</param>
+        /// <param name="autoPartId">ID автозапчасти</param>
+        /// <param name="departureWarehouseId">ID склада-отправителя</param>
+        /// <returns></returns>
         public async Task<Guid> Update(Guid orderedPartId, uint amount,
             Guid orderId, Guid autoPartId,
             Guid departureWarehouseId)
@@ -84,6 +114,11 @@ namespace CarService.DataAccess.Repositories
             return orderedPartId;
         }
 
+        /// <summary>
+        /// Удаление запчасти в заказе
+        /// </summary>
+        /// <param name="id">ID запчасти</param>
+        /// <returns></returns>
         public async Task<Guid> Delete(Guid id)
         {
             await _context.OrderParts

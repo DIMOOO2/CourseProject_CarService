@@ -2,15 +2,19 @@
 using CarService.Core.Abstractions;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Repositories;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using CarService.WebAPI;
 
 namespace CarService.newWebAPI
 {
+    /// <summary>
+    /// Класс основы приложения
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Входная точка в программе
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);

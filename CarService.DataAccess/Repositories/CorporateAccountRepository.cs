@@ -6,15 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarService.DataAccess.Repositories
 {
+    /// <summary>
+    /// Репозиторий корпоративных аккаунтов
+    /// </summary>
     public class CorporateAccountRepository : ICorporateAccountRepository
     {
         private readonly CarServiceDbContext _context;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
         public CorporateAccountRepository(CarServiceDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Получение всех корпоративных аккаунтов
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<CorporateAccount>> Get()
         {
             var accountEntities = await _context.CorporateAccounts
@@ -29,6 +40,11 @@ namespace CarService.DataAccess.Repositories
             return accounts;
         }
 
+        /// <summary>
+        /// Получение корпоративных аккаунтов по ID
+        /// </summary>
+        /// <param name="id">ID аккаунта</param>
+        /// <returns></returns>
         public async Task<CorporateAccount> GetById(Guid id)
         {
             var accountEntity = await _context.CorporateAccounts.FirstOrDefaultAsync(c => c.AccountId == id);
@@ -44,6 +60,12 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
+        /// <summary>
+        /// Получение корпоративного аккаунта по логину и паролю
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns></returns>
         public async Task<CorporateAccount> GetWithLoginAndPassword(string login, string password)
         {
             var account = await _context.CorporateAccounts.FirstOrDefaultAsync(a => a.LogIn == login && a.Password == password);
@@ -61,6 +83,11 @@ namespace CarService.DataAccess.Repositories
                 
         }
 
+        /// <summary>
+        /// Создание корпоративного аккаунта
+        /// </summary>
+        /// <param name="corporateAccount">Новый корпоративный аккаунт</param>
+        /// <returns></returns>
         public async Task<Guid> Create(CorporateAccount corporateAccount)
         {
             CorporateAccountEntity corporateAccountEntity = new CorporateAccountEntity()
@@ -77,6 +104,14 @@ namespace CarService.DataAccess.Repositories
             return corporateAccountEntity.AccountId;
         }
 
+        /// <summary>
+        /// Обновление корпоративного аккаунта
+        /// </summary>
+        /// <param name="accountId">ID аккаунта</param>
+        /// <param name="logIn">Новый логин</param>
+        /// <param name="password">Новый пароль</param>
+        /// <param name="warehouseId">Новый ID склада</param>
+        /// <returns></returns>
         public async Task<Guid> Update(Guid accountId, string logIn, string password, Guid warehouseId)
         {
             await _context.CorporateAccounts
@@ -89,6 +124,11 @@ namespace CarService.DataAccess.Repositories
             return accountId;
         }
 
+        /// <summary>
+        /// Удаление корпоративного аккаунта
+        /// </summary>
+        /// <param name="id">ID аккаунта</param>
+        /// <returns></returns>
         public async Task<Guid> Delete(Guid id)
         {
             await _context.CorporateAccounts

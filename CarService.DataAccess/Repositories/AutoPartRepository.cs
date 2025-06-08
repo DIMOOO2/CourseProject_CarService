@@ -7,15 +7,26 @@ using System.Collections.ObjectModel;
 
 namespace CarService.DataAccess.Repositories
 {
+    /// <summary>
+    /// Репозиторий автозапчасти
+    /// </summary>
     public class AutoPartRepository : IAutoPartRepository
     {
         private readonly CarServiceDbContext _context;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
         public AutoPartRepository(CarServiceDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Получение списка автозапчастей
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<AutoPart>> Get()
         {
             var autoPartEntities = await _context.AutoParts
@@ -30,6 +41,11 @@ namespace CarService.DataAccess.Repositories
             return autoParts;
         }
 
+        /// <summary>
+        /// Получение списка автозапчастей на определенном складе
+        /// </summary>
+        /// <param name="warehouseId">ID склада</param>
+        /// <returns></returns>
         public async Task<List<AutoPart>> GetByCurrentWarehouse(Guid warehouseId)
         {
             var autoPartEntities = await _context.AutoParts
@@ -44,6 +60,11 @@ namespace CarService.DataAccess.Repositories
             return autoParts!;
         }
 
+        /// <summary>
+        /// Получение автозачасти по ID
+        /// </summary>
+        /// <param name="id">ID автозапчасти</param>
+        /// <returns></returns>
         public async Task<AutoPart> GetById(Guid id)
         {
             var autoPartEntity = await _context.AutoParts.FirstOrDefaultAsync(a => a.AutoPartId == id);
@@ -58,6 +79,11 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
+        /// <summary>
+        /// Метод создания автозачасти
+        /// </summary>
+        /// <param name="autoPart">Новая автозапчасть</param>
+        /// <returns></returns>
         public async Task<Guid> Create(AutoPart autoPart)
         {
             AutoPartEntity autoPartEntity = new AutoPartEntity()
@@ -77,6 +103,17 @@ namespace CarService.DataAccess.Repositories
             return autoPartEntity.AutoPartId;
         }
 
+        /// <summary>
+        /// Обновление автозапчасти
+        /// </summary>
+        /// <param name="autoPartId">ID автозапчасти которую нужно обновить</param>
+        /// <param name="autoPartName">название автозапчасти</param>
+        /// <param name="partNumber">партийный номер</param>
+        /// <param name="price">цена</param>
+        /// <param name="stockAmount">количество</param>
+        /// <param name="manufacturerId">ID производителя</param>
+        /// <param name="warehouseId">ID склада</param>
+        /// <returns></returns>
         public async Task<Guid> Update(Guid autoPartId, string autoPartName, long partNumber,
             decimal price, uint stockAmount, Guid manufacturerId, Guid? warehouseId)
         {
@@ -92,6 +129,11 @@ namespace CarService.DataAccess.Repositories
             return autoPartId;
         }
 
+        /// <summary>
+        /// Удаление автозапчасти по ID
+        /// </summary>
+        /// <param name="id">ID автозапчасти</param>
+        /// <returns></returns>
         public async Task<Guid> Delete(Guid id)
         {
             await _context.AutoParts

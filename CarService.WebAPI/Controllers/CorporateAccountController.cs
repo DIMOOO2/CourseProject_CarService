@@ -6,17 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер корпоративных аккаунтов складов 
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class CorporateAccountController : ControllerBase
     {
         private readonly ICorporateAccountService _corporateAccountService;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="corporateAccountService">Интерфейс сервиса для работы с корпоративными аккаунтами</param>
         public CorporateAccountController(ICorporateAccountService corporateAccountService)
         {
             _corporateAccountService = corporateAccountService;
         }
 
+        /// <summary>
+        /// Получение всех корпоративных аккаунтов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<CorporateAccountResponse>>> GetAccounts()
         {
@@ -31,6 +42,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение корпоративного аккаунта по ID
+        /// </summary>
+        /// <param name="id">ID корпоративного аккаунта</param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<List<CorporateAccountResponse>>> GetAccountById(Guid id)
         {
@@ -49,6 +65,11 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound(account);
         }
 
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="request">Данные корпоративного аккаунта</param>
+        /// <returns></returns>
         [HttpPost("SignIn")]
         public async Task<ActionResult<CorporateAccount>> SignIn([FromBody] CorporateAccountRequest request)
         {
@@ -65,6 +86,11 @@ namespace CarService.newWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Добавление корпоративного аккаунта
+        /// </summary>
+        /// <param name="request">Данные нового корпоративного аккаунта</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateAccount([FromBody] CorporateAccountRequest request)
         {
@@ -84,6 +110,12 @@ namespace CarService.newWebAPI.Controllers
             return Ok(account.AccountId);
         }
 
+        /// <summary>
+        /// Обновление корпоративного аккаунта
+        /// </summary>
+        /// <param name="id">ID аккаунта</param>
+        /// <param name="request">Новые данные аккаунта</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateAccount(Guid id, [FromBody] CorporateAccountRequest request)
         {
@@ -95,6 +127,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(warehouseId);
         }
 
+        /// <summary>
+        /// Удаление корпоративного аккаунта
+        /// </summary>
+        /// <param name="id">ID аккаунта</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<Guid>> DeleteWarehouse(Guid id)
         {

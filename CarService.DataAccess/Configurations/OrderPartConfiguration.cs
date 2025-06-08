@@ -4,8 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CarService.DataAccess.Configurations
 {
+    /// <summary>
+    /// Конфигурация запчасти в заказе
+    /// </summary>
     public class OrderPartConfiguration : IEntityTypeConfiguration<OrderPartEntity>
     {
+        /// <summary>
+        /// Метод для настройки конфигурации сущности
+        /// </summary>
+        /// <param name="builder">Тип сущности</param>
         public void Configure(EntityTypeBuilder<OrderPartEntity> builder)
         {
             builder.HasKey(op => op.OrderedPartId);

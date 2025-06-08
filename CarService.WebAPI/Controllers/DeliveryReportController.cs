@@ -1,6 +1,5 @@
 ﻿using CarService.ApplicationService.Contracts.Requests;
 using CarService.ApplicationService.Contracts.Responses;
-using CarService.ApplicationService.Services;
 using CarService.Core.Abstractions;
 using CarService.Core.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +7,28 @@ using System.Collections.ObjectModel;
 
 namespace CarService.WebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер отчетов по поставкам
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class DeliveryReportController : ControllerBase
     {
         private IDeliveryReportService _service;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="service"></param>
         public DeliveryReportController(IDeliveryReportService service)
         {
             _service = service;
         }
 
+        /// <summary>
+        /// Получение всех отчетов по поставкам
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<DeliveryReportResponse>>> GetReports()
         {
@@ -35,6 +45,11 @@ namespace CarService.WebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение отчета по ID
+        /// </summary>
+        /// <param name="id">ID отчета</param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<DeliveryReportResponse>> GetReportById(Guid id)
         {
@@ -56,6 +71,11 @@ namespace CarService.WebAPI.Controllers
             else return NotFound(report);
         }
 
+        /// <summary>
+        /// Получение всех отчетов на конкретном складе
+        /// </summary>
+        /// <param name="warehouesId"></param>
+        /// <returns></returns>
         [HttpGet("fromWarehouse/{warehouesId:guid}")]
         public async Task<ActionResult<ObservableCollection<DeliveryReportResponse>>> GetAutoPartFromCurrentWarehouse(Guid warehouesId)
         {
@@ -72,6 +92,11 @@ namespace CarService.WebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Добавление нового отчета по поставке
+        /// </summary>
+        /// <param name="request">Данные отчета</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<DeliveryReportResponse>> CreateReport([FromBody] DeliveryReportRequest request)
         {
@@ -90,6 +115,12 @@ namespace CarService.WebAPI.Controllers
             return Ok(report);
         }
 
+        /// <summary>
+        /// Обновление отчета по поставке
+        /// </summary>
+        /// <param name="id">ID отчета</param>
+        /// <param name="request">Новые данные отчета</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateReport(Guid id, [FromBody] DeliveryReportRequest request)
         {
@@ -101,6 +132,11 @@ namespace CarService.WebAPI.Controllers
             return Ok(reportId);
         }
 
+        /// <summary>
+        /// Удаление отчета по поставке
+        /// </summary>
+        /// <param name="id">ID отчета</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<DeliveryReportRequest>> DeleteReport(Guid id)
         {

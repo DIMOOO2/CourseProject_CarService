@@ -6,15 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarService.DataAccess.Repositories
 {
+    /// <summary>
+    /// Репозиторий складов
+    /// </summary>
     public class WarehouseRepository : IWarehouseRepository
     {
         private readonly CarServiceDbContext _context;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
         public WarehouseRepository(CarServiceDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Получение всех складов
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Warehouse>> Get()
         {
             var warehouseEntities = await _context.Warehouses
@@ -28,6 +39,11 @@ namespace CarService.DataAccess.Repositories
             return warehouses;
         }
 
+        /// <summary>
+        /// Получение склада по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Warehouse> GetById(Guid id)
         {
             var warehouseEntities = await _context.Warehouses.FirstOrDefaultAsync(w => w.WarehouseId == id);
@@ -43,6 +59,11 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
+        /// <summary>
+        /// Создание склада
+        /// </summary>
+        /// <param name="warehouse">Новый склад</param>
+        /// <returns></returns>
         public async Task<Guid> Create(Warehouse warehouse)
         {
             WarehouseEntity warehouseEntity = new WarehouseEntity
@@ -59,6 +80,14 @@ namespace CarService.DataAccess.Repositories
             return warehouseEntity.WarehouseId;
         }
 
+        /// <summary>
+        /// Обновление склада
+        /// </summary>
+        /// <param name="id">ID склада</param>
+        /// <param name="title">Название</param>
+        /// <param name="address">Адрес</param>
+        /// <param name="city">Город</param>
+        /// <returns></returns>
         public async Task<Guid> Update(Guid id, string title, string address, string city)
         {
             await _context.Warehouses
@@ -71,6 +100,11 @@ namespace CarService.DataAccess.Repositories
             return id;
         }
 
+        /// <summary>
+        /// Удаление склада
+        /// </summary>
+        /// <param name="id">ID склада</param>
+        /// <returns></returns>
         public async Task<Guid> Delete(Guid id)
         {
             await _context.Warehouses

@@ -10,7 +10,7 @@ namespace CarService.Core.Abstractions
         /// <summary>
         /// Метод создания автозачасти
         /// </summary>
-        /// <param name="autoPart">Автозапчасть</param>
+        /// <param name="autoPart">Новая автозапчасть</param>
         /// <returns></returns>
         Task<Guid> Create(AutoPart autoPart);
         /// <summary>

@@ -3,20 +3,31 @@ using CarService.Core.Abstractions;
 using CarService.DataAccess.Contexts;
 using CarService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+
 
 
 namespace CarService.DataAccess.Repositories
 {
+    /// <summary>
+    /// Репозиторий клиента
+    /// </summary>
     public class ClientRepository : IClientRepository
     {
         private readonly CarServiceDbContext _context;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
         public ClientRepository(CarServiceDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Получение всех клиентов
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Client>> Get()
         {
             var clientEntities = await _context.Clients
@@ -31,6 +42,11 @@ namespace CarService.DataAccess.Repositories
             return clients;
         }
 
+        /// <summary>
+        /// Получение клиента по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Client> GetById(Guid id)
         {
             var clientEntity = await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == id);
@@ -43,6 +59,11 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
+        /// <summary>
+        /// Создание клиента
+        /// </summary>
+        /// <param name="client">Новый клиент</param>
+        /// <returns></returns>
         public async Task<Guid> Create(Client client)
         {
             ClientEntity clientEntity = new ClientEntity()
@@ -64,6 +85,19 @@ namespace CarService.DataAccess.Repositories
             return clientEntity.ClientId;
         }
 
+        /// <summary>
+        /// Обновление клиента
+        /// </summary>
+        /// <param name="clientId">ID клиента</param>
+        /// <param name="firstName">Имя</param>
+        /// <param name="lastName">Фамилия</param>
+        /// <param name="middleName">Отчество</param>
+        /// <param name="phoneNumber">Номер телефона</param>
+        /// <param name="email">Электронная почта</param>
+        /// <param name="address">Адрес</param>
+        /// <param name="city">Город</param>
+        /// <param name="organizationId">ID организации</param>
+        /// <returns></returns>
         public async Task<Guid> Update(Guid clientId, string firstName, string lastName, string? middleName,
             string phoneNumber, string email, string address, string city, Guid? organizationId)
         {
@@ -82,6 +116,11 @@ namespace CarService.DataAccess.Repositories
             return clientId;
         }
 
+        /// <summary>
+        /// Удаление клиента
+        /// </summary>
+        /// <param name="id">ID клиента</param>
+        /// <returns></returns>
         public async Task<Guid> Delete(Guid id)
         {
             await _context.Clients

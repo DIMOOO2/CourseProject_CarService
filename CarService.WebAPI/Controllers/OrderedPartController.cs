@@ -7,17 +7,28 @@ using System.Linq;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер запчасти в заказе
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class OrderedPartController : ControllerBase
     {
         private readonly IOrderedPartService _orderedPartService;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="orderedPartService">Интерфейс сервиса для работы с запчастями в заказах</param>
         public OrderedPartController(IOrderedPartService orderedPartService)
         {
             _orderedPartService = orderedPartService;
         }
 
+        /// <summary>
+        /// Получение всех автозапчастей в заказах
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<OrderedPartResponse>>> GetOrderedParts()
         {
@@ -33,6 +44,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение запчасти в заказе по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<List<OrderedPartResponse>>> GetOrderedPartById(Guid id)
         {
@@ -53,6 +69,11 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound(orderedPart);
         }
 
+        /// <summary>
+        /// Добавление запчасти в заказе
+        /// </summary>
+        /// <param name="request">Данные запчасти</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<List<OrderedPartResponse>>> CreateOrderedPart([FromBody] List<OrderedPartRequest> request)
         {
@@ -81,6 +102,12 @@ namespace CarService.newWebAPI.Controllers
             return Ok(orderedParts);
         }
 
+        /// <summary>
+        /// Обновление запчасти в заказе
+        /// </summary>
+        /// <param name="id">ID запчасти</param>
+        /// <param name="request">Новые данные запчасти</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateOrderedPart(Guid id, [FromBody] OrderedPartRequest request)
         {
@@ -93,6 +120,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(orderedPartId);
         }
 
+        /// <summary>
+        /// Удаление запчасти в заказе
+        /// </summary>
+        /// <param name="id">ID запчасти</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<OrderedPartRequest>> DeleteOrderedPart(Guid id)
         {

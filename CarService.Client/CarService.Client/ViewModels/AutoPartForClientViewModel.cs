@@ -82,8 +82,8 @@ namespace CarService.Client.ViewModels
                     {
                         if(autoPart.StockAmount > 0)
                         {
-                            autoPart.visibilityItem = true;
-                            autoPart.isEnabledItem = true;
+                            autoPart.VisibilityItem = true;
+                            autoPart.IsEnabledItem = true;
                         }
                     }
                     AutoPartsWithCurrentWarehouse = autoparts!;
@@ -120,8 +120,8 @@ namespace CarService.Client.ViewModels
                 if (currentAutoPart == null)
                 {
                     AutoPartsWithClient.Add(new CartAutoPart() { AutoPart = SelectItem, DesiredCount = 1 });
-                    SelectItem.isEnabledItem = false;
-                    SelectItem.visibilityItem = false;
+                    SelectItem.IsEnabledItem = false;
+                    SelectItem.VisibilityItem = false;
                 }
                 else
                 {

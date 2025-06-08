@@ -6,17 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер клиента
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="clientService">Интерфейс сервиса для работы с клиентами</param>
         public ClientController(IClientService clientService)
         {
             _clientService = clientService;
         }
 
+        /// <summary>
+        /// Получение всех клиентов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<ClientResponse>>> GetClients()
         {
@@ -33,6 +44,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение клиента по ID
+        /// </summary>
+        /// <param name="id">ID клиента</param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<ClientResponse>> GetByIdClient(Guid id)
         {
@@ -53,7 +69,11 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound(client);
         }
 
-
+        /// <summary>
+        /// Добавление клиента
+        /// </summary>
+        /// <param name="request">Данные нового клиента</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ClientResponse>> CreateClient([FromBody] ClientRequest request)
         {
@@ -78,6 +98,12 @@ namespace CarService.newWebAPI.Controllers
             return Ok(client);
         }
 
+        /// <summary>
+        /// Обновление клиента
+        /// </summary>
+        /// <param name="id">ID клиента</param>
+        /// <param name="request">Новые данные клиента</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateWarehouse(Guid id, [FromBody] ClientRequest request)
         {
@@ -95,6 +121,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(clientId);
         }
 
+        /// <summary>
+        /// Удаление клиента
+        /// </summary>
+        /// <param name="id">ID клиента</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ClientRequest>> DeleteWarehouse(Guid id)
         {

@@ -6,17 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер производителя
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class ManufacturerController : ControllerBase
     {
         private readonly IManufacturerService _manufacturerService;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="manufacturerService">Интерфейс для работы с производителями</param>
         public ManufacturerController(IManufacturerService manufacturerService)
         {
             _manufacturerService = manufacturerService;
         }
 
+        /// <summary>
+        /// Получение всех производителей
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<ManufacturerResponse>>> GatManufacturers()
         {
@@ -30,6 +41,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение производителя по ID
+        /// </summary>
+        /// <param name="id">ID производителя</param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<List<ManufacturerResponse>>> GatManufacturerById(Guid id)
         {
@@ -47,6 +63,11 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound(manufacturer);
         }
 
+        /// <summary>
+        /// Добавление производителя
+        /// </summary>
+        /// <param name="request">Данные нового производителя</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ManufacturerResponse>> CreateManufacturer([FromBody] ManufacturerRequest request)
         {
@@ -67,6 +88,12 @@ namespace CarService.newWebAPI.Controllers
             return Ok(new ManufacturerResponse(manufacturer.ManufacturerId, manufacturer.ManufacturerName, manufacturer.ContactInfo));
         }
 
+        /// <summary>
+        /// Обновление производителя
+        /// </summary>
+        /// <param name="id">ID производителя</param>
+        /// <param name="request">Новые данные производителя</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateManufacturer(Guid id, [FromBody] ManufacturerRequest request)
         {
@@ -77,6 +104,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(manufacturerId);
         }
 
+        /// <summary>
+        /// Удаление производителя
+        /// </summary>
+        /// <param name="id">ID производителя</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ManufacturerRequest>> DeleteWarehouse(Guid id)
         {

@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarService.Core.Models
+﻿namespace CarService.Core.Models
 {
+    /// <summary>
+    /// Класс корпоративного аккаунта
+    /// </summary>
     public class CorporateAccount
     {
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="accountId">ID аккаунта</param>
+        /// <param name="logIn">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="warehouseId">ID склада</param>
         private CorporateAccount(Guid accountId, string logIn, string password, Guid warehouseId)
         {
             AccountId = accountId;
@@ -15,16 +19,41 @@ namespace CarService.Core.Models
             Password = password;
             WarehouseId = warehouseId;
         }
-
+        /// <summary>
+        /// Конструктор без параметров
+        /// </summary>
         public CorporateAccount()
         {
         }
 
+        /// <summary>
+        /// ID аккаунта
+        /// </summary>
         public Guid AccountId { get; }
+
+        /// <summary>
+        /// Логин
+        /// </summary>
         public string LogIn { get; } = null!;
+
+        /// <summary>
+        /// Пароль
+        /// </summary>
         public string Password { get; } = null!;
+
+        /// <summary>
+        /// ID склада
+        /// </summary>
         public Guid WarehouseId { get; }
 
+        /// <summary>
+        /// Метод инициализации нового корпоративного аккаунта
+        /// </summary>
+        /// <param name="accountId">ID аккаунта</param>
+        /// <param name="logIn">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="warehouse">ID склада</param>
+        /// <returns></returns>
         public static (CorporateAccount CorporateAccount, string error) Create(Guid accountId, string logIn, string password, Guid warehouse)
         {
             string error = string.Empty;

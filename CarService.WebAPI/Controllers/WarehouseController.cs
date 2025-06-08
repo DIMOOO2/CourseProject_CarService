@@ -6,16 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер склада
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WarehouseController : ControllerBase
     {
         private readonly IWarehouseService _warehouseService;
+
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="warehouseService">Интерфейс сервиса для работы со складами</param>
         public WarehouseController(IWarehouseService warehouseService)
         {
             _warehouseService = warehouseService;
         }
 
+        /// <summary>
+        /// Получение всех складов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<WarehouseResponse>>> GetWarehouses()
         {
@@ -30,6 +42,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение склада по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<List<WarehouseResponse>>> GetWarehouseById(Guid id)
         {
@@ -49,6 +66,11 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound(warehouse);
         }
 
+        /// <summary>
+        /// Добавление склада
+        /// </summary>
+        /// <param name="request">Данные нового склада</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<WarehouseResponse>> CreateWarehouse([FromBody] WarehouseRequest request)
         {
@@ -68,6 +90,12 @@ namespace CarService.newWebAPI.Controllers
             return Ok(new WarehouseResponse(warehouse.WarehouseId, warehouse.Title, warehouse.Address, warehouse.City));
         }
 
+        /// <summary>
+        /// Обвноление склада
+        /// </summary>
+        /// <param name="id">ID склада</param>
+        /// <param name="request">Новые данные склада</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateWarehouse(Guid id, [FromBody] WarehouseRequest request)
         {
@@ -79,6 +107,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(warehouseId);
         }
 
+        /// <summary>
+        /// Удаление склада
+        /// </summary>
+        /// <param name="id">ID склада</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<Guid>> DeleteWarehouse(Guid id)
         {

@@ -6,15 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarService.DataAccess.Repositories
 {
+    /// <summary>
+    /// Репозиторий заказов
+    /// </summary>
     public class OrderRepository : IOrderRepository
     {
         private readonly CarServiceDbContext _context;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
         public OrderRepository(CarServiceDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Получение всех заказов
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Order>> Get()
         {
             var orderEntities = await _context.Orders
@@ -28,7 +39,11 @@ namespace CarService.DataAccess.Repositories
             return orders;
         }
 
-
+        /// <summary>
+        /// Получение заказа по ID
+        /// </summary>
+        /// <param name="id">ID заказа</param>
+        /// <returns></returns>
         public async Task<Order> GetById(Guid id)
         {
             var orderEntity = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == id);
@@ -44,6 +59,11 @@ namespace CarService.DataAccess.Repositories
             else return null!;
         }
 
+        /// <summary>
+        /// Получение всех заказов на конкретном складе
+        /// </summary>
+        /// <param name="warehouseId">ID склада</param>
+        /// <returns></returns>
         public async Task<List<Order>> GetByWarehouseId(Guid warehouseId)
         {
             var orderEntities = await _context.Orders.Where(o => o.WarehouseContractorId == warehouseId)
@@ -56,6 +76,11 @@ namespace CarService.DataAccess.Repositories
             return orders;
         }
 
+        /// <summary>
+        /// Создание заказов
+        /// </summary>
+        /// <param name="order">Новый заказ</param>
+        /// <returns></returns>
         public async Task<Guid> Create(Order order)
         {
             OrderEntity orderEntity = new OrderEntity()
@@ -73,6 +98,15 @@ namespace CarService.DataAccess.Repositories
             return orderEntity.OrderId;
         }
 
+        /// <summary>
+        /// Обновление заказа
+        /// </summary>
+        /// <param name="orderId">ID заказа</param>
+        /// <param name="orderDate">Дата оформления</param>
+        /// <param name="orderStatus">Статус выполнения</param>
+        /// <param name="clientId">ID клиента</param>
+        /// <param name="warehouseContraсtorId">ID склада-исполнителя</param>
+        /// <returns></returns>
         public async Task<Guid> Update(Guid orderId, DateTime orderDate, bool orderStatus, Guid clientId, Guid warehouseContratorId)
         {
             await _context.Orders
@@ -86,6 +120,11 @@ namespace CarService.DataAccess.Repositories
             return orderId;
         }
 
+        /// <summary>
+        /// Удаление заказа
+        /// </summary>
+        /// <param name="id">ID заказа</param>
+        /// <returns></returns>
         public async Task<Guid> Delete(Guid id)
         {
             await _context.Orders

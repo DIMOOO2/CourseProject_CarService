@@ -7,17 +7,28 @@ using System.Collections.ObjectModel;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер заказа
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="orderService">Интерфейс сервиса для работы с заказами</param>
         public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }
 
+        /// <summary>
+        /// Получение всех заказов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<OrderResponse>>> GetOrders()
         {
@@ -34,6 +45,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Получение заказа по ID
+        /// </summary>
+        /// <param name="id">ID заказа</param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<List<OrderResponse>>> GetOrderById(Guid id)
         {
@@ -55,6 +71,11 @@ namespace CarService.newWebAPI.Controllers
             else return NotFound();
         }
 
+        /// <summary>
+        /// Получение всех заказов на конкретном складе
+        /// </summary>
+        /// <param name="warehouesId"></param>
+        /// <returns></returns>
         [HttpGet("fromWarehouse/{warehouesId:guid}")]
         public async Task<ActionResult<List<OrderResponse>>> GetOrdersFromCurrentWarehouse(Guid warehouesId)
         {
@@ -72,6 +93,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Добавление заказа
+        /// </summary>
+        /// <param name="request">Данные нового заказа</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<OrderRequest>> CreateOrder([FromBody] OrderRequest request)
         {
@@ -93,6 +119,12 @@ namespace CarService.newWebAPI.Controllers
             return Ok(order);
         }
 
+        /// <summary>
+        /// Обновление заказа
+        /// </summary>
+        /// <param name="id">ID заказа</param>
+        /// <param name="request">Новые данные заказа</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<OrderResponse>> UpdateOrder(Guid id, [FromBody] OrderRequest request)
         {
@@ -107,6 +139,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(new OrderResponse(id, request.orderDate, request.orderStatus, request.clientId, request.warehouseContractorId)); 
         }
 
+        /// <summary>
+        /// Удаление заказа
+        /// </summary>
+        /// <param name="id">ID заказа</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<Guid>> DeleteOrder(Guid id)
         {

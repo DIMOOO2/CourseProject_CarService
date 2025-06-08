@@ -7,17 +7,29 @@ using System.Collections.ObjectModel;
 
 namespace CarService.newWebAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер автозапчастей
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
+
     public class AutoPartController : ControllerBase
     {
         private IAutoPartService _autoPartService;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="autoPartService">Сервис автозапчастей</param>
         public AutoPartController(IAutoPartService autoPartService)
         {
             _autoPartService = autoPartService;
         }
 
+        /// <summary>
+        /// Запрос для получения всех автозапчастей
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<AutoPartResponse>>> GetAutoParts()
         {
@@ -37,6 +49,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Запрос для получения автозапчасти по ID
+        /// </summary>
+        /// <param name="id">ID автозапчасти</param>
+        /// <returns></returns>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<AutoPartResponse>> GetAutoPartById(Guid id)
         {
@@ -59,7 +76,11 @@ namespace CarService.newWebAPI.Controllers
             }
             else return NotFound(autopart);
         }
-
+        /// <summary>
+        /// Запрос для получения запчапстей на определнном складе
+        /// </summary>
+        /// <param name="warehouesId">ID склада</param>
+        /// <returns></returns>
         [HttpGet("fromWarehouse/{warehouesId:guid}")]
         public async Task<ActionResult<ObservableCollection<AutoPartResponse>>> GetAutoPartFromCurrentWarehouse(Guid warehouesId)
         {
@@ -79,6 +100,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Запрос для создания автозапчасти
+        /// </summary>
+        /// <param name="request">Запрос с данными автозапчасти</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<AutoPartRequest>> CreateAutoPart([FromBody] AutoPartRequest request)
         {
@@ -112,6 +138,12 @@ namespace CarService.newWebAPI.Controllers
                 ));
         }
 
+        /// <summary>
+        /// Запрос для обновления автозапчасти
+        /// </summary>
+        /// <param name="id">ID автозапчасти</param>
+        /// <param name="request">Новые данные автозапчасти</param>
+        /// <returns></returns>
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<AutoPartRequest>> UpdateAutoPart(Guid id, [FromBody] AutoPartRequest request)
         {
@@ -126,6 +158,11 @@ namespace CarService.newWebAPI.Controllers
             return Ok(autopartId);
         }
 
+        /// <summary>
+        /// Удаление автозапчасти
+        /// </summary>
+        /// <param name="id">ID автозапчасти</param>
+        /// <returns></returns>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<Guid>> DeleteAutoPart(Guid id)
         {
