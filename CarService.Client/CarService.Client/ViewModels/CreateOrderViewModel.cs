@@ -10,44 +10,83 @@ using System.Net.Http.Json;
 
 namespace CarService.Client.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления создания заказа
+    /// </summary>
     public partial class CreateOrderViewModel : ObservableObject
     {
         #region Properties
+        /// <summary>
+        /// Свойство, озночающее что клиент - физическое лицо
+        /// </summary>
         [ObservableProperty]
         private bool isNaturalPerson;
 
+        /// <summary>
+        /// Свойство, озночающее что клиент - юридическое лицо
+        /// </summary>
         [ObservableProperty]
         private bool isLegalEntity;
 
+        /// <summary>
+        /// Имя
+        /// </summary>
         [ObservableProperty]
         private string firstName = null!;
 
+        /// <summary>
+        /// Фамилия
+        /// </summary>
         [ObservableProperty]
         private string lastName = null!;
 
+        /// <summary>
+        /// Отчество
+        /// </summary>
         [ObservableProperty]
         private string middleName = null!;
 
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
         [ObservableProperty]
         private string phoneNumber = null!;
 
+        /// <summary>
+        /// Электронная почта
+        /// </summary>
         [ObservableProperty]
         private string email = null!;
 
+        /// <summary>
+        /// Город местонахождения
+        /// </summary>
         [ObservableProperty]
         private string city = null!;
 
+        /// <summary>
+        /// Адрес
+        /// </summary>
         [ObservableProperty]
         private string address = null!;
 
+        /// <summary>
+        /// Название организации
+        /// </summary>
         [ObservableProperty]
         private string titleOrganization = null!;
 
+        /// <summary>
+        /// ИНН организации
+        /// </summary>
         [ObservableProperty]
         private string tinOrganization = null!;
 
-
         #endregion
+
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public CreateOrderViewModel()
         {
             try
@@ -61,9 +100,15 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         private HttpClient client = new HttpClient();
 
-
+        /// <summary>
+        /// Переход на страницу корзины автозапчастей для клиента
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task PushAutoPartForClient()
         {
@@ -77,15 +122,45 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Свойство, показывающее состояние включения блока Catch
+        /// </summary>
         private bool isActiveCatch = false;
+
+        /// <summary>
+        /// промежуточное значние ID клиента
+        /// </summary>
         private Guid clientGuid;
+
+        /// <summary>
+        /// промежуточное значние ID организации
+        /// </summary>
         private Guid? organizationGuid;
+
+        /// <summary>
+        /// промежуточное значние ID заказа
+        /// </summary>
         private Guid orderGuid;
+
+        /// <summary>
+        /// Список автозапчастей на текущем складе
+        /// </summary>
         private ObservableCollection<AutoPart> autoPartList = WebData.AutoParts!;
+
+        /// <summary>
+        /// Новый список измененных автозапчастей после оформления заказа
+        /// </summary>
         private List<AutoPartResponse> changedAutoPart = new List<AutoPartResponse>();
+
+        /// <summary>
+        /// Данные заказа
+        /// </summary>
         private OrderResponse? orderResponse;
 
-
+        /// <summary>
+        /// Метод создания заказа
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task CreateOrder()
         {
@@ -154,7 +229,7 @@ namespace CarService.Client.ViewModels
                     await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert("Сообщение", "Заказ успешно создан", "OK");
                     WebData.GetAutoPartsCollection(await client.GetFromJsonAsync<List<AutoPartResponse>>("https://localhost:1488/AutoPart/"));
                     WebData.GetOrdersCollection(await client.GetFromJsonAsync<List<OrderResponse>>($"https://localhost:1488/Order/fromWarehouse/{LoginData.CurrentWarehouse!.WarehouseId}"));
-                    var responseNewClient = await client.GetFromJsonAsync<ClientResponse>($"https://localhost:1488/Client/{orderResponse.clientId}");
+                    var responseNewClient = await client.GetFromJsonAsync<ClientResponse>($"https://localhost:1488/Client/{orderResponse!.clientId}");
                     if(responseNewClient != null)
                     {
                         WebData.Clients!.Add(Core.Models.Client.Create

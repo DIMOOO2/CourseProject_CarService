@@ -10,28 +10,49 @@ using System.Collections.ObjectModel;
 
 namespace CarService.Client.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления автозапчастей для клиента
+    /// </summary>
     public partial class AutoPartForClientViewModel : ObservableObject
     {
+        /// <summary>
+        /// Список запчастей на текущем складе
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<AutoPart> autoPartsWithCurrentWarehouse = null!;
 
+        /// <summary>
+        /// Список автозапчастей для клиента
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<CartAutoPart> autoPartsWithClient = null!;
 
+        /// <summary>
+        /// Свойство, которое принимает свое значение в зависимости от пустоты списка автозапчастей на текущем складе
+        /// </summary>
         [ObservableProperty]
         private bool isCollectionEmpty;
 
-
+        /// <summary>
+        /// Выбранный элемент запчасти из списка деталей на складе
+        /// </summary>
         [ObservableProperty]
         private AutoPart selectItem = null!;       
-        
+
+        /// <summary>
+        /// Выбранный элемент в списке автозапчастей для клиента
+        /// </summary>
         [ObservableProperty]
         private CartAutoPart selectItemClient = null!;
 
+        /// <summary>
+        /// Данные автозапчасти
+        /// </summary>
         public AutoPart AutoPart { get; set; }
 
-        private HttpClient httpClient = new HttpClient();
-
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public AutoPartForClientViewModel()
         {
             try
@@ -66,6 +87,10 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обновление списка автозапчастей которые находятся на складе
+        /// </summary>
+        /// <returns></returns>
         private async Task UpdateCollectionLocal()
         {
             try
@@ -96,6 +121,10 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Добаление автозапчасти в корзину заказа
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task AddToCart()
         {
@@ -134,6 +163,10 @@ namespace CarService.Client.ViewModels
             }         
         }
 
+        /// <summary>
+        /// Удаление автозапчасти из корзины
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task RemoveInCart()
         {
@@ -152,6 +185,10 @@ namespace CarService.Client.ViewModels
             }       
         }
 
+        /// <summary>
+        /// Сохранение корзины
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand] 
         private async Task SaveCart()
         {

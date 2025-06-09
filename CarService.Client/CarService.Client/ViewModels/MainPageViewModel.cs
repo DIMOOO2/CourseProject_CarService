@@ -1,5 +1,4 @@
-﻿using CarService.ApplicationService.Contracts.Requests;
-using CarService.ApplicationService.Contracts.Responses;
+﻿using CarService.ApplicationService.Contracts.Responses;
 using CarService.Client.Others.DataServises;
 using CarService.Client.Others.Models;
 using CarService.Client.Pages;
@@ -12,26 +11,42 @@ using System.Net.Http.Json;
 
 namespace CarService.Client.ViewModels;
 
+/// <summary>
+/// Класс модели представления главной страницы
+/// </summary>
 public partial class MainPageViewModel : ObservableObject
 {
-    private HttpClient client = new HttpClient();
-
+    /// <summary>
+    /// Свойство видимости элементов списка заказов
+    /// </summary>
     [ObservableProperty]
     bool isVisibleItems;
 
+    /// <summary>
+    /// Свойство видимости окна обновления списка
+    /// </summary>
     [ObservableProperty]
     bool isVisibleUpdate;
 
+    /// <summary>
+    /// Список заказов
+    /// </summary>
     [ObservableProperty]
     ObservableCollection<OrderInfo>? ordersCollection;
 
+    /// <summary>
+    /// Новый Http-клиент
+    /// </summary>
     private HttpClient _httpClient = new HttpClient();
 
+    /// <summary>
+    /// Конструктор класса
+    /// </summary>
     public MainPageViewModel()
     {
         try
         {
-            UpdateRequest();
+            UpdateRequest().GetAwaiter();
         }
         catch (Exception ex)
         {
@@ -39,6 +54,10 @@ public partial class MainPageViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Обновление списка заказов
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task UpdateRequest()
     {
@@ -71,7 +90,10 @@ public partial class MainPageViewModel : ObservableObject
         }
     }
 
-
+    /// <summary>
+    /// Переход на страницу создания заказа
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task PushCreateOrderPage()
     {

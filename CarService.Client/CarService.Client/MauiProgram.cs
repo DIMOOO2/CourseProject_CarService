@@ -4,12 +4,18 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
 
-
-
 namespace CarService.Client
 {
+
+    /// <summary>
+    /// Класс инициализации ресурсов в приложении
+    /// </summary>
     public static class MauiProgram
     {
+        /// <summary>
+        /// Метод создания приложения
+        /// </summary>
+        /// <returns></returns>
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();

@@ -11,20 +11,39 @@ using CarService.ApplicationService.Contracts.Responses;
 
 namespace CarService.Client.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления окна авторизации
+    /// </summary>
     public partial class AutorizationViewModel : ObservableObject
     {
+        /// <summary>
+        /// Свойство строки, где вводится логин
+        /// </summary>
         [ObservableProperty]
         private string login = null!;
 
+        /// <summary>
+        /// Свойство строки, где вводится пароль
+        /// </summary>
         [ObservableProperty]
         private string password = null!;
 
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         HttpClient _httpClient = new HttpClient();
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public AutorizationViewModel()
         {
         }
 
+        /// <summary>
+        /// Метод авторизации
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task LogIn()
         {
@@ -87,6 +106,12 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Генерация хеш-пароля по алгоритму SHA256
+        /// </summary>
+        /// <param name="password">Строка пароля без хэша</param>
+        /// <param name="salt">Соль</param>
+        /// <returns></returns>
         private static byte[] GenerateSha256Hash(string password, byte[] salt)
         {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -96,6 +121,11 @@ namespace CarService.Client.ViewModels
 
             return hash.ComputeHash(saltedPassword);
         }
+
+        /// <summary>
+        /// Генерация соли 
+        /// </summary>
+        /// <returns></returns>
         private static byte[] GenerateSalt()
         {
             const int SaltLength = 64;

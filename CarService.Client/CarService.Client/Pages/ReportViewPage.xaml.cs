@@ -3,8 +3,14 @@ using CarService.Client.ViewModels;
 
 namespace CarService.Client.Pages;
 
+/// <summary>
+/// Класс страницы просмотра отчета
+/// </summary>
 public partial class ReportViewPage : ContentPage
 {
+	/// <summary>
+	/// Инициализация страницы
+	/// </summary>
 	public ReportViewPage()
 	{
         InitializeComponent();

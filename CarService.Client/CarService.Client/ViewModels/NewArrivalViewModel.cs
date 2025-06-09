@@ -14,27 +14,54 @@ using CarService.Core.Models;
 
 namespace CarService.Client.ViewModels
 {
+    /// <summary>
+    /// Класс представления страницы оформления нового поступления
+    /// </summary>
     public partial class NewArrivalViewModel : ObservableObject
     {
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         private HttpClient _httpClient = new HttpClient();
 
+        /// <summary>
+        /// Список всех автозапчастей на складе
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<AutoPartInfo> allAutoParts;
 
+        /// <summary>
+        /// Список автозапчастей в поставке
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<ArrivalAutoPart> autoPartsFromArrival;
 
+        /// <summary>
+        /// Выбранный элемент в списке запчастей на складе
+        /// </summary>
         [ObservableProperty]
         private AutoPartInfo? selectedAutoPartFromAll;
         
+        /// <summary>
+        /// Выбранный элемент в списке автозапчастей в поставке
+        /// </summary>
         [ObservableProperty]
         private ArrivalAutoPart? selectedAutoPartFromArrival;
 
+        /// <summary>
+        /// Количество автозапчасти в поступлении
+        /// </summary>
         [ObservableProperty]
         private string autoPartAmountStr;
 
+        /// <summary>
+        /// Поле количества автозапчастей в поступлении
+        /// </summary>
         private uint autoPartAmount = 0;
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public NewArrivalViewModel()
         {
             try
@@ -53,6 +80,9 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Добаление автозапчасти в список поступления
+        /// </summary>
         [RelayCommand]
         private void AddArrivalCollection()
         {
@@ -72,6 +102,9 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Удаление автозапчасти из списка поступления
+        /// </summary>
         [RelayCommand]
         private void RemoveArrivalCollection() 
         {
@@ -98,8 +131,15 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Новый ID отчета
+        /// </summary>
         private Guid guid = Guid.NewGuid();
         
+        /// <summary>
+        /// Сохранение отчета
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task SaveArrival()
         {
@@ -118,7 +158,7 @@ namespace CarService.Client.ViewModels
 
                 using var response = await _httpClient.PostAsJsonAsync<DeliveryReportRequest>("https://localhost:1488/DeliveryReport", new DeliveryReportRequest(guid, dateTime, LoginData.CurrentWarehouse!.WarehouseId, documentByte));
 
-                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
 
                     DeliveryReportResponse? reportResponse = await response.Content.ReadFromJsonAsync<DeliveryReportResponse>();
@@ -132,7 +172,7 @@ namespace CarService.Client.ViewModels
                         )
                         .report.GetReportArticul}", "ОК");
 
-                    foreach(var item in AutoPartsFromArrival)
+                    foreach (var item in AutoPartsFromArrival)
                     {
                         var responseUpdate = await _httpClient.PutAsJsonAsync<AutoPartRequest>($"https://localhost:1488/AutoPart/{item.AutoPart.AutoPartId}",
                             new AutoPartRequest
@@ -152,7 +192,7 @@ namespace CarService.Client.ViewModels
                     WebData.GetAutoPartsCollection(autoPartResponses);
 
                     await Shell.Current.Navigation.PopAsync();
-                    
+
                 }
             }
             catch (Exception ex)

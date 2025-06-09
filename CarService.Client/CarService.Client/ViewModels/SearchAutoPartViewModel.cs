@@ -11,23 +11,43 @@ using System.Net.Http.Json;
 
 namespace CarService.Client.ViewModels
 {
+    /// <summary>
+    /// Класс модели представления страницы поиска автозапчастей
+    /// </summary>
     public partial class SearchAutoPartViewModel : ObservableObject
     {
+        /// <summary>
+        /// Новый Http-клиент
+        /// </summary>
         HttpClient httpClient = new HttpClient();
 
+        /// <summary>
+        /// Свойство видимости запчастей
+        /// </summary>
         [ObservableProperty]
         bool isVisibleItems;
 
+        /// <summary>
+        /// Свойство видимости сообщения об ошибке нахождения данных о запчастях на складе
+        /// </summary>
         [ObservableProperty]
         bool isVisibleNotFoundView;
 
+        /// <summary>
+        /// Значение поисковой строки
+        /// </summary>
         [ObservableProperty]
         string userRequest;
 
+        /// <summary>
+        /// Список автозапчастей
+        /// </summary>
         [ObservableProperty]
         ObservableCollection<AutoPartInfo>? autoParts;
 
-
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
         public SearchAutoPartViewModel() 
         {
             try
@@ -40,6 +60,9 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обновление коллекции автозапчастей
+        /// </summary>
         [RelayCommand]
         private async void UpdateRequest()
         {
@@ -55,6 +78,9 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Получение коллекции автозапчастей из сервера
+        /// </summary>
         [RelayCommand]
         private async void GetCollection()
         {
@@ -63,6 +89,9 @@ namespace CarService.Client.ViewModels
             UpdateCollection();
         }
 
+        /// <summary>
+        /// Поиск автозапчасти исходя из поискового запроса
+        /// </summary>
         [RelayCommand]
         private async void Search()
         {
@@ -76,6 +105,9 @@ namespace CarService.Client.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обновление коллекции, в зависимости от запроса
+        /// </summary>
         private void UpdateCollection()
         {
             try
