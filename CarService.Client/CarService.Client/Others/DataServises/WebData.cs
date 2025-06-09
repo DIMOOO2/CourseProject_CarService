@@ -5,15 +5,40 @@ using System.Collections.ObjectModel;
 
 namespace CarService.Client.Others.DataServises
 {
+    /// <summary>
+    /// Класс данных, которые загружаются с сервера
+    /// </summary>
     public static class WebData
     {
+        /// <summary>
+        /// Список автозапчастей
+        /// </summary>
         public static ObservableCollection<AutoPart>? AutoParts { get; set; }
+
+        /// <summary>
+        /// Список заказов
+        /// </summary>
         public static ObservableCollection<Order>? Orders { get; set; }
+
+        /// <summary>
+        /// Список производителей
+        /// </summary>
         public static ObservableCollection<Manufacturer>? Manufacturers { get; set; }
+
+        /// <summary>
+        /// Список клиентов
+        /// </summary>
         public static ObservableCollection<Core.Models.Client>? Clients { get; set; }
+
+        /// <summary>
+        /// Список отчетов
+        /// </summary>
         public static ObservableCollection<DeliveryReport>? Reports { get; set; }
 
-
+        /// <summary>
+        /// Метод установления нового списка автозапчастей
+        /// </summary>
+        /// <param name="autoParts">Новый список автомобилей</param>
         public static void GetAutoPartsCollection(List<AutoPartResponse>? autoParts)
         {
             ObservableCollection<AutoPart> currentAutoParts = new ObservableCollection<AutoPart>();
@@ -26,6 +51,10 @@ namespace CarService.Client.Others.DataServises
             AutoParts = currentAutoParts;
         }
 
+        /// <summary>
+        /// Метод установления нового списка заказов
+        /// </summary>
+        /// <param name="orders">Новый список заказов</param>
         public static void GetOrdersCollection(List<OrderResponse>? orders)
         {
             ObservableCollection<Order> currentOrders = new ObservableCollection<Order>();
@@ -38,6 +67,10 @@ namespace CarService.Client.Others.DataServises
             Orders = currentOrders;
         }
 
+        /// <summary>
+        /// Метод установления нового списка клиентов
+        /// </summary>
+        /// <param name="clients">Новый список клиентов</param>
         public static void GetClientCollection(List<ClientResponse>? clients)
         {
             ObservableCollection<Core.Models.Client> currentClients = new ObservableCollection<Core.Models.Client>();
@@ -50,6 +83,10 @@ namespace CarService.Client.Others.DataServises
             Clients = currentClients;
         }
 
+        /// <summary>
+        /// Метод установления нового списка производителей
+        /// </summary>
+        /// <param name="manufacturers">Новый список производиетелей</param>
         public static void GetCollectionManufacturer(List<ManufacturerResponse>? manufacturers)
         {
             ObservableCollection<Manufacturer> currentManufacturers = new ObservableCollection<Manufacturer>();
@@ -61,6 +98,10 @@ namespace CarService.Client.Others.DataServises
             Manufacturers = currentManufacturers;
         }
 
+        /// <summary>
+        /// Метод установления нового списка отчетов по поставкам
+        /// </summary>
+        /// <param name="deliveryReportResponses">Новый список отчетов</param>
         public static void GetColllectionReport(List<DeliveryReportResponse>? deliveryReportResponses)
         {
             ObservableCollection<DeliveryReport> deliveryReports = new ObservableCollection<DeliveryReport>();

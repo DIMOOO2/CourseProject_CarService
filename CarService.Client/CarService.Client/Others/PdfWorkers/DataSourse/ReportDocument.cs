@@ -7,11 +7,29 @@ using System.Collections.ObjectModel;
 
 namespace CarService.Client.Others.PdfWorkers.DataSourse
 {
+    /// <summary>
+    /// Класс документа отчета о поступлении
+    /// </summary>
     public class ReportDocument : IDocument
     {
+        /// <summary>
+        /// Номер отчета
+        /// </summary>
         public long NumberReport { get; }
+
+        /// <summary>
+        /// Дата создания отчета
+        /// </summary>
         public DateTime CreateDate { get; }
+
+        /// <summary>
+        /// Запчасти в новом поступлении
+        /// </summary>
         public ObservableCollection<ArrivalAutoPart> ArrivalAutoParts { get; }
+
+        /// <summary>
+        /// Текущий склад на который пришло поступление
+        /// </summary>
         public Warehouse Warehouse { get; }
 
         public ReportDocument(long numberReport, DateTime createDate, ObservableCollection<ArrivalAutoPart> arrivalAutoParts, Warehouse warehouse)
@@ -22,9 +40,22 @@ namespace CarService.Client.Others.PdfWorkers.DataSourse
             Warehouse = warehouse;
         }
 
+        /// <summary>
+        /// Установление стандартных метаданных
+        /// </summary>
+        /// <returns></returns>
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
+
+        /// <summary>
+        /// Метод установления стандартных настроек при создании документа
+        /// </summary>
+        /// <returns></returns>
         public DocumentSettings GetSettings() => DocumentSettings.Default;
 
+        /// <summary>
+        /// Метод создания документа
+        /// </summary>
+        /// <param name="container">Интерфейс контейнера документа</param>
         public void Compose(IDocumentContainer container)
         {
             container
@@ -44,6 +75,10 @@ namespace CarService.Client.Others.PdfWorkers.DataSourse
             });
         }
 
+        /// <summary>
+        /// Оформление шапки документа
+        /// </summary>
+        /// <param name="container">Контейнер содержиморго</param>
         void ComposeHeader(QuestPDF.Infrastructure.IContainer container)
         {
             container.Row(row =>
@@ -79,6 +114,10 @@ namespace CarService.Client.Others.PdfWorkers.DataSourse
             });
         }
 
+        /// <summary>
+        /// Добавление контента
+        /// </summary>
+        /// <param name="container">Контейнер содержиморго</param>
         void ComposeContent(QuestPDF.Infrastructure.IContainer container)
         {
             container.PaddingVertical(40).Column(column =>
@@ -89,6 +128,11 @@ namespace CarService.Client.Others.PdfWorkers.DataSourse
             });
         }
 
+        /// <summary>
+        /// Создание таблицы
+        /// </summary>
+        /// <param name="container"></param>
+        [Obsolete]
         void ComposeTable(QuestPDF.Infrastructure.IContainer container)
         {
             container.Table(table =>
@@ -122,7 +166,7 @@ namespace CarService.Client.Others.PdfWorkers.DataSourse
                     table.Cell().Element(CellStyle).Text(item.AutoPart.AutoPartName);
                     table.Cell().Element(CellStyle).AlignRight().Text($"{item.AutoPart.Price * item.DesiredCount} ₽");
                     table.Cell().Element(CellStyle).AlignRight().Text(item.DesiredCount);
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{item.AutoPart.Manufacturer.ManufacturerName}");
+                    table.Cell().Element(CellStyle).AlignRight().Text($"{item.AutoPart.Manufacturer!.ManufacturerName}");
 
                     static QuestPDF.Infrastructure.IContainer CellStyle(QuestPDF.Infrastructure.IContainer container)
                     {

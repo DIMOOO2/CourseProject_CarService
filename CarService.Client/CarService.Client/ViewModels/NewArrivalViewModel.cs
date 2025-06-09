@@ -140,7 +140,7 @@ namespace CarService.Client.ViewModels
                                 item.AutoPart.AutoPartName,
                                 item.AutoPart.PartNumber,
                                 item.AutoPart.Price,
-                                item.AutoPart.StockAmount + item.countWithArrival,
+                                item.AutoPart.StockAmount + item.СountWithArrival,
                                 item.AutoPart.ManufacturerId,
                                 item.AutoPart.WarehouseId
                             ));

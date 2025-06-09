@@ -1,10 +1,15 @@
 using CarService.Client.ViewModels;
 
 namespace CarService.Client.Pages;
-
+/// <summary>
+/// Класс страницы авторизации
+/// </summary>
 public partial class AutorizationPage : ContentPage
 {
-	public AutorizationPage()
+    /// <summary>
+    /// Инициализация страницы
+    /// </summary>
+    public AutorizationPage()
 	{
 		InitializeComponent();
 		BindingContext = new AutorizationViewModel();

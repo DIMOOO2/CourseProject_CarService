@@ -2,8 +2,17 @@
 
 namespace CarService.Client.Others.Models
 {
+    /// <summary>
+    /// Класс информации о заказе
+    /// </summary>
     public class OrderInfo
     {
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="orderId">ID заказа</param>
+        /// <param name="orderDate">Дата оформления</param>
+        /// <param name="orderStatus">Статус выполнения</param>
         public OrderInfo(Guid orderId, DateTime orderDate, bool orderStatus)
         {
             OrderId = orderId;
@@ -11,9 +20,24 @@ namespace CarService.Client.Others.Models
             OrderStatus = orderStatus;
         }
 
+        /// <summary>
+        /// ID заказа
+        /// </summary>
         public Guid OrderId { get; }
+
+        /// <summary>
+        /// Дата оформления
+        /// </summary>
         public DateTime OrderDate { get; }
+
+        /// <summary>
+        /// Статус выполнения
+        /// </summary>
         public bool OrderStatus { get; }
+
+        /// <summary>
+        /// Клиент-заказчик
+        /// </summary>
         public Core.Models.Client Client
         {
             get
@@ -22,8 +46,14 @@ namespace CarService.Client.Others.Models
             }
         }
 
+        /// <summary>
+        /// ID склада-исполнителя
+        /// </summary>
         public Guid WarehouseContractorId { get; }
 
+        /// <summary>
+        /// Свойство рамки элемента заказа в коллекции 
+        /// </summary>
         public Color ColorStatus
         {
             get
@@ -33,6 +63,9 @@ namespace CarService.Client.Others.Models
             }
         }
 
+        /// <summary>
+        /// Артикул заказа
+        /// </summary>
         public string ArticulNumber
         {
             get
@@ -42,6 +75,9 @@ namespace CarService.Client.Others.Models
             }
         }
 
+        /// <summary>
+        /// Свойство отображения статуса выполнения заказа
+        /// </summary>
         public string GetStatus
         {
             get
@@ -51,6 +87,9 @@ namespace CarService.Client.Others.Models
             }
         }
 
+        /// <summary>
+        /// Свойство отображения даты оформления 
+        /// </summary>
         public string GetDate
         {
             get
