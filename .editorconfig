@@ -1,4 +1,0 @@
-﻿[*.{cs,vb}]
-
-# IDE0040: Добавить модификаторы доступа
-dotnet_style_require_accessibility_modifiers = always
